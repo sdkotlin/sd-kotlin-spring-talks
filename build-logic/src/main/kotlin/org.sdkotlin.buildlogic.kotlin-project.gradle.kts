@@ -27,6 +27,7 @@ tasks {
 			freeCompilerArgs = listOf(
 				"-Xjsr305=strict",
 				"-opt-in=kotlin.ExperimentalStdlibApi",
+				"-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
 			)
 		}
 	}

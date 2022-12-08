@@ -1,6 +1,7 @@
 package org.sdkotlin.springdemo.timeservice
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
@@ -14,8 +15,7 @@ internal class TimeServer(
 	private val delayMillis: Duration = 1.seconds
 ) {
 
-	fun init() {
-
+	fun init(): Job =
 		coroutineScope.launch {
 			while (true) {
 				val currentInstant: Instant = Clock.System.now()
@@ -23,5 +23,4 @@ internal class TimeServer(
 				delay(delayMillis)
 			}
 		}
-	}
 }

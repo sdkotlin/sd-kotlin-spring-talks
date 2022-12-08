@@ -38,12 +38,24 @@ version.ref = "kotlin"
 module = "org.jetbrains.kotlin:kotlin-allopen"
 version.ref = "kotlin"
 
+[libraries.kotlinx-coroutines-bom]
+module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom"
+version.ref = "kotlinx-coroutines"
+
 [libraries.kotlinx-coroutines-core]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-core"
 version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-coroutines-core-jvm]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"
+version.ref = "kotlinx-coroutines"
+
+[libraries.kotlinx-coroutines-test]
+module = "org.jetbrains.kotlinx:kotlinx-coroutines-test"
+version.ref = "kotlinx-coroutines"
+
+[libraries.kotlinx-coroutines-test-jvm]
+module = "org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm"
 version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-datetime-jvm]
@@ -93,6 +105,11 @@ kotlinx-coroutines-jvm = [
 	"kotlinx-coroutines-core-jvm"
 ]
 
+kotlinx-coroutines-test-jvm = [
+	"kotlinx-coroutines-test",
+	"kotlinx-coroutines-test-jvm"
+]
+
 mockk-jvm = ["mockk", "mockk-dsl-jvm"]
 
 [plugins]
@@ -100,3 +117,7 @@ mockk-jvm = ["mockk", "mockk-dsl-jvm"]
 [plugins.kotlin-gradle-plugin]
 id = "org.jetbrains.kotlin.jvm"
 version.ref = "kotlin"
+
+[plugins.spring-boot-plugin]
+id = "org.springframework.boot"
+version.ref = "spring-boot"

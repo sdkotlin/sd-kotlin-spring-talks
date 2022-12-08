@@ -10,10 +10,10 @@ javaPlatform {
 
 dependencies {
 
+	api(platform(libs.kotlinx.coroutines.bom))
 	api(platform(libs.spring.boot.bom))
 
 	constraints {
-		api(libs.bundles.kotlinx.coroutines.jvm)
 		api(libs.jetbrains.annotations)
 		api(libs.kotlinx.datetime.jvm)
 		api(libs.slf4j.simple)

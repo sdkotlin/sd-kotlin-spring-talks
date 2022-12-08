@@ -11,6 +11,7 @@ javaPlatform {
 dependencies {
 
 	api(platform(libs.junit.bom))
+	api(platform(libs.kotlinx.coroutines.bom))
 
 	constraints {
 		api(libs.assertj)

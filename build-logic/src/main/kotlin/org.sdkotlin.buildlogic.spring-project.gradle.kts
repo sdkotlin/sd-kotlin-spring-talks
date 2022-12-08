@@ -1,6 +1,5 @@
 plugins {
 	id("org.sdkotlin.buildlogic.kotlin-project")
-	id("org.springframework.boot")
 	kotlin("plugin.spring")
 }
 
