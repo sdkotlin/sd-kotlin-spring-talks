@@ -15,12 +15,12 @@ fun main(args: Array<String>) {
 
 @SpringBootApplication
 @Import(
-	TimeServiceConfiguration::class,
 	TimeLoggerConfiguration::class,
+	TimeServiceConfiguration::class,
 )
 class SpringBootApp {
 
 	@Bean
-	fun applicationCoroutineScope(): CoroutineScope =
+	fun applicationServicesCoroutineScope(): CoroutineScope =
 		CoroutineScope(EmptyCoroutineContext)
 }
