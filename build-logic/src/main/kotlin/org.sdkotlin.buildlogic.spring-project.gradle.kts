@@ -1,5 +1,6 @@
 plugins {
 	id("org.sdkotlin.buildlogic.kotlin-project")
+	id("org.sdkotlin.buildlogic.test.integration-test-suite")
 	kotlin("plugin.spring")
 }
 
@@ -14,4 +15,6 @@ dependencies {
 	api(platform("org.springframework.boot:spring-boot-dependencies"))
 
 	runtimeOnly(kotlin("reflect"))
+
+	"integrationTestImplementation"("org.springframework.boot:spring-boot-starter-test")
 }

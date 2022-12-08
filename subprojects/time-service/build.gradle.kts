@@ -12,4 +12,6 @@ dependencies {
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 
 	testImplementation(libs.bundles.kotlinx.coroutines.test.jvm)
+
+	integrationTestImplementation(libs.bundles.kotlinx.coroutines.jvm)
 }
