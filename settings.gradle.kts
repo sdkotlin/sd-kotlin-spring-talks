@@ -18,4 +18,4 @@ includeBuild("platforms")
 
 include("subprojects:app")
 include("subprojects:component-a")
-include("subprojects:component-b")
+include("subprojects:time-service")

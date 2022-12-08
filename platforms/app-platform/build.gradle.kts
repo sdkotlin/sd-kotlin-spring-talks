@@ -15,6 +15,7 @@ dependencies {
 	constraints {
 		api(libs.bundles.kotlinx.coroutines.jvm)
 		api(libs.jetbrains.annotations)
+		api(libs.kotlinx.datetime.jvm)
 		api(libs.slf4j.simple)
 	}
 }
