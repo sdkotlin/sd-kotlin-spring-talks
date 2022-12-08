@@ -10,6 +10,7 @@ dependencies {
 
 	api(platform("org.sdkotlin.platforms:app-platform"))
 
+	api(project(":subprojects:time-logger"))
 	api(project(":subprojects:time-service"))
 
 	api(libs.spring.boot.starter)

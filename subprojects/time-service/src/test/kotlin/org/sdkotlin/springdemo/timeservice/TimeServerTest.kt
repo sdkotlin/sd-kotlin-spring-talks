@@ -7,7 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class TimeServerTest {
+internal class TimeServerTest {
 
 	@Test
 	fun `test time server sends time`() = runTest {

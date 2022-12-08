@@ -3,12 +3,12 @@
 assertj = "3.23.1"
 equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
+jakarta-inject = "2.0.0"
 junit = "5.9.1"
 kotlin = "1.7.21"
 kotlinx-coroutines = "1.6.4"
 kotlinx-datetime = "0.4.0"
 mockk = "1.13.2"
-slf4j = "2.0.5"
 spring = "6.0.2"
 spring-boot = "3.0.0"
 
@@ -21,6 +21,10 @@ version.ref = "assertj"
 [libraries.equalsverifier]
 module = "nl.jqno.equalsverifier:equalsverifier"
 version.ref = "equalsverifier"
+
+[libraries.jakarta-inject]
+module = "jakarta.inject:jakarta.inject-api"
+version.ref = "jakarta-inject"
 
 [libraries.jetbrains-annotations]
 module = "org.jetbrains:annotations"
@@ -70,10 +74,6 @@ version.ref = "mockk"
 module = "io.mockk:mockk-dsl-jvm"
 version.ref = "mockk"
 
-[libraries.slf4j-simple]
-module = "org.slf4j:slf4j-simple"
-version.ref = "slf4j"
-
 [libraries.spring-boot-bom]
 module = "org.springframework.boot:spring-boot-dependencies"
 version.ref = "spring-boot"
@@ -84,6 +84,10 @@ version.ref = "spring-boot"
 
 [libraries.spring-boot-starter]
 module = "org.springframework.boot:spring-boot-starter"
+version.ref = "spring-boot"
+
+[libraries.spring-boot-starter-log4j2]
+module = "org.springframework.boot:spring-boot-starter-log4j2"
 version.ref = "spring-boot"
 
 [libraries.spring-boot-starter-test]

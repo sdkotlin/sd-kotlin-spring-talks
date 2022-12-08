@@ -17,5 +17,5 @@ rootProject.name = "sd-kotlin-spring-talks"
 includeBuild("platforms")
 
 include("subprojects:app")
-include("subprojects:component-a")
+include("subprojects:time-logger")
 include("subprojects:time-service")
