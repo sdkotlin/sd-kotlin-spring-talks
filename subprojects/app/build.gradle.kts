@@ -10,13 +10,15 @@ dependencies {
 
 	api(platform("org.sdkotlin.platforms:app-platform"))
 
-	api(project(":subprojects:time-logger"))
-	api(project(":subprojects:time-service"))
-
 	api(libs.spring.boot.starter)
 	api(libs.spring.boot.starter.webflux)
-	api(libs.spring.context)
 
+	implementation(project(":subprojects:time-logger"))
+	implementation(project(":subprojects:time-service"))
+
+	implementation(libs.spring.boot)
+	implementation(libs.spring.boot.autoconfigure)
+	implementation(libs.spring.context)
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 
 	integrationTestImplementation(libs.spring.boot.starter.test)

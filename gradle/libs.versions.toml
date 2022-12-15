@@ -1,22 +1,29 @@
 [versions]
 
 assertj = "3.23.1"
+dependency-analysis-gradle-plugin = "1.17.0"
 equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
 jakarta-inject = "2.0.0"
 junit = "5.9.1"
-kotlin = "1.7.21"
+kotlin = "1.7.22"
 kotlinx-coroutines = "1.6.4"
 kotlinx-datetime = "0.4.0"
-mockk = "1.13.2"
-spring = "6.0.2"
+log4j = "2.19.0"
+mockk = "1.13.3"
+spring = "6.0.3"
 spring-boot = "3.0.0"
+versions-gradle-plugin = "0.44.0"
 
 [libraries]
 
 [libraries.assertj]
 module = "org.assertj:assertj-core"
 version.ref = "assertj"
+
+[libraries.dependency-analysis-gradle-plugin-dependency]
+module = "com.autonomousapps.dependency-analysis:com.autonomousapps.dependency-analysis.gradle.plugin"
+version.ref = "dependency-analysis-gradle-plugin"
 
 [libraries.equalsverifier]
 module = "nl.jqno.equalsverifier:equalsverifier"
@@ -62,9 +69,17 @@ version.ref = "kotlinx-coroutines"
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm"
 version.ref = "kotlinx-coroutines"
 
+[libraries.kotlinx-datetime]
+module = "org.jetbrains.kotlinx:kotlinx-datetime"
+version.ref = "kotlinx-datetime"
+
 [libraries.kotlinx-datetime-jvm]
 module = "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
 version.ref = "kotlinx-datetime"
+
+[libraries.log4j-api]
+module = "org.apache.logging.log4j:log4j-api"
+version.ref = "log4j"
 
 [libraries.mockk]
 module = "io.mockk:mockk"
@@ -73,6 +88,14 @@ version.ref = "mockk"
 [libraries.mockk-dsl-jvm]
 module = "io.mockk:mockk-dsl-jvm"
 version.ref = "mockk"
+
+[libraries.spring-boot]
+module = "org.springframework.boot:spring-boot"
+version.ref = "spring-boot"
+
+[libraries.spring-boot-autoconfigure]
+module = "org.springframework.boot:spring-boot-autoconfigure"
+version.ref = "spring-boot"
 
 [libraries.spring-boot-bom]
 module = "org.springframework.boot:spring-boot-dependencies"
@@ -114,9 +137,18 @@ kotlinx-coroutines-test-jvm = [
 	"kotlinx-coroutines-test-jvm"
 ]
 
+kotlinx-datetime-jvm = [
+	"kotlinx-datetime",
+	"kotlinx-datetime-jvm"
+]
+
 mockk-jvm = ["mockk", "mockk-dsl-jvm"]
 
 [plugins]
+
+[plugins.dependency-analysis-gradle-plugin]
+id = "com.autonomousapps.dependency-analysis"
+version.ref = "dependency-analysis-gradle-plugin"
 
 [plugins.kotlin-gradle-plugin]
 id = "org.jetbrains.kotlin.jvm"
@@ -125,3 +157,7 @@ version.ref = "kotlin"
 [plugins.spring-boot-plugin]
 id = "org.springframework.boot"
 version.ref = "spring-boot"
+
+[plugins.versions-gradle-plugin]
+id = "com.github.ben-manes.versions"
+version.ref = "versions-gradle-plugin"

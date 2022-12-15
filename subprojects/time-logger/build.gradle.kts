@@ -4,7 +4,12 @@ plugins {
 
 dependencies {
 
-	api(project(":subprojects:time-service"))
+	api(libs.spring.context)
+
+	implementation(project(":subprojects:time-service"))
+
+	implementation(libs.log4j.api)
+	implementation(libs.bundles.kotlinx.datetime.jvm)
 
 	integrationTestImplementation(project(":subprojects:time-service"))
 }

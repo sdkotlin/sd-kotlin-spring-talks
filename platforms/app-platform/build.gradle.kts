@@ -15,6 +15,6 @@ dependencies {
 
 	constraints {
 		api(libs.jetbrains.annotations)
-		api(libs.kotlinx.datetime.jvm)
+		api(libs.bundles.kotlinx.datetime.jvm)
 	}
 }
