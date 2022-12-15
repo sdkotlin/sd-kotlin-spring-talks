@@ -1,6 +1,7 @@
 package org.sdkotlin.springdemo.timelogger.conf
 
 import org.sdkotlin.springdemo.timelogger.TimeLogger
+import org.sdkotlin.springdemo.timeservice.TimeClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -8,6 +9,6 @@ import org.springframework.context.annotation.Configuration
 class TimeLoggerConfiguration {
 
 	@Bean
-	internal fun timeLogger() =
+	internal fun timeLogger(): TimeClient =
 		TimeLogger()
 }

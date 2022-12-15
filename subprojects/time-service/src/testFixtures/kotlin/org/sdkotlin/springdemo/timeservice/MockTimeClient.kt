@@ -4,7 +4,8 @@ import kotlinx.datetime.Instant
 
 class MockTimeClient : TimeClient {
 
-	private val _receivedInstants = mutableListOf<Instant>()
+	private val _receivedInstants: MutableList<Instant> =
+		mutableListOf()
 
 	val receivedInstants: List<Instant>
 		get() = _receivedInstants.toList()

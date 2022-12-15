@@ -14,5 +14,5 @@ class TimeServiceConfiguration {
 		timeClients: List<TimeClient>,
 		applicationCoroutineScope: CoroutineScope,
 	) = TimeServer(timeClients, applicationCoroutineScope)
-		.apply { init() }
+		.also { it.init() }
 }
