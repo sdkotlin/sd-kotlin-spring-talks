@@ -62,11 +62,10 @@ tasks {
 
 fun isNonStable(version: String): Boolean {
 	val stableKeyword = listOf("RELEASE", "FINAL", "GA").any {
-		version.toUpperCase()
-				.contains(it)
+		version.uppercase().contains(it)
 	}
 	val unstableKeyword =
-		listOf("""M\d+""").any { version.toUpperCase().contains(it.toRegex()) }
+		version.uppercase().contains("""M\d+""".toRegex())
 	val regex = "^[0-9,.v-]+(-r)?$".toRegex()
 	val isStable = (stableKeyword && !unstableKeyword) || regex.matches(version)
 	return isStable.not()
