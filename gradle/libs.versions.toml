@@ -1,19 +1,19 @@
 [versions]
 
 assertj = "3.24.2"
-dependency-analysis-gradle-plugin = "1.18.0"
+dependency-analysis-gradle-plugin = "1.19.0"
 equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
 jakarta-inject = "2.0.0"
 junit = "5.9.2"
-kotlin = "1.8.0"
+kotlin = "1.8.10"
 kotlinx-coroutines = "1.6.4"
 kotlinx-datetime = "0.4.0"
-log4j = "2.19.0"
+log4j = "2.20.0"
 mockk = "1.13.4"
-spring = "6.0.4"
+spring = "6.0.5"
 spring-boot = "3.0.2"
-versions-gradle-plugin = "0.45.0"
+versions-gradle-plugin = "0.46.0"
 
 [libraries]
 
