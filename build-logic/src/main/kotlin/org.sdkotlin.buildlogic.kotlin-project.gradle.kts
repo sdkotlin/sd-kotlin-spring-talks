@@ -9,7 +9,7 @@ plugins {
 }
 
 val javaTargetVersion = JavaVersion.VERSION_17.toString()
-val kotlinTargetVersion = "1.7"
+val kotlinTargetVersion = "1.8"
 
 kotlin {
 	jvmToolchain {
