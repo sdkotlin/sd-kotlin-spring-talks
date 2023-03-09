@@ -4,6 +4,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.stereotype.Service
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 import kotlin.reflect.KClass
 
 @Service
@@ -16,18 +18,24 @@ class ChildContextService(
 		const val CHILD_CONTEXT_ID_PROPERTY_NAME: String = "childContextId"
 	}
 
-	fun create(
+	private val childContextsMap: ConcurrentMap<String, ApplicationContext> =
+		ConcurrentHashMap()
+
+	fun createIfAbsent(
 		childContextId: String,
 		vararg configuration: KClass<*>,
 	): ApplicationContext {
 
-		val classes: Array<Class<out Any>> =
-			configuration.map { it.java }.toTypedArray()
+		return childContextsMap.computeIfAbsent(childContextId) {
 
-		return SpringApplicationBuilder(*classes)
-				.parent(parentContext)
-				.properties(mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId))
-				.build()
-				.run()
+			val classes: Array<Class<out Any>> =
+				configuration.map { it.java }.toTypedArray()
+
+			SpringApplicationBuilder(*classes)
+					.parent(parentContext)
+					.properties(mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId))
+					.build()
+					.run()
+		}
 	}
 }
