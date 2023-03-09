@@ -13,4 +13,5 @@ dependencies {
 	testImplementation(libs.bundles.kotlinx.coroutines.test.jvm)
 
 	integrationTestImplementation(libs.bundles.kotlinx.coroutines.jvm)
+	integrationTestImplementation(libs.spring.boot.starter.test)
 }

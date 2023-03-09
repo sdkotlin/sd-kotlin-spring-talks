@@ -16,5 +16,6 @@ dependencies {
 	constraints {
 		api(libs.jetbrains.annotations)
 		api(libs.bundles.kotlinx.datetime.jvm)
+		api(libs.bundles.log4j.kotlin)
 	}
 }

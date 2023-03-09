@@ -4,7 +4,6 @@ plugins {
 	kotlin("plugin.spring")
 }
 
-
 dependencies {
 
 	modules {
@@ -19,12 +18,5 @@ dependencies {
 
 	api(platform("org.sdkotlin.platforms:app-platform"))
 
-	//api(platform(libs.spring.boot.bom))
-	api(platform("org.springframework.boot:spring-boot-dependencies"))
-
-	implementation("org.springframework.boot:spring-boot-starter-log4j2")
-
 	runtimeOnly(kotlin("reflect"))
-
-	"integrationTestImplementation"("org.springframework.boot:spring-boot-starter-test")
 }

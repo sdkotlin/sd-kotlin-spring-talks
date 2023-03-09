@@ -3,7 +3,7 @@ package org.sdkotlin.springdemo.timelogger
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.datetime.Clock
-import org.apache.logging.log4j.Logger
+import org.apache.logging.log4j.kotlin.KotlinLogger
 import org.junit.jupiter.api.Test
 
 internal class TimeLoggerTest {
@@ -13,7 +13,7 @@ internal class TimeLoggerTest {
 
 		// Assemble
 
-		val mockLogger: Logger = mockk()
+		val mockLogger: KotlinLogger = mockk()
 
 		val timeLogger = TimeLogger(
 			mockLogger
@@ -28,7 +28,9 @@ internal class TimeLoggerTest {
 		// Assert
 
 		verify {
-			mockLogger.info(match<String> { it.contains(now.toString()) })
+			mockLogger.info(match<() -> String> {
+				it.invoke().contains(now.toString())
+			})
 		}
 	}
 }

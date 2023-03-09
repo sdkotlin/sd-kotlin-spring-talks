@@ -10,6 +10,7 @@ kotlin = "1.8.10" # See also `kotlinTargetVersion` in kotlin-project.gradle.kts.
 kotlinx-coroutines = "1.6.4"
 kotlinx-datetime = "0.4.0"
 log4j = "2.20.0"
+log4j-kotlin = "1.2.0"
 mockk = "1.13.4"
 spring = "6.0.6"
 spring-boot = "3.0.4"
@@ -61,6 +62,10 @@ version.ref = "kotlinx-coroutines"
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"
 version.ref = "kotlinx-coroutines"
 
+[libraries.kotlinx-coroutines-reactor]
+module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor"
+version.ref = "kotlinx-coroutines"
+
 [libraries.kotlinx-coroutines-test]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-test"
 version.ref = "kotlinx-coroutines"
@@ -80,6 +85,18 @@ version.ref = "kotlinx-datetime"
 [libraries.log4j-api]
 module = "org.apache.logging.log4j:log4j-api"
 version.ref = "log4j"
+
+[libraries.log4j-core]
+module = "org.apache.logging.log4j:log4j-core"
+version.ref = "log4j"
+
+[libraries.log4j-api-kotlin]
+module = "org.apache.logging.log4j:log4j-api-kotlin"
+version.ref = "log4j-kotlin"
+
+[libraries.log4j-slf4j2-impl]
+module = "org.apache.logging.log4j:log4j-slf4j2-impl"
+version.ref = "log4j-kotlin"
 
 [libraries.mockk]
 module = "io.mockk:mockk"
@@ -125,24 +142,42 @@ version.ref = "spring-boot"
 module = "org.springframework:spring-context"
 version.ref = "spring"
 
+[libraries.spring-web]
+module = "org.springframework:spring-web"
+version.ref = "spring"
+
 [bundles]
 
 kotlinx-coroutines-jvm = [
 	"kotlinx-coroutines-core",
-	"kotlinx-coroutines-core-jvm"
+	"kotlinx-coroutines-core-jvm",
+]
+
+kotlinx-coroutines-reactor = [
+	"kotlinx-coroutines-core",
+	"kotlinx-coroutines-core-jvm",
+	"kotlinx-coroutines-reactor",
 ]
 
 kotlinx-coroutines-test-jvm = [
 	"kotlinx-coroutines-test",
-	"kotlinx-coroutines-test-jvm"
+	"kotlinx-coroutines-test-jvm",
 ]
 
 kotlinx-datetime-jvm = [
 	"kotlinx-datetime",
-	"kotlinx-datetime-jvm"
+	"kotlinx-datetime-jvm",
 ]
 
-mockk-jvm = ["mockk", "mockk-dsl-jvm"]
+log4j-kotlin = [
+	"log4j-api",
+	"log4j-api-kotlin",
+]
+
+mockk-jvm = [
+	"mockk",
+	"mockk-dsl-jvm",
+]
 
 [plugins]
 
