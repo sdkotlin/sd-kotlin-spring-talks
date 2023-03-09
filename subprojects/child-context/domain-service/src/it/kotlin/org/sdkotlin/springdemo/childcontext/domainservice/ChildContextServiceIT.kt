@@ -56,13 +56,53 @@ internal class ChildContextServiceIT {
 				.describedAs("childContextId")
 				.isEqualTo(testId)
 	}
+
+	@Test
+	fun `test create for multiple configuration sources`(
+		@Autowired
+		parentContext: ConfigurableApplicationContext,
+		@Autowired
+		childContextService: ChildContextService
+	) {
+
+		val testId = "testing"
+
+		val childContext: ApplicationContext =
+			childContextService.create(
+				testId,
+				TestChildContextConfig::class,
+				TestChildContextConfig2::class
+			)
+
+		val beanName = TestChildContextConfig::testBean.name
+		val beanName2 = TestChildContextConfig2::testBean2.name
+
+		val childContextContainsBean = childContext.containsBean(beanName)
+		val childContextContainsBean2 = childContext.containsBean(beanName2)
+
+		assertThat(childContextContainsBean)
+				.describedAs("child context contains $beanName")
+				.isTrue
+
+		assertThat(childContextContainsBean2)
+				.describedAs("child context contains $beanName")
+				.isTrue
+	}
 }
 
 // Defined private and outside the test class so as not to contribute
 // configuration to the test itself, which is the parent context for the test.
+
 @Configuration
 private class TestChildContextConfig {
 
 	@Bean
 	fun testBean() = Unit
+}
+
+@Configuration
+private class TestChildContextConfig2 {
+
+	@Bean
+	fun testBean2() = Unit
 }
