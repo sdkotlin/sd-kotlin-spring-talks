@@ -44,4 +44,7 @@ class ChildContextService(
 					.run()
 		}
 	}
+
+	fun get(childContextId: String): ApplicationContext? =
+		childContextsMap[childContextId]
 }
