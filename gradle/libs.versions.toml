@@ -86,6 +86,10 @@ version.ref = "kotlinx-datetime"
 module = "org.apache.logging.log4j:log4j-api"
 version.ref = "log4j"
 
+[libraries.log4j-bom]
+module = "org.apache.logging.log4j:log4j-bom"
+version.ref = "log4j"
+
 [libraries.log4j-core]
 module = "org.apache.logging.log4j:log4j-core"
 version.ref = "log4j"

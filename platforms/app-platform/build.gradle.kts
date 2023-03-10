@@ -11,6 +11,7 @@ javaPlatform {
 dependencies {
 
 	api(platform(libs.kotlinx.coroutines.bom))
+	api(platform(libs.log4j.bom))
 	api(platform(libs.spring.boot.bom))
 
 	constraints {
