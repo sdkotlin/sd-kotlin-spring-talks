@@ -35,125 +35,125 @@ internal class ChildContextServiceIT(
 	@Test
 	fun `test create`() {
 
-		val testId = "testing"
+		val childContextId = "testing"
 
 		val childContext: ApplicationContext =
 			childContextService.createIfAbsent(
-				childContextId = testId,
+				childContextId,
 				TestChildContextConfig::class,
 			)
 
-		val beanName = TestChildContextConfig::testBean.name
+		val testBeanName = TestChildContextConfig::testBean.name
 
-		val parentContextContainsBean = parentContext.containsBean(beanName)
-		val childContextContainsBean = childContext.containsBean(beanName)
+		val parentContextContainsBean = parentContext.containsBean(testBeanName)
+		val childContextContainsBean = childContext.containsBean(testBeanName)
 
 		assertThat(parentContextContainsBean)
-				.describedAs("parent context contains $beanName")
+				.describedAs("parent context contains $testBeanName")
 				.isFalse
 
 		assertThat(childContextContainsBean)
-				.describedAs("child context contains $beanName")
+				.describedAs("child context contains $testBeanName")
 				.isTrue
 
-		val childContextId =
+		val childContextIdFromEnvironment =
 			childContext.environment[CHILD_CONTEXT_ID_PROPERTY_NAME]
 
-		assertThat(childContextId)
-				.describedAs("childContextId")
-				.isEqualTo(testId)
+		assertThat(childContextIdFromEnvironment)
+				.describedAs("childContextId from environment")
+				.isEqualTo(childContextId)
 	}
 
 	@Test
 	fun `test create for multiple child contexts`() {
 
-		val testId1 = "testing 1"
-		val testId2 = "testing 2"
+		val childContextId1 = "testing 1"
+		val childContextId2 = "testing 2"
 
 		val childContext1: ApplicationContext =
 			childContextService.createIfAbsent(
-				childContextId = testId1,
+				childContextId1,
 				TestChildContextConfig::class,
 			)
 
 		val childContext2: ApplicationContext =
 			childContextService.createIfAbsent(
-				childContextId = testId2,
+				childContextId2,
 				TestChildContextConfig::class,
 			)
 
-		val beanName = TestChildContextConfig::testBean.name
+		val testBeanName = TestChildContextConfig::testBean.name
 
-		val parentContextContainsBean = parentContext.containsBean(beanName)
-		val childContext1ContainsBean = childContext1.containsBean(beanName)
-		val childContext2ContainsBean = childContext2.containsBean(beanName)
+		val parentContextContainsBean = parentContext.containsBean(testBeanName)
+		val childContext1ContainsBean = childContext1.containsBean(testBeanName)
+		val childContext2ContainsBean = childContext2.containsBean(testBeanName)
 
 		assertThat(parentContextContainsBean)
-				.describedAs("parent context contains $beanName")
+				.describedAs("parent context contains $testBeanName")
 				.isFalse
 
 		assertThat(childContext1ContainsBean)
-				.describedAs("child context 1 contains $beanName")
+				.describedAs("child context 1 contains $testBeanName")
 				.isTrue
 
 		assertThat(childContext2ContainsBean)
-				.describedAs("child context 2 contains $beanName")
+				.describedAs("child context 2 contains $testBeanName")
 				.isTrue
 
-		val childContext1Id =
+		val childContextId1FromEnvironment =
 			childContext1.environment[CHILD_CONTEXT_ID_PROPERTY_NAME]
 
-		val childContext2Id =
+		val childContextId2FromEnvironment =
 			childContext2.environment[CHILD_CONTEXT_ID_PROPERTY_NAME]
 
-		assertThat(childContext1Id)
-				.describedAs("childContext1Id")
-				.isEqualTo(testId1)
+		assertThat(childContextId1FromEnvironment)
+				.describedAs("childContext1Id from environment")
+				.isEqualTo(childContextId1)
 
-		assertThat(childContext2Id)
-				.describedAs("childContext2Id")
-				.isEqualTo(testId2)
+		assertThat(childContextId2FromEnvironment)
+				.describedAs("childContext2Id from environment")
+				.isEqualTo(childContextId2)
 	}
 
 	@Test
 	fun `test create for multiple configuration sources`() {
 
-		val testId = "testing"
+		val childContextId = "testing"
 
 		val childContext: ApplicationContext =
 			childContextService.createIfAbsent(
-				testId,
+				childContextId,
 				TestChildContextConfig::class,
 				TestChildContextConfig2::class,
 			)
 
-		val beanName = TestChildContextConfig::testBean.name
-		val beanName2 = TestChildContextConfig2::testBean2.name
+		val testBeanName1 = TestChildContextConfig::testBean.name
+		val testBeanName2 = TestChildContextConfig2::testBean2.name
 
-		val childContextContainsBean = childContext.containsBean(beanName)
-		val childContextContainsBean2 = childContext.containsBean(beanName2)
+		val childContextContainsBean1 = childContext.containsBean(testBeanName1)
+		val childContextContainsBean2 = childContext.containsBean(testBeanName2)
 
-		assertThat(childContextContainsBean)
-				.describedAs("child context contains $beanName")
+		assertThat(childContextContainsBean1)
+				.describedAs("child context contains $testBeanName1")
 				.isTrue
 
 		assertThat(childContextContainsBean2)
-				.describedAs("child context contains $beanName2")
+				.describedAs("child context contains $testBeanName2")
 				.isTrue
 	}
 
 	@Test
 	fun `test create for idempotency`() {
 
-		val testId = "testing"
+		val sameChildContextId = "testing"
 
 		childContextService.createIfAbsent(
-			childContextId = testId,
+			childContextId = sameChildContextId,
 			InitializationCountingTestChildContextConfig::class,
 		)
 
 		childContextService.createIfAbsent(
-			childContextId = testId,
+			childContextId = sameChildContextId,
 			InitializationCountingTestChildContextConfig::class,
 		)
 
