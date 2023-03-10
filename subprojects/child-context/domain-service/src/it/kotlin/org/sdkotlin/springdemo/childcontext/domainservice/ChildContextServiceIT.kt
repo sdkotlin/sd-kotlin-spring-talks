@@ -16,7 +16,12 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_T
 @SpringBootTest
 // ChildContextService is mutable
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-internal class ChildContextServiceIT {
+internal class ChildContextServiceIT(
+	@Autowired
+	private val parentContext: ConfigurableApplicationContext,
+	@Autowired
+	private val childContextService: ChildContextService
+) {
 
 	@Configuration
 	internal class TestConfig {
@@ -28,12 +33,7 @@ internal class ChildContextServiceIT {
 	}
 
 	@Test
-	fun `test create`(
-		@Autowired
-		parentContext: ConfigurableApplicationContext,
-		@Autowired
-		childContextService: ChildContextService
-	) {
+	fun `test create`() {
 
 		val testId = "testing"
 
@@ -65,12 +65,7 @@ internal class ChildContextServiceIT {
 	}
 
 	@Test
-	fun `test create for multiple child contexts`(
-		@Autowired
-		parentContext: ConfigurableApplicationContext,
-		@Autowired
-		childContextService: ChildContextService
-	) {
+	fun `test create for multiple child contexts`() {
 
 		val testId1 = "testing 1"
 		val testId2 = "testing 2"
@@ -121,12 +116,7 @@ internal class ChildContextServiceIT {
 	}
 
 	@Test
-	fun `test create for multiple configuration sources`(
-		@Autowired
-		parentContext: ConfigurableApplicationContext,
-		@Autowired
-		childContextService: ChildContextService
-	) {
+	fun `test create for multiple configuration sources`() {
 
 		val testId = "testing"
 
@@ -153,12 +143,7 @@ internal class ChildContextServiceIT {
 	}
 
 	@Test
-	fun `test create for idempotency`(
-		@Autowired
-		parentContext: ConfigurableApplicationContext,
-		@Autowired
-		childContextService: ChildContextService
-	) {
+	fun `test create for idempotency`() {
 
 		val testId = "testing"
 
