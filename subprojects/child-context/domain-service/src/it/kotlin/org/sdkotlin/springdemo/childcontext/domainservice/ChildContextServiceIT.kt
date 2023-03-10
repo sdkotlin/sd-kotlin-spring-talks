@@ -65,6 +65,32 @@ internal class ChildContextServiceIT(
 	}
 
 	@Test
+	fun `test create for SpringBootApplication configuration`() {
+
+		val childContextId = "testing"
+
+		val additionalPropertyKey = "additionalProperty"
+		val additionalPropertyValue = "additionalPropertyValue"
+
+		val childContext: ApplicationContext =
+			childContextService.createIfAbsent(
+				childContextId,
+				TestChildContextConfig::class,
+			) { springApplicationBuilder ->
+				springApplicationBuilder.properties(
+					mapOf(additionalPropertyKey to additionalPropertyValue)
+				)
+			}
+
+		val additionalPropertyFromEnvironment =
+			childContext.environment[additionalPropertyKey]
+
+		assertThat(additionalPropertyFromEnvironment)
+				.describedAs("additionalProperty from environment")
+				.isEqualTo(additionalPropertyValue)
+	}
+
+	@Test
 	fun `test create for multiple child contexts`() {
 
 		val childContextId1 = "testing 1"

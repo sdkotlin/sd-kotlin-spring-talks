@@ -24,6 +24,8 @@ class ChildContextService(
 	fun createIfAbsent(
 		childContextId: String,
 		vararg configuration: KClass<*>,
+		springApplicationBuilderConfigurer:
+			(SpringApplicationBuilder) -> Unit = {},
 	): ApplicationContext {
 
 		return childContextsMap.computeIfAbsent(childContextId) {
@@ -31,9 +33,13 @@ class ChildContextService(
 			val classes: Array<Class<out Any>> =
 				configuration.map { it.java }.toTypedArray()
 
-			SpringApplicationBuilder(*classes)
+			val springApplicationBuilder = SpringApplicationBuilder(*classes)
 					.parent(parentContext)
 					.properties(mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId))
+
+			springApplicationBuilderConfigurer(springApplicationBuilder)
+
+			springApplicationBuilder
 					.build()
 					.run()
 		}
