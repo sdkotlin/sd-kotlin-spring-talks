@@ -16,6 +16,9 @@ class ChildContextService(
 	companion object {
 
 		const val CHILD_CONTEXT_ID_PROPERTY_NAME: String = "childContextId"
+
+		internal const val NO_SOURCES_MESSAGE: String =
+			"One or more sources is required."
 	}
 
 	private val childContextsMap: ConcurrentMap<String, ApplicationContext> =
@@ -23,19 +26,22 @@ class ChildContextService(
 
 	fun createIfAbsent(
 		childContextId: String,
-		vararg configuration: KClass<*>,
+		vararg sources: KClass<*>,
 		springApplicationBuilderConfigurer:
 			(SpringApplicationBuilder) -> Unit = {},
 	): ApplicationContext {
 
+		require(sources.isNotEmpty()) { NO_SOURCES_MESSAGE }
+
 		return childContextsMap.computeIfAbsent(childContextId) {
 
-			val classes: Array<Class<out Any>> =
-				configuration.map { it.java }.toTypedArray()
+			val sourceJavaClasses: Array<Class<out Any>> =
+				sources.map { it.java }.toTypedArray()
 
-			val springApplicationBuilder = SpringApplicationBuilder(*classes)
-					.parent(parentContext)
-					.properties(mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId))
+			val springApplicationBuilder =
+				SpringApplicationBuilder(*sourceJavaClasses)
+						.parent(parentContext)
+						.properties(mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId))
 
 			springApplicationBuilderConfigurer(springApplicationBuilder)
 

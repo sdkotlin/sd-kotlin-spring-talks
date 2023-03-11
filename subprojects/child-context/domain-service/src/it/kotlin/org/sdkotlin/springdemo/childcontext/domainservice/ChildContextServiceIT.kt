@@ -4,9 +4,11 @@
 package org.sdkotlin.springdemo.childcontext.domainservice
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService.Companion.CHILD_CONTEXT_ID_PROPERTY_NAME
+import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService.Companion.NO_SOURCES_MESSAGE
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.test.context.SpringBootTest
@@ -75,7 +77,27 @@ internal class ChildContextServiceIT(
 		}
 
 		@Test
-		fun `test create for SpringBootApplication configuration`() {
+		fun `test create for idempotency`() {
+
+			val sameChildContextId = "testing"
+
+			childContextService.createIfAbsent(
+				childContextId = sameChildContextId,
+				InitializationCountingTestChildContextConfig::class,
+			)
+
+			childContextService.createIfAbsent(
+				childContextId = sameChildContextId,
+				InitializationCountingTestChildContextConfig::class,
+			)
+
+			assertThat(
+				InitializationCountingTestChildContextConfig.initializationCount
+			).isEqualTo(1)
+		}
+
+		@Test
+		fun `test create for additional SpringBootApplication configuration`() {
 
 			val childContextId = "testing"
 
@@ -184,23 +206,15 @@ internal class ChildContextServiceIT(
 		}
 
 		@Test
-		fun `test create for idempotency`() {
+		fun `test create for no configuration sources`() {
 
-			val sameChildContextId = "testing"
+			val childContextId = "testing"
 
-			childContextService.createIfAbsent(
-				childContextId = sameChildContextId,
-				InitializationCountingTestChildContextConfig::class,
-			)
-
-			childContextService.createIfAbsent(
-				childContextId = sameChildContextId,
-				InitializationCountingTestChildContextConfig::class,
-			)
-
-			assertThat(
-				InitializationCountingTestChildContextConfig.initializationCount
-			).isEqualTo(1)
+			assertThatIllegalArgumentException().isThrownBy {
+				childContextService.createIfAbsent(
+					childContextId,
+				)
+			}.withMessageContaining(NO_SOURCES_MESSAGE)
 		}
 	}
 
