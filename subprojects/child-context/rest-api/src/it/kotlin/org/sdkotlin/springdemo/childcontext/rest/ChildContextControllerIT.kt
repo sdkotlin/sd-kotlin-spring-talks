@@ -24,7 +24,7 @@ class ChildContextControllerIT(
 	private lateinit var childContextService: ChildContextService
 
 	@Test
-	fun `test child context creation`() {
+	fun `test create`() {
 
 		val childContextId = "1"
 
@@ -42,6 +42,23 @@ class ChildContextControllerIT(
 			childContextService.createIfAbsent(
 				childContextId = childContextId,
 				sources = listOf(TestChildContextConfig::class)
+			)
+		}
+	}
+
+	@Test
+	fun `test remove and close`() {
+
+		val childContextId = "1"
+
+		webClient.delete()
+				.uri("$REQUEST_PATH/$childContextId")
+				.exchange()
+				.expectStatus().isOk
+
+		verify {
+			childContextService.removeAndCloseIfPresent(
+				childContextId = childContextId,
 			)
 		}
 	}

@@ -34,6 +34,18 @@ class ChildContextController(
 		childContextService.createIfAbsent(childContextId, sources)
 	}
 
+	@DeleteMapping("/{childContextId}")
+	@ResponseStatus(HttpStatus.OK)
+	suspend fun removeAndCloseChildContext(
+		@PathVariable childContextId: String,
+	) {
+		logger.info {
+			"""Removing and closing child context "$childContextId"."""
+		}
+
+		childContextService.removeAndCloseIfPresent(childContextId)
+	}
+
 	private fun getSourceClasses(sourcesFqns: List<String>): List<KClass<*>> =
 		sourcesFqns.map { Class.forName(it).kotlin }
 }
