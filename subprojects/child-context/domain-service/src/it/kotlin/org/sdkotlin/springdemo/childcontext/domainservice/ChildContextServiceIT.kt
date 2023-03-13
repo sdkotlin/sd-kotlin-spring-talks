@@ -43,7 +43,7 @@ internal class ChildContextServiceIT(
 	inner class TestCreate {
 
 		@Test
-		fun `test create`() {
+		fun `test create for doesn't exist`() {
 
 			val childContextId = "testing"
 
@@ -77,7 +77,7 @@ internal class ChildContextServiceIT(
 		}
 
 		@Test
-		fun `test create for idempotency`() {
+		fun `test create for does exist`() {
 
 			val sameChildContextId = "testing"
 
@@ -222,7 +222,7 @@ internal class ChildContextServiceIT(
 	inner class TestRead {
 
 		@Test
-		fun `test get child application context for doesn't exist`() {
+		fun `test get for doesn't exist`() {
 
 			val childContextId = "testChildContextId"
 
@@ -235,7 +235,7 @@ internal class ChildContextServiceIT(
 		}
 
 		@Test
-		fun `test get child application context for does exist`() {
+		fun `test get for does exist`() {
 
 			val childContextId = "testChildContextId"
 
@@ -250,6 +250,43 @@ internal class ChildContextServiceIT(
 			assertThat(childContext)
 					.describedAs("childContext")
 					.isNotNull
+		}
+	}
+
+	@Nested
+	inner class TestDelete {
+
+		@Test
+		fun `test remove and close for doesn't exist`() {
+
+			val childApplicationContext =
+				childContextService.removeAndCloseIfPresent("nonExistentId")
+
+			assertThat(childApplicationContext)
+					.describedAs("childApplicationContext")
+					.isNull()
+		}
+
+		@Test
+		fun `test remove and close for does exist`() {
+
+			val childContextId = "testChildContextId"
+
+			childContextService.createIfAbsent(
+				childContextId,
+				TestChildContextConfig::class
+			)
+
+			val childApplicationContext =
+				childContextService.removeAndCloseIfPresent(childContextId)
+
+			assertThat(childApplicationContext)
+					.describedAs("childApplicationContext")
+					.isNotNull
+
+			assertThat(childApplicationContext?.isRunning)
+					.describedAs("isRunning")
+					.isFalse
 		}
 	}
 }

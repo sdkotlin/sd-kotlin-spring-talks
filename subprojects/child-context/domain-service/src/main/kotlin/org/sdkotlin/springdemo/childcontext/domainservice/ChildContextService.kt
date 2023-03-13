@@ -1,7 +1,6 @@
 package org.sdkotlin.springdemo.childcontext.domainservice
 
 import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.context.ApplicationContext
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.stereotype.Service
 import java.util.concurrent.ConcurrentHashMap
@@ -21,7 +20,8 @@ class ChildContextService(
 			"One or more sources is required."
 	}
 
-	private val childContextsMap: ConcurrentMap<String, ApplicationContext> =
+	private val childContextsMap:
+			ConcurrentMap<String, ConfigurableApplicationContext> =
 		ConcurrentHashMap()
 
 	fun createIfAbsent(
@@ -29,7 +29,7 @@ class ChildContextService(
 		vararg sources: KClass<*>,
 		springApplicationBuilderConfigurer:
 			(SpringApplicationBuilder) -> Unit = {},
-	): ApplicationContext {
+	): ConfigurableApplicationContext {
 
 		require(sources.isNotEmpty()) { NO_SOURCES_MESSAGE }
 
@@ -41,7 +41,9 @@ class ChildContextService(
 			val springApplicationBuilder =
 				SpringApplicationBuilder(*sourceJavaClasses)
 						.parent(parentContext)
-						.properties(mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId))
+						.properties(
+							mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId)
+						)
 
 			springApplicationBuilderConfigurer(springApplicationBuilder)
 
@@ -51,6 +53,16 @@ class ChildContextService(
 		}
 	}
 
-	fun get(childContextId: String): ApplicationContext? =
+	fun get(childContextId: String): ConfigurableApplicationContext? =
 		childContextsMap[childContextId]
+
+	fun removeAndCloseIfPresent(childContextId: String):
+			ConfigurableApplicationContext? {
+
+		val applicationContext = childContextsMap.remove(childContextId)
+
+		applicationContext?.close()
+
+		return applicationContext
+	}
 }
