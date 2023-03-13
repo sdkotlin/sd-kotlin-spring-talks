@@ -1,5 +1,4 @@
 plugins {
-	idea
 	`jvm-test-suite`
 	kotlin("jvm")
 	id("org.sdkotlin.buildlogic.test.unit-test-suite")
@@ -63,16 +62,5 @@ tasks {
 	named<Task>("check").configure {
 		val integrationTest by existing
 		dependsOn(integrationTest)
-	}
-}
-
-idea {
-	module {
-		testSources.from(
-			kotlin.sourceSets[integrationTestSuiteName].kotlin.srcDirs
-		)
-		testResources.from(
-			kotlin.sourceSets[integrationTestSuiteName].resources.srcDirs
-		)
 	}
 }
