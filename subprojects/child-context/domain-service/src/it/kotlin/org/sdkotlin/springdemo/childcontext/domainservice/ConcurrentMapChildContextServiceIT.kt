@@ -7,8 +7,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService.Companion.CHILD_CONTEXT_ID_PROPERTY_NAME
-import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService.Companion.NO_SOURCES_MESSAGE
+import org.sdkotlin.springdemo.childcontext.domainservice.ConcurrentMapChildContextService.Companion.CHILD_CONTEXT_ID_PROPERTY_NAME
+import org.sdkotlin.springdemo.childcontext.domainservice.ConcurrentMapChildContextService.Companion.NO_SOURCES_MESSAGE
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.boot.test.context.SpringBootTest
@@ -23,7 +23,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_T
 @SpringBootTest
 // ChildContextService is mutable
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
-internal class ChildContextServiceIT(
+internal class ConcurrentMapChildContextServiceIT(
 	@Autowired
 	private val parentContext: ConfigurableApplicationContext,
 	@Autowired
@@ -36,7 +36,7 @@ internal class ChildContextServiceIT(
 		@Bean
 		fun childContextService(
 			applicationContext: ConfigurableApplicationContext
-		) = ChildContextService(applicationContext)
+		) = ConcurrentMapChildContextService(applicationContext)
 	}
 
 	@Nested
