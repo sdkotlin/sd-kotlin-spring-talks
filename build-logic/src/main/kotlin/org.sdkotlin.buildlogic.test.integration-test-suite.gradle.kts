@@ -26,6 +26,9 @@ testing {
 				kotlin {
 					setSrcDirs(listOf("src/it/kotlin"))
 				}
+				resources {
+					setSrcDirs(listOf("src/it/resources"))
+				}
 			}
 
 			targets {
