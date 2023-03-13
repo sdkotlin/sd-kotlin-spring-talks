@@ -3,10 +3,15 @@
 
 package org.sdkotlin.springdemo.childcontext.rest
 
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.verify
 import org.junit.jupiter.api.Test
+import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.REQUEST_PATH
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.test.web.reactive.server.WebTestClient
 
 @WebFluxTest(ChildContextController::class)
@@ -15,14 +20,38 @@ class ChildContextControllerIT(
 	val webClient: WebTestClient
 ) {
 
+	@MockkBean
+	private lateinit var childContextService: ChildContextService
+
 	@Test
 	fun `test child context creation`() {
 
-		val contextId = 1
+		val childContextId = "1"
+
+		val sources: List<String> = listOf(
+			TestChildContextConfig::class.qualifiedName!!,
+		)
 
 		webClient.put()
-				.uri("$REQUEST_PATH/$contextId")
+				.uri("$REQUEST_PATH/$childContextId")
+				.bodyValue(sources)
 				.exchange()
 				.expectStatus().isCreated
+
+		verify {
+			childContextService.createIfAbsent(
+				childContextId = childContextId,
+				sources = listOf(TestChildContextConfig::class)
+			)
+		}
 	}
 }
+
+@Configuration
+class TestChildContextConfig {
+
+	@Bean
+	fun testBean() = TestBean()
+}
+
+class TestBean

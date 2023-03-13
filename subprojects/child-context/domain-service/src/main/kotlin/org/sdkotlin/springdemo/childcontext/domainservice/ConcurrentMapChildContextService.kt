@@ -26,7 +26,18 @@ class ConcurrentMapChildContextService(
 
 	override fun createIfAbsent(
 		childContextId: String,
-		vararg sources: KClass<*>,
+		source: KClass<*>,
+		springApplicationBuilderConfigurer: (SpringApplicationBuilder) -> Unit
+	): ConfigurableApplicationContext =
+		createIfAbsent(
+			childContextId,
+			listOf(source),
+			springApplicationBuilderConfigurer
+		)
+
+	override fun createIfAbsent(
+		childContextId: String,
+		sources: List<KClass<*>>,
 		springApplicationBuilderConfigurer:
 			(SpringApplicationBuilder) -> Unit,
 	): ConfigurableApplicationContext {

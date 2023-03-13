@@ -50,7 +50,7 @@ internal class ConcurrentMapChildContextServiceIT(
 			val childContext: ApplicationContext =
 				childContextService.createIfAbsent(
 					childContextId,
-					TestChildContextConfig::class,
+					source = TestChildContextConfig::class,
 				)
 
 			val testBeanName = TestChildContextConfig::testBean.name
@@ -82,13 +82,13 @@ internal class ConcurrentMapChildContextServiceIT(
 			val sameChildContextId = "testing"
 
 			childContextService.createIfAbsent(
-				childContextId = sameChildContextId,
-				InitializationCountingTestChildContextConfig::class,
+				sameChildContextId,
+				source = InitializationCountingTestChildContextConfig::class,
 			)
 
 			childContextService.createIfAbsent(
 				childContextId = sameChildContextId,
-				InitializationCountingTestChildContextConfig::class,
+				source = InitializationCountingTestChildContextConfig::class,
 			)
 
 			assertThat(
@@ -107,7 +107,7 @@ internal class ConcurrentMapChildContextServiceIT(
 			val childContext: ApplicationContext =
 				childContextService.createIfAbsent(
 					childContextId,
-					TestChildContextConfig::class,
+					source = TestChildContextConfig::class,
 				) { springApplicationBuilder ->
 					springApplicationBuilder.properties(
 						mapOf(additionalPropertyKey to additionalPropertyValue)
@@ -131,13 +131,13 @@ internal class ConcurrentMapChildContextServiceIT(
 			val childContext1: ApplicationContext =
 				childContextService.createIfAbsent(
 					childContextId1,
-					TestChildContextConfig::class,
+					source = TestChildContextConfig::class,
 				)
 
 			val childContext2: ApplicationContext =
 				childContextService.createIfAbsent(
 					childContextId2,
-					TestChildContextConfig::class,
+					source = TestChildContextConfig::class,
 				)
 
 			val testBeanName = TestChildContextConfig::testBean.name
@@ -184,8 +184,10 @@ internal class ConcurrentMapChildContextServiceIT(
 			val childContext: ApplicationContext =
 				childContextService.createIfAbsent(
 					childContextId,
-					TestChildContextConfig::class,
-					TestChildContextConfig2::class,
+					sources = listOf(
+						TestChildContextConfig::class,
+						TestChildContextConfig2::class,
+					),
 				)
 
 			val testBeanName1 = TestChildContextConfig::testBean.name
@@ -213,6 +215,7 @@ internal class ConcurrentMapChildContextServiceIT(
 			assertThatIllegalArgumentException().isThrownBy {
 				childContextService.createIfAbsent(
 					childContextId,
+					sources = emptyList(),
 				)
 			}.withMessageContaining(NO_SOURCES_MESSAGE)
 		}
@@ -241,7 +244,7 @@ internal class ConcurrentMapChildContextServiceIT(
 
 			childContextService.createIfAbsent(
 				childContextId,
-				TestChildContextConfig::class
+				source = TestChildContextConfig::class
 			)
 
 			val childContext =
@@ -274,7 +277,7 @@ internal class ConcurrentMapChildContextServiceIT(
 
 			childContextService.createIfAbsent(
 				childContextId,
-				TestChildContextConfig::class
+				source = TestChildContextConfig::class
 			)
 
 			val childApplicationContext =
