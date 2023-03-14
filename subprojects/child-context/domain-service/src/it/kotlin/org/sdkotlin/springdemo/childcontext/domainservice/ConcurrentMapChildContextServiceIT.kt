@@ -184,7 +184,7 @@ internal class ConcurrentMapChildContextServiceIT(
 			val childContext: ApplicationContext =
 				childContextService.createIfAbsent(
 					childContextId,
-					sources = listOf(
+					sources = setOf(
 						TestChildContextConfig::class,
 						TestChildContextConfig2::class,
 					),
@@ -215,7 +215,7 @@ internal class ConcurrentMapChildContextServiceIT(
 			assertThatIllegalArgumentException().isThrownBy {
 				childContextService.createIfAbsent(
 					childContextId,
-					sources = emptyList(),
+					sources = emptySet(),
 				)
 			}.withMessageContaining(NO_SOURCES_MESSAGE)
 		}
