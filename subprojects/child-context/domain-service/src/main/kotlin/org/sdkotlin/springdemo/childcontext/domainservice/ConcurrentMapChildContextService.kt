@@ -31,13 +31,13 @@ class ConcurrentMapChildContextService(
 	): ConfigurableApplicationContext =
 		createIfAbsent(
 			childContextId,
-			listOf(source),
+			setOf(source),
 			springApplicationBuilderConfigurer
 		)
 
 	override fun createIfAbsent(
 		childContextId: String,
-		sources: List<KClass<*>>,
+		sources: Set<KClass<*>>,
 		springApplicationBuilderConfigurer:
 			(SpringApplicationBuilder) -> Unit,
 	): ConfigurableApplicationContext {

@@ -6,6 +6,7 @@ package org.sdkotlin.springdemo.childcontext.rest
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import io.mockk.verify
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.LIST_ACTION
@@ -16,6 +17,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
+import kotlin.reflect.KClass
 
 @WebFluxTest(ChildContextController::class)
 class ChildContextControllerIT(
@@ -26,61 +28,106 @@ class ChildContextControllerIT(
 	@MockkBean
 	private lateinit var childContextService: ChildContextService
 
-	@Test
-	fun `test create`() {
+	@Nested
+	inner class TestCreate {
 
-		val childContextId = "1"
+		@Test
+		fun `test create`() {
 
-		val sources: List<String> = listOf(
-			TestChildContextConfig::class.qualifiedName!!,
-		)
+			val childContextId = "1"
 
-		webClient.put()
-				.uri("$REQUEST_PATH/$childContextId")
-				.bodyValue(sources)
-				.exchange()
-				.expectStatus().isCreated
-
-		verify {
-			childContextService.createIfAbsent(
-				childContextId = childContextId,
-				sources = listOf(TestChildContextConfig::class)
+			val sources: Set<String> = setOf(
+				TestChildContextConfig::class.qualifiedName!!,
 			)
+
+			webClient.put()
+					.uri("$REQUEST_PATH/$childContextId")
+					.bodyValue(sources)
+					.exchange()
+					.expectStatus().isCreated
+
+			verify {
+				childContextService.createIfAbsent(
+					childContextId = childContextId,
+					sources = setOf(TestChildContextConfig::class)
+				)
+			}
+		}
+
+		@Test
+		fun `test create for no sources`() {
+
+			val childContextId = "1"
+
+			webClient.put()
+					.uri("$REQUEST_PATH/$childContextId")
+					.exchange()
+					.expectStatus().isBadRequest
+
+			// TODO Verify validation failure message(s)
+		}
+
+		@Test
+		fun `test create for service exception`() {
+
+			val childContextId = "1"
+
+			val sources: Set<String> = setOf(
+				TestChildContextConfig::class.qualifiedName!!,
+			)
+
+			every {
+				childContextService.createIfAbsent(any(), any<Set<KClass<*>>>())
+			} throws Exception("Test service exception")
+
+			webClient.put()
+					.uri("$REQUEST_PATH/$childContextId")
+					.bodyValue(sources)
+					.exchange()
+					.expectStatus().is5xxServerError
 		}
 	}
 
-	@Test
-	fun `test list`() {
+	@Nested
+	inner class TestList {
 
-		val childContextId = "1"
+		@Test
+		fun `test list`() {
 
-		val childContextIds = setOf(childContextId)
+			val childContextId = "1"
 
-		every {
-			childContextService.list()
-		} returns childContextIds
+			val childContextIds = setOf(childContextId)
 
-		webClient.get()
-				.uri("$REQUEST_PATH$LIST_ACTION")
-				.exchange()
-				.expectStatus().isOk
-				.expectBody<Set<String>>().isEqualTo(childContextIds)
+			every {
+				childContextService.list()
+			} returns childContextIds
+
+			webClient.get()
+					.uri("$REQUEST_PATH$LIST_ACTION")
+					.exchange()
+					.expectStatus().isOk
+					.expectBody<Set<String>>().isEqualTo(childContextIds)
+		}
 	}
 
-	@Test
-	fun `test remove and close`() {
+	@Nested
+	inner class TestRemoveAndClose {
 
-		val childContextId = "1"
+		@Test
+		fun `test remove and close`() {
 
-		webClient.delete()
-				.uri("$REQUEST_PATH/$childContextId")
-				.exchange()
-				.expectStatus().isOk
+			val childContextId = "1"
 
-		verify {
-			childContextService.removeAndCloseIfPresent(
-				childContextId = childContextId,
-			)
+			webClient.delete()
+					.uri("$REQUEST_PATH/$childContextId")
+					.exchange()
+					.expectStatus().isOk
+
+			verify {
+				childContextService.removeAndCloseIfPresent(
+					childContextId = childContextId,
+				)
+			}
 		}
 	}
 }

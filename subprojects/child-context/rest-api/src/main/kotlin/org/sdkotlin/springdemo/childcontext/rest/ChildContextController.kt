@@ -25,13 +25,13 @@ class ChildContextController(
 	@ResponseStatus(HttpStatus.CREATED)
 	suspend fun createChildContext(
 		@PathVariable childContextId: String,
-		@RequestBody sourcesFqns: List<String>,
+		@RequestBody sourcesFqns: Set<String>,
 	) {
 		logger.info {
 			"""Creating child context "$childContextId" for sources "$sourcesFqns"."""
 		}
 
-		val sources: List<KClass<*>> = getSourceClasses(sourcesFqns)
+		val sources: Set<KClass<*>> = getSourceClasses(sourcesFqns)
 
 		childContextService.createIfAbsent(childContextId, sources)
 	}
@@ -58,6 +58,6 @@ class ChildContextController(
 		childContextService.removeAndCloseIfPresent(childContextId)
 	}
 
-	private fun getSourceClasses(sourcesFqns: List<String>): List<KClass<*>> =
-		sourcesFqns.map { Class.forName(it).kotlin }
+	private fun getSourceClasses(sourcesFqns: Set<String>): Set<KClass<*>> =
+		sourcesFqns.map { Class.forName(it).kotlin }.toSet()
 }

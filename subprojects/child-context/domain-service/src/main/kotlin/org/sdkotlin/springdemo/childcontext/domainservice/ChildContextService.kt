@@ -15,7 +15,7 @@ interface ChildContextService {
 
 	fun createIfAbsent(
 		childContextId: String,
-		sources: List<KClass<*>>,
+		sources: Set<KClass<*>>,
 		springApplicationBuilderConfigurer:
 			(SpringApplicationBuilder) -> Unit = {},
 	): ConfigurableApplicationContext
