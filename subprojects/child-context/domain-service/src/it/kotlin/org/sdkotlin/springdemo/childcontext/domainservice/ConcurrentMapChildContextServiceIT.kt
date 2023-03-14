@@ -315,41 +315,41 @@ internal class ConcurrentMapChildContextServiceIT(
 					.isFalse
 		}
 	}
-}
 
-// Defined private and outside the test class so as not to contribute
-// configuration to the test itself, which is the parent context for the test.
+	// Defined private so as not to contribute configuration to the test itself,
+	// which is the parent context for the test.
 
-@Configuration
-private class TestChildContextConfig {
+	@Configuration
+	private class TestChildContextConfig {
 
-	@Bean
-	fun testBean() = TestBean()
-}
-
-@Configuration
-private class TestChildContextConfig2 {
-
-	@Bean
-	fun testBean2() = TestBean()
-}
-
-@Configuration
-private class InitializationCountingTestChildContextConfig {
-
-	companion object {
-
-		val initializationCount: Int
-			get() = _initializationCount
-
-		private var _initializationCount: Int = 0
+		@Bean
+		fun testBean() = TestBean()
 	}
 
-	@Bean
-	fun testBean(): TestBean {
-		_initializationCount++
-		return TestBean()
-	}
-}
+	@Configuration
+	private class TestChildContextConfig2 {
 
-private class TestBean
+		@Bean
+		fun testBean2() = TestBean()
+	}
+
+	@Configuration
+	private class InitializationCountingTestChildContextConfig {
+
+		companion object {
+
+			val initializationCount: Int
+				get() = _initializationCount
+
+			private var _initializationCount: Int = 0
+		}
+
+		@Bean
+		fun testBean(): TestBean {
+			_initializationCount++
+			return TestBean()
+		}
+	}
+
+	private class TestBean
+}

@@ -85,11 +85,14 @@ class ChildContextControllerIT(
 	}
 }
 
+// Defined outside the test class so as not to contribute configuration to the
+// test itself.
+
 @Configuration
-class TestChildContextConfig {
+internal class TestChildContextConfig {
 
 	@Bean
 	fun testBean() = TestBean()
 }
 
-class TestBean
+internal class TestBean
