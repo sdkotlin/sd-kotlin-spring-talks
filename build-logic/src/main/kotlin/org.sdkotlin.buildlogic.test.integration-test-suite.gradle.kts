@@ -34,7 +34,9 @@ testing {
 				all {
 					testTask.configure {
 						filter {
-							includeTestsMatching("*IT*")
+							includeTestsMatching("*IT")
+							// Support JUnit @Nested test classes
+							includeTestsMatching("*IT$*")
 						}
 						shouldRunAfter(test)
 					}
