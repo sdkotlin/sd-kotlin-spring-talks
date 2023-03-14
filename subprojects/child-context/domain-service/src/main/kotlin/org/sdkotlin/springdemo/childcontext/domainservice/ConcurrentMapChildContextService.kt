@@ -64,6 +64,9 @@ class ConcurrentMapChildContextService(
 		}
 	}
 
+	override fun list(): Set<String> =
+		childContextsMap.keys
+
 	override fun get(childContextId: String): ConfigurableApplicationContext? =
 		childContextsMap[childContextId]
 

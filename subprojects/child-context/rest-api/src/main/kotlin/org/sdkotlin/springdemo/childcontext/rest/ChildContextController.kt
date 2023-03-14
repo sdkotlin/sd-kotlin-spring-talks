@@ -17,6 +17,8 @@ class ChildContextController(
 
 	companion object {
 		const val REQUEST_PATH = "/child-context"
+
+		const val LIST_ACTION = "/list"
 	}
 
 	@PutMapping("/{childContextId}")
@@ -32,6 +34,16 @@ class ChildContextController(
 		val sources: List<KClass<*>> = getSourceClasses(sourcesFqns)
 
 		childContextService.createIfAbsent(childContextId, sources)
+	}
+
+	@GetMapping(LIST_ACTION)
+	@ResponseStatus(HttpStatus.OK)
+	suspend fun listChildContextIds(): Set<String> {
+		logger.info {
+			"""Listing child context IDs."""
+		}
+
+		return childContextService.list()
 	}
 
 	@DeleteMapping("/{childContextId}")

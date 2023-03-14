@@ -4,15 +4,18 @@
 package org.sdkotlin.springdemo.childcontext.rest
 
 import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
 import io.mockk.verify
 import org.junit.jupiter.api.Test
 import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
+import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.LIST_ACTION
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.REQUEST_PATH
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.test.web.reactive.server.WebTestClient
+import org.springframework.test.web.reactive.server.expectBody
 
 @WebFluxTest(ChildContextController::class)
 class ChildContextControllerIT(
@@ -44,6 +47,24 @@ class ChildContextControllerIT(
 				sources = listOf(TestChildContextConfig::class)
 			)
 		}
+	}
+
+	@Test
+	fun `test list`() {
+
+		val childContextId = "1"
+
+		val childContextIds = setOf(childContextId)
+
+		every {
+			childContextService.list()
+		} returns childContextIds
+
+		webClient.get()
+				.uri("$REQUEST_PATH$LIST_ACTION")
+				.exchange()
+				.expectStatus().isOk
+				.expectBody<Set<String>>().isEqualTo(childContextIds)
 	}
 
 	@Test

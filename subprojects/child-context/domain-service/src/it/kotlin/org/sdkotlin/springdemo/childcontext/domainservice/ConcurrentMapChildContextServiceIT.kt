@@ -225,6 +225,29 @@ internal class ConcurrentMapChildContextServiceIT(
 	inner class TestRead {
 
 		@Test
+		fun `test list for empty`() {
+
+			val childContextIds = childContextService.list()
+
+			assertThat(childContextIds).isEmpty()
+		}
+
+		@Test
+		fun `test list for non-empty`() {
+
+			val childContextId = "testing"
+
+			childContextService.createIfAbsent(
+				childContextId,
+				source = TestChildContextConfig::class,
+			)
+
+			val childContextIds = childContextService.list()
+
+			assertThat(childContextIds).containsOnly(childContextId)
+		}
+
+		@Test
 		fun `test get for doesn't exist`() {
 
 			val childContextId = "testChildContextId"

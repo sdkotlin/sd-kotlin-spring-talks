@@ -20,6 +20,8 @@ interface ChildContextService {
 			(SpringApplicationBuilder) -> Unit = {},
 	): ConfigurableApplicationContext
 
+	fun list(): Set<String>
+
 	fun get(childContextId: String): ConfigurableApplicationContext?
 
 	fun removeAndCloseIfPresent(childContextId: String):
