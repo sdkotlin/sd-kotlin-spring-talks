@@ -39,6 +39,7 @@ class ChildContextController(
 	@GetMapping(LIST_ACTION)
 	@ResponseStatus(HttpStatus.OK)
 	suspend fun listChildContextIds(): Set<String> {
+
 		logger.info {
 			"""Listing child context IDs."""
 		}
@@ -51,6 +52,7 @@ class ChildContextController(
 	suspend fun removeAndCloseChildContext(
 		@PathVariable childContextId: String,
 	) {
+
 		logger.info {
 			"""Removing and closing child context "$childContextId"."""
 		}
