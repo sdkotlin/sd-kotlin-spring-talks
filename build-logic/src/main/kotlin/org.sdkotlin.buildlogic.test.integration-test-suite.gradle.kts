@@ -19,14 +19,15 @@ testing {
 			}
 
 			sources {
+				val sourcesRootDir = "src/it"
 				java {
-					setSrcDirs(listOf("src/it/java"))
+					setSrcDirs(listOf("$sourcesRootDir/java"))
 				}
 				kotlin {
-					setSrcDirs(listOf("src/it/kotlin"))
+					setSrcDirs(listOf("$sourcesRootDir/kotlin"))
 				}
 				resources {
-					setSrcDirs(listOf("src/it/resources"))
+					setSrcDirs(listOf("$sourcesRootDir/resources"))
 				}
 			}
 
@@ -34,9 +35,10 @@ testing {
 				all {
 					testTask.configure {
 						filter {
-							includeTestsMatching("*IT")
-							// Support JUnit @Nested test classes
-							includeTestsMatching("*IT$*")
+							val testSuffix = "IT"
+							includeTestsMatching("*$testSuffix")
+							// Support JUnit @Nested tests
+							includeTestsMatching("*$testSuffix$*")
 						}
 						shouldRunAfter(test)
 					}
