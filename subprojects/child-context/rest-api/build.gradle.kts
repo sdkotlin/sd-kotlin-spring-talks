@@ -6,6 +6,7 @@ dependencies {
 
 	api(libs.log4j.api.kotlin)
 	api(libs.spring.boot.starter)
+	api(libs.spring.boot.starter.validation)
 	api(libs.spring.boot.starter.webflux)
 	api(libs.spring.web)
 
@@ -15,6 +16,7 @@ dependencies {
 
 	integrationTestImplementation(project(":subprojects:child-context:domain-service"))
 
+	integrationTestImplementation(libs.mockito.kotlin)
 	integrationTestImplementation(libs.spring.boot.starter.test)
 	integrationTestImplementation(libs.spring.mockk)
 }

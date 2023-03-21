@@ -16,6 +16,7 @@ dependencies {
 	constraints {
 		api(libs.assertj)
 		api(libs.bundles.mockk.jvm)
+		api(libs.mockito.kotlin)
 		api(libs.spring.mockk)
 	}
 }

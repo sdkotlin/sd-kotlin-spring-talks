@@ -1,5 +1,6 @@
 package org.sdkotlin.springdemo.childcontext.rest
 
+import jakarta.validation.constraints.NotEmpty
 import org.apache.logging.log4j.kotlin.KotlinLogger
 import org.apache.logging.log4j.kotlin.logger
 import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
@@ -19,13 +20,19 @@ class ChildContextController(
 		const val REQUEST_PATH = "/child-context"
 
 		const val LIST_ACTION = "/list"
+
+		const val NO_SOURCES_MESSAGE = "Sources set must not be empty."
+		const val EMPTY_SOURCE_MESSAGE = "Source FQN must not be empty."
 	}
 
 	@PutMapping("/{childContextId}")
 	@ResponseStatus(HttpStatus.CREATED)
 	suspend fun createChildContext(
-		@PathVariable childContextId: String,
-		@RequestBody sourcesFqns: Set<String>,
+		@PathVariable
+		childContextId: String,
+		@RequestBody
+		@NotEmpty(message = NO_SOURCES_MESSAGE)
+		sourcesFqns: Set<@NotEmpty(message = EMPTY_SOURCE_MESSAGE) String>,
 	) {
 		logger.info {
 			"""Creating child context "$childContextId" for sources "$sourcesFqns"."""
