@@ -16,7 +16,6 @@ dependencies {
 
 	integrationTestImplementation(project(":subprojects:child-context:domain-service"))
 
-	integrationTestImplementation(libs.mockito.kotlin)
 	integrationTestImplementation(libs.spring.boot.starter.test)
 	integrationTestImplementation(libs.spring.mockk)
 }

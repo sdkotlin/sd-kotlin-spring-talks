@@ -11,7 +11,6 @@ kotlinx-coroutines = "1.6.4"
 kotlinx-datetime = "0.4.0"
 log4j = "2.20.0"
 log4j-kotlin = "1.2.0"
-mockito-kotlin = "4.1.0"
 mockk = "1.13.5"
 spring = "6.0.8"
 spring-boot = "3.0.6"
@@ -103,10 +102,6 @@ version.ref = "log4j-kotlin"
 [libraries.log4j-slf4j2-impl]
 module = "org.apache.logging.log4j:log4j-slf4j2-impl"
 version.ref = "log4j-kotlin"
-
-[libraries.mockito-kotlin]
-module = "org.mockito.kotlin:mockito-kotlin"
-version.ref = "mockito-kotlin"
 
 [libraries.mockk]
 module = "io.mockk:mockk"
