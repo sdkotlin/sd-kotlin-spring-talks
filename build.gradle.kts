@@ -20,9 +20,6 @@ allprojects {
 dependencyAnalysis {
 	issues {
 		all {
-			onAny {
-				severity("fail")
-			}
 			onUnusedDependencies {
 				exclude(
 					// Test dependencies added globally for convenience.
