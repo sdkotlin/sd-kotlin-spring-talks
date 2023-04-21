@@ -34,6 +34,12 @@ dependencyAnalysis {
 			}
 		}
 	}
+	dependencies {
+		bundle("kotlinx-coroutines-core") {
+			includeDependency("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+			includeDependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
+		}
+	}
 }
 
 tasks {
