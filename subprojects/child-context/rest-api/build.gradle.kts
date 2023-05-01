@@ -4,12 +4,14 @@ plugins {
 
 dependencies {
 
+	api(project(":subprojects:child-context:domain-service"))
+
 	api(libs.log4j.api.kotlin)
 	api(libs.spring.boot.starter)
 	api(libs.spring.boot.starter.webflux)
 	api(libs.spring.web)
 
-	implementation(project(":subprojects:child-context:domain-service"))
+	implementation(libs.spring.context)
 
 	runtimeOnly(libs.bundles.kotlinx.coroutines.reactor)
 

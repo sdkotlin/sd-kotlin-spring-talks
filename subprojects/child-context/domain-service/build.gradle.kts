@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
 
+	api(libs.spring.boot)
 	api(libs.spring.context)
 
 	implementation(libs.spring.boot.starter)
