@@ -4,6 +4,8 @@ assertj = "3.24.2"
 dependency-analysis-gradle-plugin = "1.20.0"
 equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
+jackson = "2.14.2"
+jackson-kogera = "2.14.2-alpha7"
 jakarta-inject = "2.0.0"
 junit = "5.9.3" # Duplicated in unit-test-suite.gradle.kts.
 kotlin = "1.8.10" # See also `kotlinTargetVersion` in kotlin-project.gradle.kts.
@@ -30,6 +32,18 @@ version.ref = "dependency-analysis-gradle-plugin"
 [libraries.equalsverifier]
 module = "nl.jqno.equalsverifier:equalsverifier"
 version.ref = "equalsverifier"
+
+[libraries.jackson-bom]
+module = "com.fasterxml.jackson:jackson-bom"
+version.ref = "jackson"
+
+[libraries.jackson-module-kogera]
+module = "com.github.ProjectMapK:jackson-module-kogera"
+version.ref = "jackson-kogera"
+
+[libraries.jackson-module-kotlin]
+module = "com.fasterxml.jackson.module:jackson-module-kotlin"
+version.ref = "jackson"
 
 [libraries.jakarta-inject]
 module = "jakarta.inject:jakarta.inject-api"
@@ -139,6 +153,10 @@ version.ref = "spring-boot"
 module = "org.springframework.boot:spring-boot-starter"
 version.ref = "spring-boot"
 
+[libraries.spring-boot-starter-json]
+module = "org.springframework.boot:spring-boot-starter-json"
+version.ref = "spring-boot"
+
 [libraries.spring-boot-starter-log4j2]
 module = "org.springframework.boot:spring-boot-starter-log4j2"
 version.ref = "spring-boot"
@@ -149,6 +167,10 @@ version.ref = "spring-boot"
 
 [libraries.spring-boot-starter-webflux]
 module = "org.springframework.boot:spring-boot-starter-webflux"
+version.ref = "spring-boot"
+
+[libraries.spring-boot-test-autoconfigure]
+module = "org.springframework.boot:spring-boot-test-autoconfigure"
 version.ref = "spring-boot"
 
 [libraries.spring-web]
