@@ -1,8 +1,8 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
-	`java-library`
-	`jvm-test-suite`
+	id("java-library")
+	id("jvm-test-suite")
 }
 
 @Suppress("UnstableApiUsage")

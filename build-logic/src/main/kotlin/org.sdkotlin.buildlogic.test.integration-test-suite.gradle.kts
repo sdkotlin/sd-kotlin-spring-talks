@@ -1,10 +1,8 @@
 plugins {
-	`jvm-test-suite`
 	kotlin("jvm")
+	id("jvm-test-suite")
 	id("org.sdkotlin.buildlogic.test.unit-test-suite")
 }
-
-val integrationTestSuiteName = "integrationTest"
 
 @Suppress("UnstableApiUsage")
 testing {
@@ -12,7 +10,7 @@ testing {
 
 		val test by getting(JvmTestSuite::class)
 
-		register<JvmTestSuite>(integrationTestSuiteName) {
+		register<JvmTestSuite>("integrationTest") {
 
 			dependencies {
 				implementation(project())
@@ -24,7 +22,10 @@ testing {
 					setSrcDirs(listOf("$sourcesRootDir/java"))
 				}
 				kotlin {
-					setSrcDirs(listOf("$sourcesRootDir/kotlin"))
+					setSrcDirs(listOf(
+						"$sourcesRootDir/kotlin",
+						"$sourcesRootDir/java",
+					))
 				}
 				resources {
 					setSrcDirs(listOf("$sourcesRootDir/resources"))
@@ -53,9 +54,7 @@ dependencies {
 	// Version catalog not available in precompiled script plugins:
 	// https://github.com/gradle/gradle/issues/15383
 
-	"integrationTestImplementation"(
-		platform("org.sdkotlin.platforms:test-platform")
-	)
+	"integrationTestImplementation"(platform("org.sdkotlin.platforms:test-platform"))
 
 	//"integrationTestImplementation"(libs.assertj.core)
 	"integrationTestImplementation"("org.assertj:assertj-core")
