@@ -5,7 +5,7 @@ import org.apache.logging.log4j.kotlin.KotlinLogger
 import org.apache.logging.log4j.kotlin.logger
 import org.sdkotlin.springdemo.timeservice.TimeClient
 
-internal class TimeLogger(
+class TimeLogger(
 	private val logger: KotlinLogger = logger()
 ) : TimeClient {
 
