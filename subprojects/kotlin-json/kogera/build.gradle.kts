@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
 
+	// Include jackson-module-kogera instead of jackson-module-kotlin
 	integrationTestImplementation(libs.jackson.module.kogera)
 	integrationTestImplementation(libs.spring.boot.starter.json)
 	integrationTestImplementation(libs.spring.boot.starter.test)

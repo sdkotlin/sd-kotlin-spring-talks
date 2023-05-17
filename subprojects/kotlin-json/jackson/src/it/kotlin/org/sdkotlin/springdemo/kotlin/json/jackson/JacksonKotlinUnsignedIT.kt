@@ -33,12 +33,14 @@ internal class JacksonKotlinUnsignedIT(
 		val signedTypesJsonContent: JsonContent<SignedTypesEntity> =
 			signedTypesJacksonTester.write(signedTypesEntity)
 
+		println(signedTypesJsonContent.json)
+
 		assertThat(signedTypesJsonContent)
 			.extractingJsonPathNumberValue("$.signedInteger")
 			.isEqualTo(1)
 		assertThat(signedTypesJsonContent)
 			.extractingJsonPathNumberValue("$.signedLong")
-			.satisfies(ThrowingConsumer { number ->
+			.satisfies(ThrowingConsumer { number: Number ->
 				assertThat(number.toLong()).isEqualTo(2L)
 			})
 	}
@@ -53,11 +55,11 @@ internal class JacksonKotlinUnsignedIT(
 			}
 		""".trimIndent()
 
-		val content: SignedTypesEntity =
+		val signedTypesEntity: SignedTypesEntity =
 			signedTypesJacksonTester.parseObject(signedTypesJson)
 
-		assertThat(content.signedInteger).isEqualTo(1)
-		assertThat(content.signedLong).isEqualTo(2L)
+		assertThat(signedTypesEntity.signedInteger).isEqualTo(1)
+		assertThat(signedTypesEntity.signedLong).isEqualTo(2L)
 	}
 
 	@Test
