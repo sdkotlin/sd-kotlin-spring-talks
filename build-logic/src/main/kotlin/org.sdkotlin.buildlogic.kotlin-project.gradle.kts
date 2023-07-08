@@ -9,7 +9,6 @@ plugins {
 }
 
 val javaTargetVersion = JavaVersion.VERSION_17.toString()
-val kotlinTargetVersion = "1.8"
 
 kotlin {
 	jvmToolchain {
@@ -25,8 +24,6 @@ tasks {
 
 	withType<KotlinCompile>().configureEach {
 		kotlinOptions {
-			languageVersion = kotlinTargetVersion
-			apiVersion = kotlinTargetVersion
 			jvmTarget = javaTargetVersion
 			freeCompilerArgs = listOf(
 				"-Xjsr305=strict",
