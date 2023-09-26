@@ -1,5 +1,6 @@
 package org.sdkotlin.springdemo.kotlin.json.jackson
 
+import io.github.projectmapk.jackson.module.kogera.KotlinModule
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.ThrowingConsumer
 import org.junit.jupiter.api.Test
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.JsonTest
 import org.springframework.boot.test.json.JacksonTester
 import org.springframework.boot.test.json.JsonContent
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @JsonTest
@@ -18,7 +20,11 @@ internal class JacksonKogeraUnsignedIT(
 ) {
 
 	@Configuration
-	internal class TestConfig
+	internal class TestConfig {
+
+		@Bean
+		fun kotlinModule() = KotlinModule.Builder().build()
+	}
 
 	@Test
 	fun `test signed value serialization`() {
