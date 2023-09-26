@@ -6,6 +6,7 @@ dependencyResolutionManagement {
 	@Suppress("UnstableApiUsage")
 	repositories {
 		gradlePluginPortal()
+		maven { setUrl("https://repo.spring.io/milestone") }
 	}
 	versionCatalogs {
 		create("libs") {
