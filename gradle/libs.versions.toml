@@ -1,7 +1,7 @@
 [versions]
 
 assertj = "3.24.2"
-dependency-analysis-gradle-plugin = "1.22.0"
+dependency-analysis-gradle-plugin = "1.24.1-SNAPSHOT"
 equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
 jackson = "2.15.2"
@@ -124,6 +124,10 @@ version.ref = "mockk"
 [libraries.mockk-dsl-jvm]
 module = "io.mockk:mockk-dsl-jvm"
 version.ref = "mockk"
+
+[libraries.spring]
+module = "org.springframework:spring"
+version.ref = "spring"
 
 [libraries.spring-context]
 module = "org.springframework:spring-context"

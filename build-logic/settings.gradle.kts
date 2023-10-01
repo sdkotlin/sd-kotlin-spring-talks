@@ -7,6 +7,7 @@ dependencyResolutionManagement {
 	repositories {
 		gradlePluginPortal()
 		maven { setUrl("https://repo.spring.io/milestone") }
+		maven { setUrl("https://oss.sonatype.org/content/repositories/snapshots/") }
 	}
 	versionCatalogs {
 		create("libs") {
