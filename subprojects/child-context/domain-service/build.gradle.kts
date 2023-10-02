@@ -9,5 +9,9 @@ dependencies {
 
 	implementation(libs.spring.boot.starter)
 
+	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.boot.starter.test)
+	integrationTestImplementation(libs.spring.boot.test)
+	integrationTestImplementation(libs.spring.core)
+	integrationTestImplementation(libs.spring.test)
 }

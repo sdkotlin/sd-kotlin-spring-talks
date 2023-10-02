@@ -20,9 +20,9 @@ import org.springframework.test.web.reactive.server.expectBody
 import kotlin.reflect.KClass
 
 @WebFluxTest(ChildContextController::class)
-class ChildContextControllerIT(
+internal class ChildContextControllerIT(
 	@Autowired
-	val webClient: WebTestClient
+	private val webClient: WebTestClient
 ) {
 
 	@MockkBean
@@ -41,10 +41,10 @@ class ChildContextControllerIT(
 			)
 
 			webClient.put()
-					.uri("$REQUEST_PATH/$childContextId")
-					.bodyValue(sources)
-					.exchange()
-					.expectStatus().isCreated
+				.uri("$REQUEST_PATH/$childContextId")
+				.bodyValue(sources)
+				.exchange()
+				.expectStatus().isCreated
 
 			verify {
 				childContextService.createIfAbsent(
@@ -60,9 +60,9 @@ class ChildContextControllerIT(
 			val childContextId = "1"
 
 			webClient.put()
-					.uri("$REQUEST_PATH/$childContextId")
-					.exchange()
-					.expectStatus().isBadRequest
+				.uri("$REQUEST_PATH/$childContextId")
+				.exchange()
+				.expectStatus().isBadRequest
 
 			// TODO Verify validation failure message(s)
 		}
@@ -81,10 +81,10 @@ class ChildContextControllerIT(
 			} throws Exception("Test service exception")
 
 			webClient.put()
-					.uri("$REQUEST_PATH/$childContextId")
-					.bodyValue(sources)
-					.exchange()
-					.expectStatus().is5xxServerError
+				.uri("$REQUEST_PATH/$childContextId")
+				.bodyValue(sources)
+				.exchange()
+				.expectStatus().is5xxServerError
 		}
 	}
 
@@ -103,10 +103,10 @@ class ChildContextControllerIT(
 			} returns childContextIds
 
 			webClient.get()
-					.uri("$REQUEST_PATH$LIST_ACTION")
-					.exchange()
-					.expectStatus().isOk
-					.expectBody<Set<String>>().isEqualTo(childContextIds)
+				.uri("$REQUEST_PATH$LIST_ACTION")
+				.exchange()
+				.expectStatus().isOk
+				.expectBody<Set<String>>().isEqualTo(childContextIds)
 		}
 	}
 
@@ -119,9 +119,9 @@ class ChildContextControllerIT(
 			val childContextId = "1"
 
 			webClient.delete()
-					.uri("$REQUEST_PATH/$childContextId")
-					.exchange()
-					.expectStatus().isOk
+				.uri("$REQUEST_PATH/$childContextId")
+				.exchange()
+				.expectStatus().isOk
 
 			verify {
 				childContextService.removeAndCloseIfPresent(

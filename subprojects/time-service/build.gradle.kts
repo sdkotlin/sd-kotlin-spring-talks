@@ -10,8 +10,12 @@ dependencies {
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 
+	testImplementation(project(":subprojects:time-service"))
+
 	testImplementation(libs.bundles.kotlinx.coroutines.test.jvm)
 
 	integrationTestImplementation(libs.kotlinx.coroutines.core)
+	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.boot.starter.test)
+	integrationTestImplementation(libs.spring.boot.test)
 }

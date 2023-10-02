@@ -56,8 +56,8 @@ dependencies {
 
 	"integrationTestImplementation"(platform("org.sdkotlin.platforms:test-platform"))
 
-	//"integrationTestImplementation"(libs.assertj.core)
 	"integrationTestImplementation"("org.assertj:assertj-core")
+	"integrationTestImplementation"("org.junit.jupiter:junit-jupiter-api")
 }
 
 tasks {

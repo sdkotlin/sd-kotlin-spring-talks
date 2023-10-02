@@ -15,6 +15,15 @@ dependencies {
 
 	runtimeOnly(libs.bundles.kotlinx.coroutines.reactor)
 
+	integrationTestImplementation(project(":subprojects:child-context:domain-service"))
+
+	integrationTestImplementation(libs.bundles.mockk.jvm)
+	integrationTestImplementation(libs.spring.beans)
+	integrationTestImplementation(libs.spring.boot.autoconfigure)
+	integrationTestImplementation(libs.spring.boot.test.autoconfigure)
 	integrationTestImplementation(libs.spring.boot.starter.test)
+	integrationTestImplementation(libs.spring.context)
+	integrationTestImplementation(libs.spring.core)
 	integrationTestImplementation(libs.spring.mockk)
+	integrationTestImplementation(libs.spring.test)
 }

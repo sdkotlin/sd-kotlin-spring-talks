@@ -17,5 +17,8 @@ dependencies {
 	implementation(libs.spring.boot.autoconfigure)
 	implementation(libs.spring.context)
 
+	integrationTestImplementation(libs.spring.beans)
+	integrationTestImplementation(libs.spring.context)
+	integrationTestImplementation(libs.spring.boot.test)
 	integrationTestImplementation(libs.spring.boot.starter.test)
 }

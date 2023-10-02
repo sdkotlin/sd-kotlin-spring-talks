@@ -34,6 +34,6 @@ internal class TimeServerTest {
 		// Assert
 
 		assertThat(mockTimeClient.receivedInstants)
-				.hasSize(1)
+			.hasSize(1)
 	}
 }
