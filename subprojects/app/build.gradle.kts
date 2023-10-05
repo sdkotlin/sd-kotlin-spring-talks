@@ -13,6 +13,8 @@ dependencies {
 	implementation(project(":subprojects:time-service"))
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
+	implementation(libs.jakarta.inject)
+	implementation(libs.log4j.api.kotlin)
 	implementation(libs.spring.boot)
 	implementation(libs.spring.boot.autoconfigure)
 	implementation(libs.spring.context)
