@@ -5,7 +5,7 @@ import org.apache.logging.log4j.kotlin.logger
 import java.nio.file.Path
 
 @JvmInline
-internal value class LogPath(val value: Path)
+value class LogPath(val value: Path)
 
 internal class LogService(
 	private val logPath: LogPath,

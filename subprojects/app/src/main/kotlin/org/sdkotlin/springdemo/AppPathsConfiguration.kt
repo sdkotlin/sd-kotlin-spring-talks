@@ -8,10 +8,10 @@ import java.nio.file.Paths
 internal class AppPathsConfiguration {
 
 	@Bean
-	fun configPath(): () -> ConfigPath =
-		{ ConfigPath(Paths.get("config")) }
+	fun configPath(): ConfigPath =
+		ConfigPath(Paths.get("config"))
 
 	@Bean
-	fun logPath(): () -> LogPath =
-		{ LogPath(Paths.get("logs")) }
+	fun logPath(): LogPath =
+		LogPath(Paths.get("logs"))
 }
