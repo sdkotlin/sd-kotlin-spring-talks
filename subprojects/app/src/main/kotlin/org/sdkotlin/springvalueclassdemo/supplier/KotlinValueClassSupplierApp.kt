@@ -17,17 +17,13 @@ value class TestBean2(val value: String)
 class TestService1(
 	private val testBean1: TestBean1
 ) {
-	fun init() {
-		println(testBean1.value)
-	}
+	fun init() = println(testBean1.value)
 }
 
 class TestService2(
 	private val testBean2: TestBean2
 ) {
-	fun init() {
-		println(testBean2.value)
-	}
+	fun init() = println(testBean2.value)
 }
 
 @SpringBootApplication
