@@ -8,13 +8,15 @@ import java.nio.file.Path
 value class ConfigPath(val value: Path)
 
 internal class ConfigService(
-	private val configPath: ConfigPath,
+	private val configPathSupplier: () -> ConfigPath,
 	private val logger: KotlinLogger = logger(),
 ) {
 
 	companion object; // Receiver for logger()
 
 	fun init() {
-		logger.info { "Config path: ${configPath.value.toAbsolutePath()}" }
+		logger.info {
+			"Config path: ${configPathSupplier().value.toAbsolutePath()}"
+		}
 	}
 }

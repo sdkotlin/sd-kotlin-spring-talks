@@ -23,13 +23,13 @@ internal class SpringBootApp {
 
 	@Bean
 	fun configService(
-		configPath: ConfigPath
-	) = ConfigService(configPath).also { it.init() }
+		configPathSupplier: () -> ConfigPath
+	) = ConfigService(configPathSupplier).also { it.init() }
 
 	@Bean
 	fun logService(
-		logPath: LogPath
-	) = LogService(logPath).also { it.init() }
+		logPathSupplier: () -> LogPath
+	) = LogService(logPathSupplier).also { it.init() }
 
 	@Bean
 	fun applicationServicesCoroutineScope(): CoroutineScope =
