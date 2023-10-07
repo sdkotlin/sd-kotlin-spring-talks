@@ -24,3 +24,7 @@ dependencies {
 	integrationTestImplementation(libs.spring.boot.test)
 	integrationTestImplementation(libs.spring.boot.starter.test)
 }
+
+springBoot {
+	mainClass = "org.sdkotlin.springdemo.SpringBootApp"
+}
