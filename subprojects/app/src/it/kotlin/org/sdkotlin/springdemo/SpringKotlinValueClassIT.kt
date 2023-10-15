@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.function.Supplier
 
+/**
+ * Test case for
+ * [spring-projects/spring-framework#31372](https://github.com/spring-projects/spring-framework/issues/31372).
+ */
 @SpringBootTest
 internal class SpringKotlinValueClassIT {
 
