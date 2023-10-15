@@ -19,7 +19,7 @@ internal class SpringKotlinValueClassIT {
 	value class WorldString(val value: String)
 
 	@Configuration
-	internal class TestConfig {
+	class TestConfig {
 
 		@Bean
 		fun helloBean(): HelloString =
