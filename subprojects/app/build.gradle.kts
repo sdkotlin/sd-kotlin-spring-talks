@@ -13,14 +13,16 @@ dependencies {
 	implementation(project(":subprojects:time-service"))
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
-	implementation(libs.jakarta.inject)
 	implementation(libs.log4j.api.kotlin)
+	implementation(libs.spring.beans)
 	implementation(libs.spring.boot)
 	implementation(libs.spring.boot.autoconfigure)
+	implementation(libs.spring.core)
 	implementation(libs.spring.context)
 
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
+	integrationTestImplementation(libs.spring.core)
 	integrationTestImplementation(libs.spring.boot.test)
 	integrationTestImplementation(libs.spring.boot.starter.test)
 }

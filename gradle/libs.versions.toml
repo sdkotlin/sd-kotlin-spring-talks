@@ -1,7 +1,7 @@
 [versions]
 
 assertj = "3.24.2"
-dependency-analysis-gradle-plugin = "1.24.0"
+dependency-analysis-gradle-plugin = "1.25.0"
 equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
 jackson = "2.15.2"
