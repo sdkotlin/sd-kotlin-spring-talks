@@ -22,6 +22,7 @@ dependencyAnalysis {
 		all {
 			onAny {
 				severity("fail")
+				exclude("org.jetbrains.kotlin:kotlin-stdlib")
 			}
 			onUnusedDependencies {
 				exclude(
