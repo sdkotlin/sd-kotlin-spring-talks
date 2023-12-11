@@ -1,5 +1,3 @@
-// https://github.com/gradle/gradle/issues/22797
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
 	alias(libs.plugins.spring.boot.plugin)
 	id("org.sdkotlin.buildlogic.spring-project")
