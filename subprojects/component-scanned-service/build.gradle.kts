@@ -4,6 +4,5 @@ plugins {
 
 dependencies {
 
-	api(libs.kotlinx.datetime.jvm)
-	api(libs.spring.context)
+	implementation(libs.spring.context)
 }
