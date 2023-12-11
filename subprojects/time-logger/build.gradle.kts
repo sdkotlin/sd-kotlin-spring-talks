@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 
-	api(project(":subprojects:time-service"))
+	api(projects.subprojects.timeService)
 
 	api(libs.bundles.kotlinx.datetime.jvm)
 	api(libs.log4j.api.kotlin)
@@ -12,7 +12,7 @@ dependencies {
 
 	testImplementation(libs.bundles.mockk.jvm)
 
-	integrationTestImplementation(project(":subprojects:time-service"))
+	integrationTestImplementation(projects.subprojects.timeService)
 
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.boot.starter.test)

@@ -7,8 +7,8 @@ dependencies {
 
 	api(libs.spring.boot.starter)
 
-	implementation(project(":subprojects:time-logger"))
-	implementation(project(":subprojects:time-service"))
+	implementation(projects.subprojects.timeLogger)
+	implementation(projects.subprojects.timeService)
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 	implementation(libs.log4j.api.kotlin)

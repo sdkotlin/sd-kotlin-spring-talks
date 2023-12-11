@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 
-	api(project(":subprojects:child-context:domain-service"))
+	api(projects.subprojects.childContext.domainService)
 
 	api(libs.log4j.api.kotlin)
 	api(libs.spring.boot.starter)
@@ -15,7 +15,7 @@ dependencies {
 
 	runtimeOnly(libs.bundles.kotlinx.coroutines.reactor)
 
-	integrationTestImplementation(project(":subprojects:child-context:domain-service"))
+	integrationTestImplementation(projects.subprojects.childContext.domainService)
 
 	integrationTestImplementation(libs.bundles.mockk.jvm)
 	integrationTestImplementation(libs.spring.beans)

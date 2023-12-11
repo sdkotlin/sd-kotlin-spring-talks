@@ -10,7 +10,7 @@ dependencies {
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 
-	testImplementation(project(":subprojects:time-service"))
+	testImplementation(projects.subprojects.timeService)
 
 	testImplementation(libs.bundles.kotlinx.coroutines.test.jvm)
 
