@@ -1,6 +1,7 @@
 package org.sdkotlin.springdemo
 
 import kotlinx.coroutines.CoroutineScope
+import org.sdkotlin.springdemo.componentscannedservice.ComponentScannedService
 import org.sdkotlin.springdemo.timelogger.conf.TimeLoggerConfiguration
 import org.sdkotlin.springdemo.timeservice.conf.TimeServiceConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -34,4 +35,11 @@ internal class SpringBootApp {
 	@Bean
 	fun applicationServicesCoroutineScope(): CoroutineScope =
 		CoroutineScope(EmptyCoroutineContext)
+
+	@Bean
+	fun componentScannedServiceClient(
+		componentScannedService: ComponentScannedService
+	): String =
+		componentScannedService.doIt()
+			.also { println(it) }
 }

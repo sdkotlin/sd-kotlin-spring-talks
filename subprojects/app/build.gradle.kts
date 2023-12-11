@@ -9,6 +9,7 @@ dependencies {
 
 	implementation(projects.subprojects.timeLogger)
 	implementation(projects.subprojects.timeService)
+	implementation(projects.subprojects.componentScannedService)
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 	implementation(libs.log4j.api.kotlin)
