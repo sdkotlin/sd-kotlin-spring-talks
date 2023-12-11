@@ -2,7 +2,6 @@ pluginManagement {
 	includeBuild("build-logic")
 	repositories {
 		gradlePluginPortal()
-		maven { setUrl("https://repo.spring.io/milestone") }
 	}
 }
 
@@ -14,7 +13,6 @@ dependencyResolutionManagement {
 	@Suppress("UnstableApiUsage")
 	repositories {
 		mavenCentral()
-		maven { setUrl("https://repo.spring.io/milestone") }
 		maven { setUrl("https://jitpack.io") }
 	}
 }
