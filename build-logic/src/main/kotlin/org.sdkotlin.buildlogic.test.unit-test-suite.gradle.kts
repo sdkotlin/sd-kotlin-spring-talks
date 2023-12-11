@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
-	id("java-library")
+	id("java")
 	id("jvm-test-suite")
 }
 
