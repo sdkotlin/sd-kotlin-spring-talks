@@ -28,5 +28,5 @@ dependencies {
 }
 
 springBoot {
-	mainClass = "org.sdkotlin.springdemo.SpringBootApp"
+	mainClass = "org.sdkotlin.springdemo.SpringBootAppKt"
 }
