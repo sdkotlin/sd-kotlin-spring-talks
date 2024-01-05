@@ -5,16 +5,19 @@ plugins {
 	id("jvm-test-suite")
 }
 
+val versionCatalog = versionCatalogs.named("libs")
+
 @Suppress("UnstableApiUsage")
 testing {
 	suites {
 		configureEach {
 			if (this is JvmTestSuite) {
 
-				// Version catalog not available in precompiled script plugins:
+				// Version catalog type-safe accessors not available in
+				// precompiled script plugins:
 				// https://github.com/gradle/gradle/issues/15383
-				//val junitVersion = libs.version.junit.get()
-				val junitVersion = "5.10.1" // Duplicated in libs.versions.toml.
+				val junitVersion = versionCatalog.findVersion("junit")
+					.get().preferredVersion
 
 				useJUnitJupiter(junitVersion)
 
