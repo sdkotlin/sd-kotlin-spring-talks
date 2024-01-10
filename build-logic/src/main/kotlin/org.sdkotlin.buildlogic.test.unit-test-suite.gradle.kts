@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
-
 plugins {
 	id("java")
 	id("jvm-test-suite")
@@ -12,7 +10,6 @@ testing {
 	suites {
 		configureEach {
 			if (this is JvmTestSuite) {
-
 				// Version catalog type-safe accessors not available in
 				// precompiled script plugins:
 				// https://github.com/gradle/gradle/issues/15383
@@ -20,23 +17,6 @@ testing {
 					.get().preferredVersion
 
 				useJUnitJupiter(junitVersion)
-
-				targets {
-					all {
-						testTask.configure {
-							testLogging {
-								showStandardStreams = true
-								events(
-									PASSED,
-									SKIPPED,
-									FAILED,
-									STANDARD_OUT,
-									STANDARD_ERROR
-								)
-							}
-						}
-					}
-				}
 			}
 		}
 	}
