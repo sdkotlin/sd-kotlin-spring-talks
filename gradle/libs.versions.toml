@@ -7,7 +7,7 @@ jetbrains-annotations = "23.0.0"
 jackson = "2.16.1"
 jackson-kogera = "2.16.0-beta9"
 jakarta-inject = "2.0.1"
-junit = "5.10.1"
+junit = "5.10.2"
 # Consider also `kotlinTargetVersion` in kotlin-project.gradle.kts.
 kotlin = "1.9.22"
 kotlinx-coroutines = "1.7.3"
