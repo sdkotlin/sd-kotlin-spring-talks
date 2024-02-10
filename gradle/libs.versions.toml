@@ -18,7 +18,7 @@ mockk = "1.13.9"
 spring = "6.1.2"
 spring-boot = "3.2.1"
 spring-mockk = "4.0.2"
-versions-gradle-plugin = "0.50.0"
+versions-gradle-plugin = "0.51.0"
 
 [libraries]
 
