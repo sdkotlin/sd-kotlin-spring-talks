@@ -9,7 +9,7 @@ plugins {
 	id("com.autonomousapps.dependency-analysis")
 }
 
-val javaTargetVersion = JavaVersion.VERSION_17.toString()
+val javaTargetVersion: String = JavaVersion.VERSION_21.toString()
 
 kotlin {
 	jvmToolchain {
@@ -19,17 +19,27 @@ kotlin {
 
 tasks {
 	withType<JavaCompile>().configureEach {
-		sourceCompatibility = javaTargetVersion
-		targetCompatibility = javaTargetVersion
+
+		with(options) {
+			release = javaTargetVersion.toInt()
+			isFork = true
+		}
 	}
 
 	withType<KotlinCompile>().configureEach {
-		kotlinOptions {
-			jvmTarget = javaTargetVersion
+		compilerOptions {
+			optIn = listOf(
+				"kotlin.ExperimentalStdlibApi",
+				"kotlin.contracts.ExperimentalContracts",
+				"kotlinx.coroutines.ExperimentalCoroutinesApi",
+			)
+			// Planned for deprecation:
+			// https://youtrack.jetbrains.com/issue/KT-61035/
 			freeCompilerArgs = listOf(
+				// https://youtrack.jetbrains.com/issue/KT-61410/
 				"-Xjsr305=strict",
-				"-opt-in=kotlin.ExperimentalStdlibApi",
-				"-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+				// https://youtrack.jetbrains.com/issue/KT-49746/
+				"-Xjdk-release=$javaTargetVersion"
 			)
 		}
 	}
