@@ -4,7 +4,7 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ResourceLoader
-import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets.UTF_8
 
 @Configuration
 internal class CustomResourcesConfiguration {
@@ -18,7 +18,7 @@ internal class CustomResourcesConfiguration {
 		ApplicationRunner {
 			val customerResourceContent = resourceLoader
 				.getResource("classpath:/custom-resource.txt")
-				.getContentAsString(Charset.defaultCharset())
+				.getContentAsString(UTF_8)
 
 			println("*** custom-resource.txt context:")
 			println(customerResourceContent)

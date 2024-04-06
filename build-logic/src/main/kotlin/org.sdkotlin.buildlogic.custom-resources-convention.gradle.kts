@@ -5,7 +5,7 @@ import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttrib
 dependencies {
 	attributesSchema {
 		// Register a new attribute key for variant-aware consumption
-		// of custom resource dependencies
+		// of custom resource dependencies.
 		attribute(RESOURCE_ATTRIBUTE)
 	}
 }
@@ -13,11 +13,11 @@ dependencies {
 @Suppress("UnstableApiUsage")
 configurations {
 
-	// Create dependency scope for projects with custom resources artifacts
+	// Create dependency scope for projects with custom resources artifacts.
 	val customScope = dependencyScope("customScope")
 
 	// Create variant-aware resolvable configuration for custom resources
-	// artifacts
+	// artifacts.
 	resolvable("customClasspath") {
 		extendsFrom(customScope.get())
 		attributes {
@@ -26,7 +26,7 @@ configurations {
 	}
 
 	// Create variant-aware consumable configuration for custom resources
-	// artifacts
+	// artifacts.
 	consumable("customElements") {
 		extendsFrom(customScope.get())
 		attributes {
@@ -37,12 +37,12 @@ configurations {
 
 artifacts {
 
-	// Any files in "src/main/custom" are custom resources
+	// Any files in "src/main/custom" are custom resources.
 	val customResourceDirectory: Directory =
 		project.layout.projectDirectory.dir("src/main/custom")
 
 	//  No build step is necessary, so directly add the directory as an
-	//  artifact to the variant-aware consumable configuration
+	//  artifact to the variant-aware consumable configuration.
 	add("customElements", customResourceDirectory)
 }
 
@@ -58,14 +58,14 @@ tasks {
 		if (name in listOf("run", "bootRun", "bootTestRun") ||
 			name.endsWith("main()")) {
 
-			// Add the custom resources to the runtime classpath
+			// Add the custom resources to the runtime classpath.
 			classpath = classpath.plus(customClasspath.get())
 		}
 	}
 
 	withType<Test>().configureEach {
 
-		// Add the custom resources to the classpath for all `Test` tasks
+		// Add the custom resources to the classpath for all `Test` tasks.
 		classpath = classpath.plus(customClasspath.get())
 	}
 }

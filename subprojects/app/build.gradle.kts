@@ -21,7 +21,7 @@ dependencies {
 	implementation(libs.spring.core)
 	implementation(libs.spring.context)
 
-	// A project with a custom resources artifact
+	// A project with a custom resources artifact.
 	customScope(projects.subprojects.customResources)
 
 	integrationTestImplementation(libs.spring.beans)
