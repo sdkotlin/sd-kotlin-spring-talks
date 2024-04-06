@@ -1,4 +1,6 @@
 plugins {
+	id("org.sdkotlin.buildlogic.custom-resources-convention")
+	application
 	alias(libs.plugins.spring.boot.plugin)
 	id("org.sdkotlin.buildlogic.spring-project")
 }
@@ -19,11 +21,18 @@ dependencies {
 	implementation(libs.spring.core)
 	implementation(libs.spring.context)
 
+	// A project with a custom resources artifact
+	customScope(projects.subprojects.customResources)
+
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
 	integrationTestImplementation(libs.spring.core)
 	integrationTestImplementation(libs.spring.boot.test)
 	integrationTestImplementation(libs.spring.boot.starter.test)
+}
+
+application {
+	mainClass = "org.sdkotlin.springdemo.SpringBootAppKt"
 }
 
 springBoot {

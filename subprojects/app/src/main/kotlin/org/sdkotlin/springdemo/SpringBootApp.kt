@@ -17,6 +17,7 @@ fun main(args: Array<String>) {
 @SpringBootApplication
 @Import(
 	AppPathsConfiguration::class,
+	CustomResourcesConfiguration::class,
 	TimeLoggerConfiguration::class,
 	TimeServiceConfiguration::class,
 )
