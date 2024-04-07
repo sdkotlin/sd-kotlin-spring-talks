@@ -1,6 +1,3 @@
-// TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-23114 is fixed.
-@file:Suppress("invisible_reference", "invisible_member")
-
 package org.sdkotlin.springdemo.timeservice.conf
 
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +16,7 @@ internal class TimeServiceConfigurationIT {
 
 	@Configuration
 	@Import(TimeServiceConfiguration::class)
-	internal class TestConfig {
+	class TestConfig {
 
 		@Bean
 		fun applicationCoroutineScope(): CoroutineScope =

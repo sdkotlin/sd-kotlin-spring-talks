@@ -1,6 +1,3 @@
-// TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-23114 is fixed.
-@file:Suppress("invisible_reference", "invisible_member")
-
 package org.sdkotlin.springdemo.childcontext.domainservice
 
 import org.assertj.core.api.Assertions.assertThat
@@ -31,7 +28,7 @@ internal class ConcurrentMapChildContextServiceIT(
 ) {
 
 	@SpringBootConfiguration
-	internal class TestConfig {
+	class TestConfig {
 
 		@Bean
 		fun childContextService(

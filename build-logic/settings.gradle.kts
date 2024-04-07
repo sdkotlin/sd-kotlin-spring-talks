@@ -10,6 +10,6 @@ dependencyResolutionManagement {
 	}
 }
 
-includeBuild("../platforms")
-
 rootProject.name = "build-logic"
+
+includeBuild("../platforms")

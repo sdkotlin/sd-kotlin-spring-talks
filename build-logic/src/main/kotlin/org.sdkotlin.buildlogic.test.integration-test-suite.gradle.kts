@@ -1,8 +1,17 @@
+import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation.Companion.MAIN_COMPILATION_NAME
+import org.sdkotlin.buildlogic.test.Compilations.TEST_FIXTURES_COMPILATION_NAME
+
 plugins {
 	kotlin("jvm")
 	id("jvm-test-suite")
 	id("org.sdkotlin.buildlogic.test.unit-test-suite")
 }
+
+val testSuiteName = "integrationTest"
+val testSuiteDirName = "it"
+val testSuiteTestSuffix = "IT"
+
+val versionCatalog = versionCatalogs.named("libs")
 
 @Suppress("UnstableApiUsage")
 testing {
@@ -10,22 +19,20 @@ testing {
 
 		val test by getting(JvmTestSuite::class)
 
-		register<JvmTestSuite>("integrationTest") {
-
-			dependencies {
-				implementation(project())
-			}
+		register<JvmTestSuite>(testSuiteName) {
 
 			sources {
-				val sourcesRootDir = "src/it"
+				val sourcesRootDir = "src/$testSuiteDirName"
 				java {
 					setSrcDirs(listOf("$sourcesRootDir/java"))
 				}
 				kotlin {
-					setSrcDirs(listOf(
-						"$sourcesRootDir/kotlin",
-						"$sourcesRootDir/java",
-					))
+					setSrcDirs(
+						listOf(
+							"$sourcesRootDir/kotlin",
+							"$sourcesRootDir/java",
+						)
+					)
 				}
 				resources {
 					setSrcDirs(listOf("$sourcesRootDir/resources"))
@@ -36,10 +43,9 @@ testing {
 				all {
 					testTask.configure {
 						filter {
-							val testSuffix = "IT"
-							includeTestsMatching("*$testSuffix")
+							includeTestsMatching("*$testSuiteTestSuffix")
 							// Support JUnit @Nested tests
-							includeTestsMatching("*$testSuffix$*")
+							includeTestsMatching("*$testSuiteTestSuffix$*")
 						}
 						shouldRunAfter(test)
 					}
@@ -51,13 +57,30 @@ testing {
 
 dependencies {
 
-	// Version catalog not available in precompiled script plugins:
-	// https://github.com/gradle/gradle/issues/15383
+	// Version catalog type-safe accessors not available in precompiled script
+	// plugins: https://github.com/gradle/gradle/issues/15383
 
-	"integrationTestImplementation"(platform("org.sdkotlin.platforms:test-platform"))
+	"integrationTestImplementation"(
+		platform("org.sdkotlin.platforms:test-platform")
+	)
 
-	"integrationTestImplementation"("org.assertj:assertj-core")
-	"integrationTestImplementation"("org.junit.jupiter:junit-jupiter-api")
+	"integrationTestImplementation"(
+		versionCatalog.findLibrary("assertj").get()
+	)
+	"integrationTestImplementation"(
+		versionCatalog.findLibrary("junit-api").get()
+	)
+}
+
+kotlin {
+	target {
+		// Workaround for https://youtrack.jetbrains.com/issue/KTIJ-23114.
+		compilations.getByName(testSuiteName)
+			.associateWith(compilations.getByName(MAIN_COMPILATION_NAME))
+		compilations.findByName(TEST_FIXTURES_COMPILATION_NAME)?.let {
+			compilations.getByName(testSuiteName).associateWith(it)
+		}
+	}
 }
 
 tasks {

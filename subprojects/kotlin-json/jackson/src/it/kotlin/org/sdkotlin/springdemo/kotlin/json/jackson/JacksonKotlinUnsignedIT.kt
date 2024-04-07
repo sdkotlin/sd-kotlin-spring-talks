@@ -19,7 +19,7 @@ internal class JacksonKotlinUnsignedIT(
 ) {
 
 	@Configuration
-	internal class TestConfig
+	class TestConfig
 
 	@Test
 	fun `test signed value serialization`() {

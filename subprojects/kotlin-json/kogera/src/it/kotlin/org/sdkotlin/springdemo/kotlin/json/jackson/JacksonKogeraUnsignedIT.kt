@@ -20,7 +20,7 @@ internal class JacksonKogeraUnsignedIT(
 ) {
 
 	@Configuration
-	internal class TestConfig {
+	class TestConfig {
 
 		@Bean
 		fun kotlinModule() = KotlinModule.Builder().build()

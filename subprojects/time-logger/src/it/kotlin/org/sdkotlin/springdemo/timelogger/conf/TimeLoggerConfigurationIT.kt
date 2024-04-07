@@ -1,6 +1,3 @@
-// TODO: Remove when https://youtrack.jetbrains.com/issue/KTIJ-23114 is fixed.
-@file:Suppress("invisible_reference", "invisible_member")
-
 package org.sdkotlin.springdemo.timelogger.conf
 
 import org.assertj.core.api.Assertions.assertThat
@@ -17,7 +14,7 @@ internal class TimeLoggerConfigurationIT {
 
 	@Configuration
 	@Import(TimeLoggerConfiguration::class)
-	internal class TestConfig
+	class TestConfig
 
 	@Test
 	fun `test time logger is in context as TimeClient`(
