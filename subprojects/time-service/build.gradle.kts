@@ -1,5 +1,6 @@
 plugins {
 	id("org.sdkotlin.buildlogic.spring-project")
+	id("org.sdkotlin.buildlogic.test.integration-test-suite")
 	`java-test-fixtures`
 }
 
@@ -16,6 +17,6 @@ dependencies {
 
 	integrationTestImplementation(libs.kotlinx.coroutines.core)
 	integrationTestImplementation(libs.spring.beans)
-	integrationTestImplementation(libs.spring.boot.starter.test)
-	integrationTestImplementation(libs.spring.boot.test)
+	integrationTestImplementation(libs.springboot.starter.test)
+	integrationTestImplementation(libs.springboot.test)
 }

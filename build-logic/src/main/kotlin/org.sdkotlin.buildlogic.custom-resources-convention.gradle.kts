@@ -59,13 +59,21 @@ tasks {
 			name.endsWith("main()")) {
 
 			// Add the custom resources to the runtime classpath.
-			classpath = classpath.plus(customClasspath.get())
+			classpath(customClasspath)
 		}
 	}
 
-	withType<Test>().configureEach {
-
-		// Add the custom resources to the classpath for all `Test` tasks.
-		classpath = classpath.plus(customClasspath.get())
-	}
+	//withType<Test>().configureEach {
+	//
+	//	classpath = classpath.plus(customClasspath.get())
+	//
+	//	//notCompatibleWithConfigurationCache(
+	//	//	"Cannot serialize Gradle script object references"
+	//	//)
+	//	//
+	//	//doFirst {
+	//	//	// Add the custom resources to the classpath for all `Test` tasks.
+	//	//	classpath = classpath.plus(files(customClasspath.get().resolve()))
+	//	//}
+	//}
 }

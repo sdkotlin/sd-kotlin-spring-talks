@@ -44,7 +44,6 @@ version.ref = "jackson-kogera"
 
 [libraries.jackson-module-kotlin]
 module = "com.fasterxml.jackson.module:jackson-module-kotlin"
-version.ref = "jackson"
 
 [libraries.jakarta-inject]
 module = "jakarta.inject:jakarta.inject-api"
@@ -78,23 +77,18 @@ version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-coroutines-core]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-core"
-version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-coroutines-core-jvm]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"
-version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-coroutines-reactor]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor"
-version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-coroutines-test]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-test"
-version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-coroutines-test-jvm]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-test-jvm"
-version.ref = "kotlinx-coroutines"
 
 [libraries.kotlinx-datetime]
 module = "org.jetbrains.kotlinx:kotlinx-datetime"
@@ -106,7 +100,6 @@ version.ref = "kotlinx-datetime"
 
 [libraries.log4j-api]
 module = "org.apache.logging.log4j:log4j-api"
-version.ref = "log4j"
 
 [libraries.log4j-bom]
 module = "org.apache.logging.log4j:log4j-bom"
@@ -114,7 +107,6 @@ version.ref = "log4j"
 
 [libraries.log4j-core]
 module = "org.apache.logging.log4j:log4j-core"
-version.ref = "log4j"
 
 [libraries.log4j-api-kotlin]
 module = "org.apache.logging.log4j:log4j-api-kotlin"
@@ -138,63 +130,19 @@ version.ref = "mockk"
 
 [libraries.spring]
 module = "org.springframework:spring"
-version.ref = "spring"
 
 [libraries.spring-beans]
 module = "org.springframework:spring-beans"
+
+[libraries.spring-bom]
+module = "org.springframework:spring-framework-bom"
 version.ref = "spring"
-
-[libraries.spring-boot]
-module = "org.springframework.boot:spring-boot"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-autoconfigure]
-module = "org.springframework.boot:spring-boot-autoconfigure"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-bom]
-module = "org.springframework.boot:spring-boot-dependencies"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-gradle-plugin-dependency]
-module = "org.springframework.boot:spring-boot-gradle-plugin"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-starter]
-module = "org.springframework.boot:spring-boot-starter"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-starter-json]
-module = "org.springframework.boot:spring-boot-starter-json"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-starter-log4j2]
-module = "org.springframework.boot:spring-boot-starter-log4j2"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-starter-test]
-module = "org.springframework.boot:spring-boot-starter-test"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-starter-webflux]
-module = "org.springframework.boot:spring-boot-starter-webflux"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-test]
-module = "org.springframework.boot:spring-boot-test"
-version.ref = "spring-boot"
-
-[libraries.spring-boot-test-autoconfigure]
-module = "org.springframework.boot:spring-boot-test-autoconfigure"
-version.ref = "spring-boot"
 
 [libraries.spring-context]
 module = "org.springframework:spring-context"
-version.ref = "spring"
 
 [libraries.spring-core]
 module = "org.springframework:spring-core"
-version.ref = "spring"
 
 [libraries.spring-mockk]
 module = "com.ninja-squad:springmockk"
@@ -202,11 +150,44 @@ version.ref = "spring-mockk"
 
 [libraries.spring-test]
 module = "org.springframework:spring-test"
-version.ref = "spring"
 
 [libraries.spring-web]
 module = "org.springframework:spring-web"
-version.ref = "spring"
+
+[libraries.springboot]
+module = "org.springframework.boot:spring-boot"
+
+[libraries.springboot-autoconfigure]
+module = "org.springframework.boot:spring-boot-autoconfigure"
+
+[libraries.springboot-bom]
+module = "org.springframework.boot:spring-boot-dependencies"
+version.ref = "spring-boot"
+
+[libraries.springboot-gradle-plugin-dependency]
+module = "org.springframework.boot:spring-boot-gradle-plugin"
+version.ref = "spring-boot"
+
+[libraries.springboot-starter]
+module = "org.springframework.boot:spring-boot-starter"
+
+[libraries.springboot-starter-json]
+module = "org.springframework.boot:spring-boot-starter-json"
+
+[libraries.springboot-starter-log4j2]
+module = "org.springframework.boot:spring-boot-starter-log4j2"
+
+[libraries.springboot-starter-test]
+module = "org.springframework.boot:spring-boot-starter-test"
+
+[libraries.springboot-starter-webflux]
+module = "org.springframework.boot:spring-boot-starter-webflux"
+
+[libraries.springboot-test]
+module = "org.springframework.boot:spring-boot-test"
+
+[libraries.springboot-test-autoconfigure]
+module = "org.springframework.boot:spring-boot-test-autoconfigure"
 
 [bundles]
 
@@ -252,7 +233,7 @@ version.ref = "dependency-analysis-gradle-plugin"
 id = "org.jetbrains.kotlin.jvm"
 version.ref = "kotlin"
 
-[plugins.spring-boot-plugin]
+[plugins.springboot-plugin]
 id = "org.springframework.boot"
 version.ref = "spring-boot"
 

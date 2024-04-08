@@ -1,13 +1,14 @@
 plugins {
-	id("org.sdkotlin.buildlogic.custom-resources-convention")
 	application
-	alias(libs.plugins.spring.boot.plugin)
+	alias(libs.plugins.springboot.plugin)
+	id("org.sdkotlin.buildlogic.custom-resources-convention")
 	id("org.sdkotlin.buildlogic.spring-project")
+	id("org.sdkotlin.buildlogic.test.integration-test-suite")
 }
 
 dependencies {
 
-	api(libs.spring.boot.starter)
+	api(libs.springboot.starter)
 
 	implementation(projects.subprojects.timeLogger)
 	implementation(projects.subprojects.timeService)
@@ -16,19 +17,20 @@ dependencies {
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 	implementation(libs.log4j.api.kotlin)
 	implementation(libs.spring.beans)
-	implementation(libs.spring.boot)
-	implementation(libs.spring.boot.autoconfigure)
 	implementation(libs.spring.core)
 	implementation(libs.spring.context)
+	implementation(libs.springboot)
+	implementation(libs.springboot.autoconfigure)
 
-	// A project with a custom resources artifact.
+	// A project with a transitive dependency on a project with a custom
+	// resources artifact.
 	customScope(projects.subprojects.customResources)
 
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
 	integrationTestImplementation(libs.spring.core)
-	integrationTestImplementation(libs.spring.boot.test)
-	integrationTestImplementation(libs.spring.boot.starter.test)
+	integrationTestImplementation(libs.springboot.test)
+	integrationTestImplementation(libs.springboot.starter.test)
 }
 
 application {

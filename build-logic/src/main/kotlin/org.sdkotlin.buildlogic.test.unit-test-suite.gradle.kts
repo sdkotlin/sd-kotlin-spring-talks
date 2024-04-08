@@ -3,6 +3,9 @@ plugins {
 	id("jvm-test-suite")
 }
 
+// Version catalog type-safe accessors not available in precompiled script
+// plugins: https://github.com/gradle/gradle/issues/15383. Use the version
+// catalog extension instead.
 val versionCatalog = versionCatalogs.named("libs")
 
 @Suppress("UnstableApiUsage")
@@ -10,9 +13,7 @@ testing {
 	suites {
 		configureEach {
 			if (this is JvmTestSuite) {
-				// Version catalog type-safe accessors not available in
-				// precompiled script plugins:
-				// https://github.com/gradle/gradle/issues/15383
+
 				val junitVersion = versionCatalog.findVersion("junit")
 					.get().preferredVersion
 
@@ -23,9 +24,6 @@ testing {
 }
 
 dependencies {
-
-	// Version catalog type-safe accessors not available in precompiled script
-	// plugins: https://github.com/gradle/gradle/issues/15383
 
 	testImplementation(platform("org.sdkotlin.platforms:test-platform"))
 

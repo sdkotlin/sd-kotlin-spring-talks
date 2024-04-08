@@ -11,6 +11,9 @@ val testSuiteName = "integrationTest"
 val testSuiteDirName = "it"
 val testSuiteTestSuffix = "IT"
 
+// Version catalog type-safe accessors not available in precompiled script
+// plugins: https://github.com/gradle/gradle/issues/15383. Use the version
+// catalog extension instead.
 val versionCatalog = versionCatalogs.named("libs")
 
 @Suppress("UnstableApiUsage")
@@ -56,9 +59,6 @@ testing {
 }
 
 dependencies {
-
-	// Version catalog type-safe accessors not available in precompiled script
-	// plugins: https://github.com/gradle/gradle/issues/15383
 
 	"integrationTestImplementation"(
 		platform("org.sdkotlin.platforms:test-platform")

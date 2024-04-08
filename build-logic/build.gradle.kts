@@ -11,5 +11,5 @@ dependencies {
 	implementation(libs.dependency.analysis.gradle.plugin.dependency)
 	implementation(libs.kotlin.gradle.plugin.dependency)
 	implementation(libs.kotlin.spring.gradle.plugin.dependency)
-	implementation(libs.spring.boot.gradle.plugin.dependency)
+	implementation(libs.springboot.gradle.plugin.dependency)
 }
