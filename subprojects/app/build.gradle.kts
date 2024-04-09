@@ -36,7 +36,3 @@ dependencies {
 application {
 	mainClass = "org.sdkotlin.springdemo.SpringBootAppKt"
 }
-
-springBoot {
-	mainClass = "org.sdkotlin.springdemo.SpringBootAppKt"
-}
