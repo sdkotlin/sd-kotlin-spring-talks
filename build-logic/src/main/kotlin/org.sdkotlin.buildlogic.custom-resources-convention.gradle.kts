@@ -63,17 +63,14 @@ tasks {
 		}
 	}
 
-	//withType<Test>().configureEach {
-	//
-	//	classpath = classpath.plus(customClasspath.get())
-	//
-	//	//notCompatibleWithConfigurationCache(
-	//	//	"Cannot serialize Gradle script object references"
-	//	//)
-	//	//
-	//	//doFirst {
-	//	//	// Add the custom resources to the classpath for all `Test` tasks.
-	//	//	classpath = classpath.plus(files(customClasspath.get().resolve()))
-	//	//}
-	//}
+	withType<Test>().configureEach {
+
+		val customClasspathFileCollection =
+			customClasspath.get().fileCollection()
+
+		doFirst {
+			// Add the custom resources to the classpath for all `Test` tasks.
+			classpath = classpath.plus(customClasspathFileCollection)
+		}
+	}
 }

@@ -24,7 +24,7 @@ dependencies {
 
 	// A project with a transitive dependency on a project with a custom
 	// resources artifact.
-	customScope(projects.subprojects.customResources)
+	customScope(projects.subprojects.customResourcesIntermediary)
 
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
