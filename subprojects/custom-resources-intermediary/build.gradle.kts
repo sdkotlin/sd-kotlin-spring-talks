@@ -1,4 +1,8 @@
+import org.sdkotlin.buildlogic.attributes.ResourceAttributes.CUSTOM_RESOURCE
+import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttributes
+
 plugins {
+	id("org.sdkotlin.buildlogic.kotlin-project")
 	id("org.sdkotlin.buildlogic.custom-resources-convention")
 }
 
@@ -7,5 +11,9 @@ description =
 
 dependencies {
 	// A project with a custom resources artifact.
-	customScope(projects.subprojects.customResources)
+	api(projects.subprojects.customResources) {
+		attributes {
+			applyResourceAttributes(objects, CUSTOM_RESOURCE)
+		}
+	}
 }
