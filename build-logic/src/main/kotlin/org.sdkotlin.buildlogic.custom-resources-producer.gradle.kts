@@ -1,19 +1,10 @@
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.CUSTOM_RESOURCE
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.RESOURCE_ATTRIBUTE
+import org.sdkotlin.buildlogic.attributes.CustomResources.CUSTOM_RESOURCE
 import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttributes
-
-dependencies {
-	attributesSchema {
-		// Register a new attribute key for variant-aware consumption
-		// of custom resource dependencies.
-		attribute(RESOURCE_ATTRIBUTE)
-	}
-}
 
 @Suppress("UnstableApiUsage")
 configurations {
 
-	// Create variant-aware consumable configuration for custom resources
+	// Create variant-aware consumable configuration for "custom" resources
 	// artifacts.
 	consumable("customElements") {
 		attributes {

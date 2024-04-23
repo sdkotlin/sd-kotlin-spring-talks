@@ -1,19 +1,12 @@
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.CUSTOM_RESOURCE
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttributes
-
 plugins {
 	id("org.sdkotlin.buildlogic.kotlin-project")
-	id("org.sdkotlin.buildlogic.custom-resources-convention")
+	id("org.sdkotlin.buildlogic.custom-resources-consumer")
 }
 
 description =
 	"An intermediary project to ensure custom resource are resolved transitively."
 
 dependencies {
-	// A project with a custom resources artifact.
-	runtimeOnly(projects.subprojects.customResources) {
-		attributes {
-			applyResourceAttributes(objects, CUSTOM_RESOURCE)
-		}
-	}
+	// A project with a "custom" resources artifact.
+	runtimeOnly(customResources(projects.subprojects.customResources))
 }
