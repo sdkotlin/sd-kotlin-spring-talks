@@ -11,7 +11,7 @@ description =
 
 dependencies {
 	// A project with a custom resources artifact.
-	api(projects.subprojects.customResources) {
+	runtimeOnly(projects.subprojects.customResources) {
 		attributes {
 			applyResourceAttributes(objects, CUSTOM_RESOURCE)
 		}

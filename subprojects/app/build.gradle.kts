@@ -1,10 +1,6 @@
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.CUSTOM_RESOURCE
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttributes
-
 plugins {
 	application
 	alias(libs.plugins.springboot.plugin)
-	id("org.sdkotlin.buildlogic.custom-resources-convention")
 	id("org.sdkotlin.buildlogic.spring-project")
 	id("org.sdkotlin.buildlogic.test.integration-test-suite")
 }
@@ -27,11 +23,7 @@ dependencies {
 
 	// A project with a transitive dependency on a project with a custom
 	// resources artifact.
-	implementation(projects.subprojects.customResourcesIntermediary) {
-		attributes {
-			applyResourceAttributes(objects, CUSTOM_RESOURCE)
-		}
-	}
+	runtimeOnly(projects.subprojects.customResourcesIntermediary)
 
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
