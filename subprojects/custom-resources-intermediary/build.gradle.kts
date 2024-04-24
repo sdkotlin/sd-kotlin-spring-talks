@@ -4,7 +4,7 @@ plugins {
 }
 
 description =
-	"An intermediary project to ensure custom resource are resolved transitively."
+	"An intermediary project to ensure custom resources are resolved transitively."
 
 dependencies {
 	// A project with a "custom" resources artifact.
