@@ -10,7 +10,7 @@ jakarta-inject = "2.0.1"
 junit = "5.11.0"
 # Consider also `kotlinTargetVersion` in kotlin-project.gradle.kts.
 kotlin = "2.0.10"
-kotlinx-coroutines = "1.8.0"
+kotlinx-coroutines = "1.8.1"
 kotlinx-datetime = "0.6.0"
 log4j = "2.23.1"
 log4j-kotlin = "1.4.0"
