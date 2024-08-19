@@ -23,16 +23,21 @@ dependencyAnalysis {
 		all {
 			onAny {
 				severity("fail")
-				exclude("org.jetbrains.kotlin:kotlin-stdlib")
 			}
 			onUnusedDependencies {
 				exclude(
 					// Test dependencies added globally for convenience.
 					"io.mockk:mockk-dsl-jvm",
 					"org.assertj:assertj-core",
+					"org.jetbrains.kotlin:kotlin-stdlib",
 					"org.junit.jupiter:junit-jupiter-api",
 					"org.junit.jupiter:junit-jupiter-params",
 				)
+			}
+			onIncorrectConfiguration {
+				// https://github.com/autonomousapps/dependency-analysis-gradle-plugin/issues/1059
+				severity("fail")
+				exclude("org.jetbrains.kotlin:kotlin-stdlib")
 			}
 		}
 	}
