@@ -1,5 +1,3 @@
-import gradle.kotlin.dsl.accessors._8758bf21ec0488ee6f70886b9f0e8378.versionCatalogs
-
 plugins {
 	id("org.sdkotlin.buildlogic.kotlin-project")
 	kotlin("plugin.spring")
