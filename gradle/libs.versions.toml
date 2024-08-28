@@ -2,7 +2,6 @@
 
 assertj = "3.26.3"
 dependency-analysis-gradle-plugin = "1.33.0"
-equalsverifier = "3.11.1"
 jetbrains-annotations = "23.0.0"
 jackson = "2.17.2"
 jackson-kogera = "2.17.1-beta13"
@@ -29,10 +28,6 @@ version.ref = "assertj"
 [libraries.dependency-analysis-gradle-plugin-dependency]
 module = "com.autonomousapps.dependency-analysis:com.autonomousapps.dependency-analysis.gradle.plugin"
 version.ref = "dependency-analysis-gradle-plugin"
-
-[libraries.equalsverifier]
-module = "nl.jqno.equalsverifier:equalsverifier"
-version.ref = "equalsverifier"
 
 [libraries.jackson-bom]
 module = "com.fasterxml.jackson:jackson-bom"
