@@ -11,8 +11,6 @@ plugins {
 
 dependencies {
 
-	api(libs.springboot.starter)
-
 	implementation(projects.subprojects.timeLogger)
 	implementation(projects.subprojects.timeService)
 	implementation(projects.subprojects.componentScannedService)
@@ -33,7 +31,6 @@ dependencies {
 	integrationTestImplementation(libs.spring.context)
 	integrationTestImplementation(libs.spring.core)
 	integrationTestImplementation(libs.springboot.test)
-	integrationTestImplementation(libs.springboot.starter.test)
 }
 
 application {

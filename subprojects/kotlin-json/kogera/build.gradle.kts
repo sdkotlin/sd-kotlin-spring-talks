@@ -9,8 +9,9 @@ dependencies {
 	integrationTestImplementation(libs.jackson.module.kogera)
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
-	integrationTestImplementation(libs.springboot.starter.json)
-	integrationTestImplementation(libs.springboot.starter.test)
 	integrationTestImplementation(libs.springboot.test)
 	integrationTestImplementation(libs.springboot.test.autoconfigure)
+
+	integrationTestRuntimeOnly(libs.springboot.starter.json)
+	integrationTestRuntimeOnly(libs.springboot.starter.test)
 }

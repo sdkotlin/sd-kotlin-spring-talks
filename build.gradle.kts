@@ -30,6 +30,7 @@ dependencyAnalysis {
 					"io.mockk:mockk-dsl-jvm",
 					"org.assertj:assertj-core",
 					"org.jetbrains.kotlin:kotlin-stdlib",
+					"org.junit.jupiter:junit-jupiter",
 					"org.junit.jupiter:junit-jupiter-api",
 					"org.junit.jupiter:junit-jupiter-params",
 				)

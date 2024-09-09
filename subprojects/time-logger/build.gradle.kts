@@ -16,6 +16,5 @@ dependencies {
 	integrationTestImplementation(projects.subprojects.timeService)
 
 	integrationTestImplementation(libs.spring.beans)
-	integrationTestImplementation(libs.springboot.starter.test)
 	integrationTestImplementation(libs.springboot.test)
 }

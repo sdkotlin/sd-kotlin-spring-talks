@@ -19,7 +19,7 @@ dependencies {
 
 	api(platform("org.sdkotlin.platforms:app-platform"))
 
-	implementation(
+	runtimeOnly(
 		versionCatalog.findLibrary("springboot-starter-log4j2").get()
 	)
 

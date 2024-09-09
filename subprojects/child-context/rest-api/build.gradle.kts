@@ -9,12 +9,12 @@ dependencies {
 
 	api(libs.log4j.api.kotlin)
 	api(libs.spring.web)
-	api(libs.springboot.starter)
-	api(libs.springboot.starter.webflux)
 
 	implementation(libs.spring.context)
 
 	runtimeOnly(libs.bundles.kotlinx.coroutines.reactor)
+	runtimeOnly(libs.springboot.starter)
+	runtimeOnly(libs.springboot.starter.webflux)
 
 	integrationTestImplementation(projects.subprojects.childContext.domainService)
 
@@ -26,5 +26,4 @@ dependencies {
 	integrationTestImplementation(libs.spring.test)
 	integrationTestImplementation(libs.springboot.autoconfigure)
 	integrationTestImplementation(libs.springboot.test.autoconfigure)
-	integrationTestImplementation(libs.springboot.starter.test)
 }

@@ -17,6 +17,5 @@ dependencies {
 
 	integrationTestImplementation(libs.kotlinx.coroutines.core)
 	integrationTestImplementation(libs.spring.beans)
-	integrationTestImplementation(libs.springboot.starter.test)
 	integrationTestImplementation(libs.springboot.test)
 }
