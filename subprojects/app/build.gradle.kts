@@ -18,8 +18,8 @@ dependencies {
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 	implementation(libs.log4j.api.kotlin)
 	implementation(libs.spring.beans)
-	implementation(libs.spring.core)
 	implementation(libs.spring.context)
+	implementation(libs.spring.core)
 	implementation(libs.springboot)
 	implementation(libs.springboot.autoconfigure)
 
