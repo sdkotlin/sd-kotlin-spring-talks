@@ -43,6 +43,18 @@ testing {
 				}
 			}
 
+			// Attempt to subtract the `implementation` dependencies KGP is
+			// adding to `integrationTestImplementation` for
+			// https://github.com/autonomousapps/dependency-analysis-gradle-plugin/issues/1239
+			val implementation by configurations
+			configurations.getByName(sources.implementationConfigurationName) {
+				withDependencies {
+					removeIf {
+						implementation.dependencies.contains(it)
+					}
+				}
+			}
+
 			targets {
 				all {
 					testTask.configure {
