@@ -11,6 +11,8 @@ dependencies {
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
 
+	testFixturesApi(libs.kotlinx.datetime.jvm)
+
 	testImplementation(projects.subprojects.timeService)
 
 	testImplementation(libs.bundles.kotlinx.coroutines.test.jvm)
