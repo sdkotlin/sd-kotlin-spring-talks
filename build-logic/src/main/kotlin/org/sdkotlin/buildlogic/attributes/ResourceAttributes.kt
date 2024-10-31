@@ -1,6 +1,9 @@
 package org.sdkotlin.buildlogic.attributes
 
 import org.gradle.api.Named
+import org.gradle.api.artifacts.CacheableRule
+import org.gradle.api.artifacts.ComponentMetadataContext
+import org.gradle.api.artifacts.ComponentMetadataRule
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
@@ -13,7 +16,9 @@ import org.gradle.api.attributes.LibraryElements.RESOURCES
 import org.gradle.api.model.ObjectFactory
 import org.gradle.kotlin.dsl.named
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
+import org.sdkotlin.buildlogic.attributes.ResourceAttributes.RESOURCE_ATTRIBUTE
 import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttributes
+import javax.inject.Inject
 
 /**
  * An attribute type for resource variants.
@@ -76,5 +81,20 @@ class ResourceAttributeDependencyCreationExtension(
 		}
 
 		return dependency
+	}
+}
+
+@CacheableRule
+abstract class DefaultResourceAttributeRule : ComponentMetadataRule {
+
+	@get:Inject
+	abstract val objects: ObjectFactory
+
+	override fun execute(context: ComponentMetadataContext) {
+		context.details.allVariants {
+			attributes {
+				attributes.attribute(RESOURCE_ATTRIBUTE, objects.named("none"))
+			}
+		}
 	}
 }
