@@ -5,9 +5,9 @@ import org.sdkotlin.buildlogic.attributes.ResourceAttributes.RESOURCE_ATTRIBUTE
 
 dependencies {
 
-	// Register a new attribute key for variant-aware consumption
-	// of "custom" resources dependencies.
 	attributesSchema {
+		// Register a new attribute key for variant-aware consumption of
+		// "custom" resources dependencies.
 		attribute(RESOURCE_ATTRIBUTE)
 	}
 

@@ -18,7 +18,7 @@ import org.sdkotlin.buildlogic.attributes.ResourceAttributes.applyResourceAttrib
 /**
  * An attribute type for resource variants.
  */
-interface ResourceAttributeType : Named {
+interface ResourceAttribute : Named {
 	override fun getName(): String = "ResourceAttribute"
 }
 
@@ -30,10 +30,10 @@ object ResourceAttributes {
 	/**
 	 * An attribute for resource dependency variants.
 	 */
-	val RESOURCE_ATTRIBUTE: Attribute<ResourceAttributeType> =
+	val RESOURCE_ATTRIBUTE: Attribute<ResourceAttribute> =
 		Attribute.of(
 			ResourceAttributes::class.qualifiedName!!,
-			ResourceAttributeType::class.java
+			ResourceAttribute::class.java
 		)
 
 	/**
@@ -41,13 +41,12 @@ object ResourceAttributes {
 	 * variants.
 	 */
 	fun AttributeContainer.applyResourceAttributes(
-		objectFactory: ObjectFactory,
+		objects: ObjectFactory,
 		resourceAttributeValue: String
 	) {
-		attribute(BUNDLING_ATTRIBUTE, objectFactory.named(EXTERNAL))
-		attribute(LIBRARY_ELEMENTS_ATTRIBUTE, objectFactory.named(RESOURCES))
-		attribute(RESOURCE_ATTRIBUTE,
-			objectFactory.named(resourceAttributeValue))
+		attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
+		attribute(LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(RESOURCES))
+		attribute(RESOURCE_ATTRIBUTE, objects.named(resourceAttributeValue))
 	}
 }
 
