@@ -25,7 +25,7 @@ dependencies {
 		"customResources",
 		ResourceAttributeDependencyCreationExtension(
 			dependencyHandler = this,
-			objectFactory = objects,
+			objects = objects,
 			resourceAttributeValue = CUSTOM_RESOURCE
 		)
 	)

@@ -61,7 +61,7 @@ object ResourceAttributes {
  */
 class ResourceAttributeDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val objectFactory: ObjectFactory,
+	private val objects: ObjectFactory,
 	private val resourceAttributeValue: String
 ) : DependencyCreationExtension {
 
@@ -75,7 +75,7 @@ class ResourceAttributeDependencyCreationExtension(
 
 		dependency.attributes {
 			applyResourceAttributes(
-				objectFactory,
+				objects,
 				resourceAttributeValue
 			)
 		}
@@ -92,7 +92,7 @@ abstract class DefaultResourceAttributeRule : ComponentMetadataRule {
 
 	override fun execute(context: ComponentMetadataContext) {
 		context.details.allVariants {
-			attributes {
+			if (!attributes.keySet().contains(RESOURCE_ATTRIBUTE)) {
 				attributes.attribute(RESOURCE_ATTRIBUTE, objects.named("none"))
 			}
 		}
