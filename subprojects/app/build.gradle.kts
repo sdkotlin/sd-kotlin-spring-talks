@@ -41,6 +41,9 @@ tasks {
 
 	register("printCustomClasspath") {
 
+		group = "custom"
+		description = "Print the custom classpath"
+
 		val fileCollection: FileCollection =
 			configurations.runtimeClasspath.get().incoming.artifactView {
 
