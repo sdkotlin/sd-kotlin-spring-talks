@@ -1,6 +1,6 @@
 package org.sdkotlin.buildlogic.attributes
 
-import org.sdkotlin.buildlogic.attributes.ResourceAttributes.RESOURCE_ATTRIBUTE
+import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
 
 /**
  * A companion object for the custom resources convention plugins.
@@ -8,8 +8,8 @@ import org.sdkotlin.buildlogic.attributes.ResourceAttributes.RESOURCE_ATTRIBUTE
 object CustomResources {
 
 	/**
-	 * The [RESOURCE_ATTRIBUTE] value for the "custom" resource dependency
-	 * variant.
+	 * The [LIBRARY_ELEMENTS_ATTRIBUTE] value for the "custom resources"
+	 * dependency variant.
 	 */
-	const val CUSTOM_RESOURCE = "Custom"
+	const val CUSTOM_RESOURCES = "custom resources"
 }

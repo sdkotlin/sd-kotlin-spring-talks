@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.sdkotlin.buildlogic.attributes.CustomResources.CUSTOM_RESOURCES
+import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 
 plugins {
 	kotlin("jvm")
@@ -45,6 +47,45 @@ tasks {
 				// https://youtrack.jetbrains.com/issue/KT-49746/
 				"-Xjdk-release=$javaTargetVersion"
 			)
+		}
+	}
+
+	register("printCustomResourcesClasspath") {
+
+		group = "custom-resources"
+		description =
+			"Prints the custom resources subset of the runtime classpath"
+
+		val fileCollection: Provider<FileCollection> = provider {
+			configurations.runtimeClasspath.get().incoming.artifactView {
+				attributes {
+					applyLibraryElementsAttributes(objects, CUSTOM_RESOURCES)
+				}
+			}.files
+		}
+
+		doLast {
+
+			val customResourcesAsPath = fileCollection.get().asPath
+
+			println("customResourcesAsPath: $customResourcesAsPath")
+		}
+	}
+
+	register("printRuntimeClasspath") {
+
+		group = "custom-resources"
+		description = "Prints the runtime classpath"
+
+		val fileCollection: Provider<FileCollection> = provider {
+			configurations.runtimeClasspath.get()
+		}
+
+		doLast {
+
+			val runtimeClasspathAsPath = fileCollection.get().asPath
+
+			println("runtimeClasspathAsPath: $runtimeClasspathAsPath")
 		}
 	}
 }
