@@ -1,3 +1,4 @@
+import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.sdkotlin.buildlogic.attributes.CustomResources.CUSTOM_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
@@ -58,6 +59,10 @@ tasks {
 
 		val fileCollection: Provider<FileCollection> = provider {
 			configurations.runtimeClasspath.get().incoming.artifactView {
+
+				@Suppress("UnstableApiUsage")
+				withVariantReselection()
+
 				attributes {
 					applyLibraryElementsAttributes(objects, CUSTOM_RESOURCES)
 				}
@@ -66,9 +71,40 @@ tasks {
 
 		doLast {
 
-			val customResourcesAsPath = fileCollection.get().asPath
+			val classpathAsPath = fileCollection.get().asPath
 
-			println("customResourcesAsPath: $customResourcesAsPath")
+			val wrappedClasspath = classpathAsPath.replace(":", "\n")
+
+			println("wrappedClasspath: \n$wrappedClasspath")
+		}
+	}
+
+	register("printRuntimeClasspathWithoutCustomResources") {
+
+		group = "custom-resources"
+		description =
+			"Prints the runtime classpath without the custom resources"
+
+		val fileCollection: Provider<FileCollection> = provider {
+			configurations.runtimeClasspath.get().incoming.artifactView {
+
+				@Suppress("UnstableApiUsage")
+				withVariantReselection()
+
+				attributes {
+					applyLibraryElementsAttributes(objects,
+						CLASSES_AND_RESOURCES)
+				}
+			}.files
+		}
+
+		doLast {
+
+			val classpathAsPath = fileCollection.get().asPath
+
+			val wrappedClasspath = classpathAsPath.replace(":", "\n")
+
+			println("wrappedClasspath: \n$wrappedClasspath")
 		}
 	}
 
@@ -83,9 +119,11 @@ tasks {
 
 		doLast {
 
-			val runtimeClasspathAsPath = fileCollection.get().asPath
+			val classpathAsPath = fileCollection.get().asPath
 
-			println("runtimeClasspathAsPath: $runtimeClasspathAsPath")
+			val wrappedClasspath = classpathAsPath.replace(":", "\n")
+
+			println("wrappedClasspath: \n$wrappedClasspath")
 		}
 	}
 }
