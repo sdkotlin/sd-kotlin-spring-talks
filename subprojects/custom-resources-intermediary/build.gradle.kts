@@ -1,6 +1,6 @@
 plugins {
 	id("org.sdkotlin.buildlogic.kotlin-project")
-	id("org.sdkotlin.buildlogic.custom-resources-consumer")
+	id("org.sdkotlin.buildlogic.custom-resources")
 }
 
 description =

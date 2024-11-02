@@ -1,7 +1,4 @@
-import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.sdkotlin.buildlogic.attributes.CustomResources.CUSTOM_RESOURCES
-import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 
 plugins {
 	kotlin("jvm")
@@ -25,6 +22,7 @@ jvmDependencyConflicts {
 }
 
 tasks {
+
 	withType<JavaCompile>().configureEach {
 
 		with(options) {
@@ -48,82 +46,6 @@ tasks {
 				// https://youtrack.jetbrains.com/issue/KT-49746/
 				"-Xjdk-release=$javaTargetVersion"
 			)
-		}
-	}
-
-	register("printCustomResourcesClasspath") {
-
-		group = "custom-resources"
-		description =
-			"Prints the custom resources subset of the runtime classpath"
-
-		val fileCollection: Provider<FileCollection> = provider {
-			configurations.runtimeClasspath.get().incoming.artifactView {
-
-				@Suppress("UnstableApiUsage")
-				withVariantReselection()
-
-				attributes {
-					applyLibraryElementsAttributes(objects, CUSTOM_RESOURCES)
-				}
-			}.files
-		}
-
-		doLast {
-
-			val classpathAsPath = fileCollection.get().asPath
-
-			val wrappedClasspath = classpathAsPath.replace(":", "\n")
-
-			println("wrappedClasspath: \n$wrappedClasspath")
-		}
-	}
-
-	register("printRuntimeClasspathWithoutCustomResources") {
-
-		group = "custom-resources"
-		description =
-			"Prints the runtime classpath without the custom resources"
-
-		val fileCollection: Provider<FileCollection> = provider {
-			configurations.runtimeClasspath.get().incoming.artifactView {
-
-				@Suppress("UnstableApiUsage")
-				withVariantReselection()
-
-				attributes {
-					applyLibraryElementsAttributes(objects,
-						CLASSES_AND_RESOURCES)
-				}
-			}.files
-		}
-
-		doLast {
-
-			val classpathAsPath = fileCollection.get().asPath
-
-			val wrappedClasspath = classpathAsPath.replace(":", "\n")
-
-			println("wrappedClasspath: \n$wrappedClasspath")
-		}
-	}
-
-	register("printRuntimeClasspath") {
-
-		group = "custom-resources"
-		description = "Prints the runtime classpath"
-
-		val fileCollection: Provider<FileCollection> = provider {
-			configurations.runtimeClasspath.get()
-		}
-
-		doLast {
-
-			val classpathAsPath = fileCollection.get().asPath
-
-			val wrappedClasspath = classpathAsPath.replace(":", "\n")
-
-			println("wrappedClasspath: \n$wrappedClasspath")
 		}
 	}
 }
