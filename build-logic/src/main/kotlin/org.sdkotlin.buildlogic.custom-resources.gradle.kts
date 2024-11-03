@@ -1,4 +1,3 @@
-import gradle.kotlin.dsl.accessors._0defa1a7b298cc792e0089bd5fae3b0a.runtimeClasspath
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
 import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
@@ -58,7 +57,7 @@ tasks {
 		classpathName = "runtimeClasspath"
 
 		classpath = provider {
-			configurations.runtimeClasspath.get()
+			configurations.named("runtimeClasspath").get()
 		}
 	}
 
@@ -71,15 +70,17 @@ tasks {
 		classpathName = "customResourcesClasspath"
 
 		classpath = provider {
-			configurations.runtimeClasspath.get().incoming.artifactView {
+			configurations.named("runtimeClasspath").get().incoming
+				.artifactView {
 
-				@Suppress("UnstableApiUsage")
-				withVariantReselection()
+					@Suppress("UnstableApiUsage")
+					withVariantReselection()
 
-				attributes {
-					applyLibraryElementsAttributes(objects, CUSTOM_RESOURCES)
-				}
-			}.files
+					attributes {
+						applyLibraryElementsAttributes(objects,
+							CUSTOM_RESOURCES)
+					}
+				}.files
 		}
 	}
 
@@ -92,16 +93,17 @@ tasks {
 		classpathName = "runtimeClasspathWithoutCustomResources"
 
 		classpath = provider {
-			configurations.runtimeClasspath.get().incoming.artifactView {
+			configurations.named("runtimeClasspath").get().incoming
+				.artifactView {
 
-				@Suppress("UnstableApiUsage")
-				withVariantReselection()
+					@Suppress("UnstableApiUsage")
+					withVariantReselection()
 
-				attributes {
-					applyLibraryElementsAttributes(objects,
-						CLASSES_AND_RESOURCES)
-				}
-			}.files
+					attributes {
+						applyLibraryElementsAttributes(objects,
+							CLASSES_AND_RESOURCES)
+					}
+				}.files
 		}
 	}
 }
