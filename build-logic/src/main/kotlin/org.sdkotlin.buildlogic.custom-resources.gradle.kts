@@ -77,8 +77,10 @@ tasks {
 					withVariantReselection()
 
 					attributes {
-						applyLibraryElementsAttributes(objects,
-							CUSTOM_RESOURCES)
+						applyLibraryElementsAttributes(
+							objects,
+							libraryElementsAttributeValue = CUSTOM_RESOURCES
+						)
 					}
 				}.files
 		}
@@ -100,8 +102,10 @@ tasks {
 					withVariantReselection()
 
 					attributes {
-						applyLibraryElementsAttributes(objects,
-							CLASSES_AND_RESOURCES)
+						applyLibraryElementsAttributes(
+							objects,
+							libraryElementsAttributeValue = CLASSES_AND_RESOURCES
+						)
 					}
 				}.files
 		}
