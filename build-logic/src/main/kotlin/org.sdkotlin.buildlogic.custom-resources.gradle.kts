@@ -42,7 +42,8 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							CUSTOM_RESOURCES
+							libraryElementsAttributeValue =
+								"$CUSTOM_RESOURCES-resources"
 						)
 					}
 				}.files
@@ -67,7 +68,8 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							CLASSES_AND_RESOURCES
+							libraryElementsAttributeValue =
+								CLASSES_AND_RESOURCES
 						)
 					}
 				}.files

@@ -27,8 +27,10 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 			@Suppress("UnstableApiUsage")
 			project.configurations.consumable(consumableConfigurationName) {
 				attributes {
-					applyLibraryElementsAttributes(project.objects,
-						resourceConfiguration)
+					applyLibraryElementsAttributes(
+						project.objects,
+						"$resourceConfiguration-resources"
+					)
 				}
 			}
 
@@ -42,7 +44,7 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 					dependencyHandler = project.dependencies,
 					objects = project.objects,
 					libraryElementsAttributeValue =
-						"$resourceConfiguration resources"
+						"$resourceConfiguration-resources"
 				)
 			)
 
