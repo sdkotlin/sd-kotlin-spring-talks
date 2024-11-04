@@ -1,14 +1,21 @@
 import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.sdkotlin.buildlogic.attributes.CustomResources.CUSTOM_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
-import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
+import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
+
+plugins {
+	id("java")
+}
 
 apply<ResourceConfigurationsPlugin>()
 
-configure<ResourceConfigurationsExtension> {
-	resourceConfigurations.add(CUSTOM_RESOURCES)
+configure<NamedDomainObjectContainer<ResourceConfiguration>> {
+	create(CUSTOM_RESOURCES)
 }
+
+val resourceConfiguration: ResourceConfiguration =
+	the<NamedDomainObjectContainer<ResourceConfiguration>>()[CUSTOM_RESOURCES]
 
 tasks {
 
@@ -42,8 +49,7 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							libraryElementsAttributeValue =
-								"$CUSTOM_RESOURCES-resources"
+							resourceConfiguration.libraryElementsAttributeValue.get()
 						)
 					}
 				}.files
@@ -68,8 +74,7 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							libraryElementsAttributeValue =
-								CLASSES_AND_RESOURCES
+							libraryElementsAttributeValue = CLASSES_AND_RESOURCES
 						)
 					}
 				}.files
