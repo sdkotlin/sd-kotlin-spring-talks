@@ -11,5 +11,5 @@ object CustomResources {
 	 * The [LIBRARY_ELEMENTS_ATTRIBUTE] value for the "custom resources"
 	 * dependency variant.
 	 */
-	const val CUSTOM_RESOURCES = "custom-resources"
+	const val CUSTOM_RESOURCES = "custom"
 }
