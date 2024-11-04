@@ -100,7 +100,8 @@ abstract class PrintClasspath : DefaultTask() {
 
 		val classpathAsPath = classpath.get().asPath
 
-		val wrappedClasspath = classpathAsPath.replace(":", "\n")
+		val wrappedClasspath =
+			classpathAsPath.replace(File.pathSeparator, "\n")
 
 		logger.lifecycle("${classpathName.get()}: \n$wrappedClasspath")
 	}
