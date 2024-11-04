@@ -5,6 +5,8 @@ import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 
 plugins {
+	// Java plugin application only strictly needed for ensuring
+	// `runtimeClasspath` exists for demo print tasks below.
 	id("java")
 }
 
@@ -13,6 +15,8 @@ apply<ResourceConfigurationsPlugin>()
 configure<NamedDomainObjectContainer<ResourceConfiguration>> {
 	create(CUSTOM_RESOURCES)
 }
+
+// Print tasks for demonstration purposes only...
 
 val resourceConfiguration: ResourceConfiguration =
 	the<NamedDomainObjectContainer<ResourceConfiguration>>()[CUSTOM_RESOURCES]
