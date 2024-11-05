@@ -1,6 +1,5 @@
 plugins {
 	application
-	alias(libs.plugins.springboot.plugin)
 	id("org.sdkotlin.buildlogic.custom-resources")
 	id("org.sdkotlin.buildlogic.spring-project")
 	id("org.sdkotlin.buildlogic.test.integration-test-suite")

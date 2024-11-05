@@ -13,7 +13,6 @@ dependencies {
 	implementation(libs.jvm.dependency.conflict.resolution.gradle.plugin.dependency)
 	implementation(libs.kotlin.gradle.plugin.dependency)
 	implementation(libs.kotlin.spring.gradle.plugin.dependency)
-	implementation(libs.springboot.gradle.plugin.dependency)
 }
 
 gradlePlugin {

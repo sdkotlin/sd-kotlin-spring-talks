@@ -163,10 +163,6 @@ module = "org.springframework.boot:spring-boot-autoconfigure"
 module = "org.springframework.boot:spring-boot-dependencies"
 version.ref = "spring-boot"
 
-[libraries.springboot-gradle-plugin-dependency]
-module = "org.springframework.boot:spring-boot-gradle-plugin"
-version.ref = "spring-boot"
-
 [libraries.springboot-starter]
 module = "org.springframework.boot:spring-boot-starter"
 
@@ -239,10 +235,6 @@ version.ref = "jvm-dependency-conflict-resolution"
 [plugins.jvm-dependency-conflict-resolution-gradle-plugin]
 id = "org.gradlex.jvm-dependency-conflict-resolution"
 version.ref = "jvm-dependency-conflict-resolution"
-
-[plugins.springboot-plugin]
-id = "org.springframework.boot"
-version.ref = "spring-boot"
 
 [plugins.versions-gradle-plugin]
 id = "com.github.ben-manes.versions"
