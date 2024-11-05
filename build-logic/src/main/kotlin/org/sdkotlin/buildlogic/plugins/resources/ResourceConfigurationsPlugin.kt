@@ -26,7 +26,7 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 			resourceConfigurationContainer
 		)
 
-		resourceConfigurationContainer.all {
+		resourceConfigurationContainer.configureEach {
 
 			// Create a variant-aware consumable configuration for this resource
 			// configuration's artifacts.
