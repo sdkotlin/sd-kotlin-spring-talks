@@ -33,6 +33,12 @@ rootProject.name = "sd-kotlin-spring-talks"
 
 includeBuild("platforms")
 
+gradle.beforeProject {
+	// Set group and version properties for all projects
+	group = "org.sdkotlin"
+	version = "1.0.0-SNAPSHOT"
+}
+
 include("subprojects:app")
 include("subprojects:child-context:domain-service")
 include("subprojects:child-context:rest-api")

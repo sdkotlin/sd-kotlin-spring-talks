@@ -13,11 +13,6 @@ plugins {
 	alias(libs.plugins.versions.gradle.plugin)
 }
 
-allprojects {
-	group = "org.sdkotlin"
-	version = "0.0.1-SNAPSHOT"
-}
-
 dependencyAnalysis {
 	issues {
 		all {
