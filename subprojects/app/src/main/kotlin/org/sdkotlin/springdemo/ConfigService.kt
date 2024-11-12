@@ -9,11 +9,8 @@ value class ConfigPath(val value: Path)
 
 internal class ConfigService(
 	private val configPathSupplier: () -> ConfigPath,
-	private val logger: KotlinLogger = logger(),
+	private val logger: KotlinLogger = ConfigService::class.logger(),
 ) {
-
-	companion object; // Receiver for logger()
-
 	fun init() {
 		logger.info {
 			"Config path: ${configPathSupplier().value.toAbsolutePath()}"

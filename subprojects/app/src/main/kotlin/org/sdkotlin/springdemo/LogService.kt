@@ -9,11 +9,8 @@ value class LogPath(val value: Path)
 
 internal class LogService(
 	private val logPathSupplier: () -> LogPath,
-	private val logger: KotlinLogger = logger(),
+	private val logger: KotlinLogger = LogService::class.logger(),
 ) {
-
-	companion object; // Receiver for logger()
-
 	fun init() {
 		logger.info {
 			"Log path: ${logPathSupplier().value.toAbsolutePath()}"

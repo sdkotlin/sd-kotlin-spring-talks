@@ -14,7 +14,6 @@ internal class TimeServer(
 	private val coroutineScope: CoroutineScope,
 	private val delayMillis: Duration = 1.seconds
 ) {
-
 	fun init(): Job =
 		coroutineScope.launch {
 			while (true) {

@@ -18,7 +18,6 @@ internal class JacksonKogeraUnsignedIT(
 	@Autowired
 	val unsignedTypesJacksonTester: JacksonTester<UnsignedTypesEntity>,
 ) {
-
 	@Configuration
 	class TestConfig {
 

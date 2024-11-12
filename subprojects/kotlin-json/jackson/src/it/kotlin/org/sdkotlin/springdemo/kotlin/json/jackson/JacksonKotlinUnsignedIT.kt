@@ -17,7 +17,6 @@ internal class JacksonKotlinUnsignedIT(
 	@Autowired
 	val unsignedTypesJacksonTester: JacksonTester<UnsignedTypesEntity>,
 ) {
-
 	@Configuration
 	class TestConfig
 

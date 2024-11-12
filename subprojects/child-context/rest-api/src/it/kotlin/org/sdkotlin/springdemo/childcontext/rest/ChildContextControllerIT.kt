@@ -21,7 +21,6 @@ internal class ChildContextControllerIT(
 	@Autowired
 	private val webClient: WebTestClient
 ) {
-
 	@MockkBean
 	private lateinit var childContextService: ChildContextService
 

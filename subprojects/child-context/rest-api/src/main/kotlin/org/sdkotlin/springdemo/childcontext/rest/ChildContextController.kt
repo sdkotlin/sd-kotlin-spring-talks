@@ -5,19 +5,24 @@ import org.apache.logging.log4j.kotlin.logger
 import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.REQUEST_PATH
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 import kotlin.reflect.KClass
 
 @RestController
 @RequestMapping(REQUEST_PATH)
 class ChildContextController(
 	private val childContextService: ChildContextService,
-	private val logger: KotlinLogger = logger()
+	private val logger: KotlinLogger = ChildContextController::class.logger()
 ) {
-
 	companion object {
 		const val REQUEST_PATH = "/child-context"
-
 		const val LIST_ACTION = "/list"
 	}
 

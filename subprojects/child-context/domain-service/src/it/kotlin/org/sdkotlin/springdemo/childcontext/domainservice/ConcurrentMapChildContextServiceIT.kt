@@ -26,7 +26,6 @@ internal class ConcurrentMapChildContextServiceIT(
 	@Autowired
 	private val childContextService: ChildContextService
 ) {
-
 	@SpringBootConfiguration
 	class TestConfig {
 
@@ -58,19 +57,19 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContext.containsBean(testBeanName)
 
 			assertThat(parentContextContainsBean)
-					.describedAs("parent context contains $testBeanName")
-					.isFalse
+				.describedAs("parent context contains $testBeanName")
+				.isFalse
 
 			assertThat(childContextContainsBean)
-					.describedAs("child context contains $testBeanName")
-					.isTrue
+				.describedAs("child context contains $testBeanName")
+				.isTrue
 
 			val childContextIdFromEnvironment =
 				childContext.environment[CHILD_CONTEXT_ID_PROPERTY_NAME]
 
 			assertThat(childContextIdFromEnvironment)
-					.describedAs("childContextId from environment")
-					.isEqualTo(childContextId)
+				.describedAs("childContextId from environment")
+				.isEqualTo(childContextId)
 		}
 
 		@Test
@@ -115,8 +114,8 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContext.environment[additionalPropertyKey]
 
 			assertThat(additionalPropertyFromEnvironment)
-					.describedAs("additionalProperty from environment")
-					.isEqualTo(additionalPropertyValue)
+				.describedAs("additionalProperty from environment")
+				.isEqualTo(additionalPropertyValue)
 		}
 
 		@Test
@@ -147,16 +146,16 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContext2.containsBean(testBeanName)
 
 			assertThat(parentContextContainsBean)
-					.describedAs("parent context contains $testBeanName")
-					.isFalse
+				.describedAs("parent context contains $testBeanName")
+				.isFalse
 
 			assertThat(childContext1ContainsBean)
-					.describedAs("child context 1 contains $testBeanName")
-					.isTrue
+				.describedAs("child context 1 contains $testBeanName")
+				.isTrue
 
 			assertThat(childContext2ContainsBean)
-					.describedAs("child context 2 contains $testBeanName")
-					.isTrue
+				.describedAs("child context 2 contains $testBeanName")
+				.isTrue
 
 			val childContextId1FromEnvironment =
 				childContext1.environment[CHILD_CONTEXT_ID_PROPERTY_NAME]
@@ -165,12 +164,12 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContext2.environment[CHILD_CONTEXT_ID_PROPERTY_NAME]
 
 			assertThat(childContextId1FromEnvironment)
-					.describedAs("childContext1Id from environment")
-					.isEqualTo(childContextId1)
+				.describedAs("childContext1Id from environment")
+				.isEqualTo(childContextId1)
 
 			assertThat(childContextId2FromEnvironment)
-					.describedAs("childContext2Id from environment")
-					.isEqualTo(childContextId2)
+				.describedAs("childContext2Id from environment")
+				.isEqualTo(childContextId2)
 		}
 
 		@Test
@@ -196,12 +195,12 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContext.containsBean(testBeanName2)
 
 			assertThat(childContextContainsBean1)
-					.describedAs("child context contains $testBeanName1")
-					.isTrue
+				.describedAs("child context contains $testBeanName1")
+				.isTrue
 
 			assertThat(childContextContainsBean2)
-					.describedAs("child context contains $testBeanName2")
-					.isTrue
+				.describedAs("child context contains $testBeanName2")
+				.isTrue
 		}
 
 		@Test
@@ -253,8 +252,8 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContextService.get(childContextId)
 
 			assertThat(childContext)
-					.describedAs("childContext")
-					.isNull()
+				.describedAs("childContext")
+				.isNull()
 		}
 
 		@Test
@@ -271,8 +270,8 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContextService.get(childContextId)
 
 			assertThat(childContext)
-					.describedAs("childContext")
-					.isNotNull
+				.describedAs("childContext")
+				.isNotNull
 		}
 	}
 
@@ -286,8 +285,8 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContextService.removeAndCloseIfPresent("nonExistentId")
 
 			assertThat(childApplicationContext)
-					.describedAs("childApplicationContext")
-					.isNull()
+				.describedAs("childApplicationContext")
+				.isNull()
 		}
 
 		@Test
@@ -304,12 +303,12 @@ internal class ConcurrentMapChildContextServiceIT(
 				childContextService.removeAndCloseIfPresent(childContextId)
 
 			assertThat(childApplicationContext)
-					.describedAs("childApplicationContext")
-					.isNotNull
+				.describedAs("childApplicationContext")
+				.isNotNull
 
 			assertThat(childApplicationContext?.isRunning)
-					.describedAs("isRunning")
-					.isFalse
+				.describedAs("isRunning")
+				.isFalse
 		}
 	}
 
