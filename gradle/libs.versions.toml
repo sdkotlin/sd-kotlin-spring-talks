@@ -1,6 +1,6 @@
 [versions]
 
-assertj = "3.27.2"
+assertj = "3.27.3"
 dependency-analysis-gradle-plugin = "2.7.0"
 jetbrains-annotations = "23.0.0"
 jackson = "2.18.2"
