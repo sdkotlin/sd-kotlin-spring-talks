@@ -15,7 +15,7 @@ log4j = "2.24.1"
 log4j-kotlin = "1.5.0"
 mockk = "1.13.16"
 spring = "6.2.3"
-spring-boot = "3.4.2"
+spring-boot = "3.4.3"
 spring-mockk = "4.0.2"
 versions-gradle-plugin = "0.52.0"
 
