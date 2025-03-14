@@ -6,6 +6,10 @@ plugins {
 	id("org.sdkotlin.buildlogic.test.integration-test-suite")
 }
 
+application {
+	mainClass = "org.sdkotlin.springdemo.SpringBootAppKt"
+}
+
 dependencies {
 
 	implementation(projects.subprojects.timeLogger)
@@ -28,8 +32,4 @@ dependencies {
 	integrationTestImplementation(libs.spring.context)
 	integrationTestImplementation(libs.spring.core)
 	integrationTestImplementation(libs.springboot.test)
-}
-
-application {
-	mainClass = "org.sdkotlin.springdemo.SpringBootAppKt"
 }
