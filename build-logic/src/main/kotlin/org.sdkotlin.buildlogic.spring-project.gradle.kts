@@ -22,6 +22,4 @@ dependencies {
 	runtimeOnly(
 		versionCatalog.findLibrary("springboot-starter-log4j2").get()
 	)
-
-	runtimeOnly(kotlin("reflect"))
 }
