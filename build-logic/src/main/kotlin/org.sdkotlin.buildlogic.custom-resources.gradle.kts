@@ -13,7 +13,11 @@ plugins {
 apply<ResourceConfigurationsPlugin>()
 
 configure<NamedDomainObjectContainer<ResourceConfiguration>> {
-	create(CUSTOM_RESOURCES)
+	create(CUSTOM_RESOURCES) {
+		attributes {
+			applyLibraryElementsAttributes(objects, "$name-resources")
+		}
+	}
 }
 
 // Print tasks for demonstration purposes only...
@@ -53,7 +57,7 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							resourceConfiguration.libraryElementsAttributeValue.get()
+							"${resourceConfiguration.name}-resources"
 						)
 					}
 				}.files

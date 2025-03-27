@@ -6,8 +6,6 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
 import org.gradle.kotlin.dsl.container
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
-import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributeDependencyCreationExtension
-import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 
 class ResourceConfigurationsPlugin : Plugin<Project> {
 
@@ -33,12 +31,7 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 			val consumableConfigurationName = "${name}Elements"
 			@Suppress("UnstableApiUsage")
 			project.configurations.consumable(consumableConfigurationName) {
-				attributes {
-					applyLibraryElementsAttributes(
-						project.objects,
-						libraryElementsAttributeValue.get(),
-					)
-				}
+				resourceAttributes.applyTo(attributes)
 			}
 
 			// Add a `DependencyHandler` extension for declaring a dependency on
@@ -47,10 +40,9 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 			project.dependencies.extensions.add(
 				DependencyCreationExtension::class.java,
 				dependencyHandlerExtensionName,
-				LibraryElementsAttributeDependencyCreationExtension(
+				ResourceAttributesDependencyCreationExtension(
 					project.dependencies,
-					project.objects,
-					libraryElementsAttributeValue.get()
+					resourceAttributes,
 				)
 			)
 
