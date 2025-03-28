@@ -3,8 +3,8 @@ package org.sdkotlin.buildlogic.attributes
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.attributes.Bundling.BUNDLING_ATTRIBUTE
 import org.gradle.api.attributes.Bundling.EXTERNAL
-import org.gradle.api.attributes.Category
 import org.gradle.api.attributes.Category.CATEGORY_ATTRIBUTE
+import org.gradle.api.attributes.Category.LIBRARY
 import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
 import org.gradle.api.attributes.Usage.JAVA_RUNTIME
 import org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE
@@ -25,7 +25,7 @@ object LibraryElementsAttributes {
 		libraryElementsAttributeValue: String
 	) {
 		attribute(USAGE_ATTRIBUTE, objects.named(JAVA_RUNTIME))
-		attribute(CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+		attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
 		attribute(LIBRARY_ELEMENTS_ATTRIBUTE,
 			objects.named(libraryElementsAttributeValue))
 		attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
