@@ -1,28 +1,31 @@
-package org.sdkotlin.buildlogic.plugins.resources
+package org.sdkotlin.buildlogic.artifacts.dsl
 
 import org.gradle.api.artifacts.Dependency
-import org.gradle.api.artifacts.ProjectDependency
+import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
+import org.gradle.api.attributes.AttributeContainer
+import org.sdkotlin.buildlogic.attributes.applyAttributes
 
 /**
  * A [DependencyHandler] extension that sets the attributes for variants of a
  * declared [Dependency].
  */
-class ResourceAttributesDependencyCreationExtension(
+class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val resourceAttributes: ResourceAttributes,
+	private val dependencyAttributes: AttributeContainer,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {
 
 		val dependency = dependencyHandler.create(notation)
 
-		require(dependency is ProjectDependency) {
+		require(dependency is ModuleDependency) {
 			"Dependency type ${dependency::class.qualifiedName} unknown!"
 		}
 
-		resourceAttributes.applyTo(dependency.attributes)
+		dependency.attributes {
+			applyAttributes(dependencyAttributes)
+		}
 
 		return dependency
 	}

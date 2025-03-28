@@ -1,5 +1,4 @@
 import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
-import org.sdkotlin.buildlogic.attributes.CustomResources.CUSTOM_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
@@ -10,20 +9,19 @@ plugins {
 	id("java")
 }
 
+// The name for the "custom" resource configuration dependency variant.
+val resourceConfigurationName = "custom"
+
 apply<ResourceConfigurationsPlugin>()
 
 configure<NamedDomainObjectContainer<ResourceConfiguration>> {
-	create(CUSTOM_RESOURCES) {
-		attributes {
-			applyLibraryElementsAttributes(objects, "$name-resources")
-		}
-	}
+	create(resourceConfigurationName)
 }
 
 // Print tasks for demonstration purposes only...
 
 val resourceConfiguration: ResourceConfiguration =
-	the<NamedDomainObjectContainer<ResourceConfiguration>>()[CUSTOM_RESOURCES]
+	the<NamedDomainObjectContainer<ResourceConfiguration>>()[resourceConfigurationName]
 
 tasks {
 

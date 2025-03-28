@@ -24,10 +24,10 @@ object LibraryElementsAttributes {
 		objects: ObjectFactory,
 		libraryElementsAttributeValue: String
 	) {
-		attribute(USAGE_ATTRIBUTE, objects.named(JAVA_RUNTIME))
 		attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
+		attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
 		attribute(LIBRARY_ELEMENTS_ATTRIBUTE,
 			objects.named(libraryElementsAttributeValue))
-		attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
+		attribute(USAGE_ATTRIBUTE, objects.named(JAVA_RUNTIME))
 	}
 }
