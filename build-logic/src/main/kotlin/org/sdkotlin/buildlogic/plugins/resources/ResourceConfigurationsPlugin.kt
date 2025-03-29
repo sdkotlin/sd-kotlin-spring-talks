@@ -105,6 +105,9 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 			@Suppress("UnstableApiUsage")
 			project.configurations.consumable(consumableConfigurationName.get()) {
 				attributes {
+					// TODO: Remove debug logging.
+					println("Apply resource attributes for '${this@configureEach.name}' to ${consumableConfigurationName.get()}...")
+
 					applyAttributes(resourceAttributes)
 				}
 			}

@@ -14,6 +14,7 @@ kotlinx-datetime = "0.6.2"
 log4j = "2.24.1"
 log4j-kotlin = "1.5.0"
 mockk = "1.13.17"
+osdetector-gradle-plugin = "1.7.3"
 spring = "6.2.5"
 spring-boot = "3.4.4"
 spring-mockk = "4.0.2"
@@ -127,6 +128,10 @@ version.ref = "mockk"
 module = "io.mockk:mockk-dsl-jvm"
 version.ref = "mockk"
 
+[libraries.osdetector-gradle-plugin-dependency]
+module = "com.google.gradle:osdetector-gradle-plugin"
+version.ref = "osdetector-gradle-plugin"
+
 [libraries.spring]
 module = "org.springframework:spring"
 
@@ -239,6 +244,10 @@ version.ref = "jvm-dependency-conflict-resolution"
 [plugins.jvm-dependency-conflict-resolution-gradle-plugin]
 id = "org.gradlex.jvm-dependency-conflict-resolution"
 version.ref = "jvm-dependency-conflict-resolution"
+
+[plugins.osdetector-gradle-plugin]
+id = "com.google.osdetector"
+version.ref = "osdetector-gradle-plugin"
 
 [plugins.springboot-plugin]
 id = "org.springframework.boot"

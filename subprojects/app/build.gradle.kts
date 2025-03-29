@@ -27,6 +27,9 @@ dependencies {
 	// A project with a transitive dependency on a project with a custom
 	// resources artifact.
 	runtimeOnly(projects.subprojects.customResourcesIntermediary)
+	// A project with a transitive dependency on a project with a native
+	// resources artifact.
+	runtimeOnly(projects.subprojects.nativeResourcesIntermediary)
 
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)

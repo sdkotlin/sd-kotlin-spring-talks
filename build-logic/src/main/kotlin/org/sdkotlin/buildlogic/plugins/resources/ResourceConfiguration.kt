@@ -84,6 +84,9 @@ abstract class ResourceConfiguration @Inject constructor(
 	 * @param action a configuration block that defines the attributes.
 	 */
 	fun attributes(action: ResourceAttributes.() -> Unit) {
+		// TODO: Remove debug logging.
+		println("Configuring resource attributes for '$name'...")
+
 		resourceAttributes.action()
 	}
 }

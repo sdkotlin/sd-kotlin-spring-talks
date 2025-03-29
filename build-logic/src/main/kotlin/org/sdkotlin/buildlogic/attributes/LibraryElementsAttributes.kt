@@ -13,7 +13,7 @@ import org.gradle.api.provider.Provider
 import org.gradle.kotlin.dsl.named
 
 /**
- * A namespace for custom [LIBRARY_ELEMENTS_ATTRIBUTE] utilities.
+ * A namespace for [LIBRARY_ELEMENTS_ATTRIBUTE] utilities.
  */
 object LibraryElementsAttributes {
 
@@ -25,6 +25,9 @@ object LibraryElementsAttributes {
 		objects: ObjectFactory,
 		libraryElementsAttributeValue: Provider<String>
 	) {
+		// TODO: Remove debug logging.
+		println("Setting library elements attributes for '$libraryElementsAttributeValue'...")
+
 		attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
 		attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
 		attribute(LIBRARY_ELEMENTS_ATTRIBUTE,

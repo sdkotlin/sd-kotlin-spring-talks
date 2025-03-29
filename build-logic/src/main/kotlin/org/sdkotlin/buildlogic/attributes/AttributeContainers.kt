@@ -17,6 +17,10 @@ fun AttributeContainer.applyAttributes(
 		@Suppress("UNCHECKED_CAST")
 		val value =
 			otherAttributeContainer.getAttribute<Any>(key as Attribute<Any>)
+
+		// TODO: Remove debug logging.
+		println("Applying attribute '$key' with value '$value'...")
+
 		attribute(key, value as Any)
 	}
 }
