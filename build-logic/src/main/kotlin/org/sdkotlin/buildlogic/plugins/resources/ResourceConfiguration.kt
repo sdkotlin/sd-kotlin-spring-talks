@@ -11,7 +11,7 @@ import javax.inject.Inject
  * A project extension for configuring the [ResourceConfigurationsPlugin].
  *
  * @property name the resource configuration name. Used to derive the default
- * value other properties.
+ * values for other properties.
  * @param objects the injected [ObjectFactory].
  * @param layout the injected [ProjectLayout]
  */
