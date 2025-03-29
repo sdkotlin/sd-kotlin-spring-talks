@@ -27,16 +27,18 @@ import javax.inject.Inject
  * ```
  * org.gradle.category            = library
  * org.gradle.dependency.bundling = external
- * org.gradle.libraryelements     = <name>-resources
+ * org.gradle.libraryelements     = <libraryElementsAttributeValue>
  * org.gradle.usage               = java-runtime
  * ```
  *
- * @param name the name of the resource configuration (used to derive the
- * value for the `org.gradle.libraryelements` attribute, if not overridden).
+ * @param libraryElementsAttributeValue the value used for the
+ * `org.gradle.libraryelements` attribute, if the default attributes are not
+ * overridden.
+ * @param objects the injected [ObjectFactory].
  */
 abstract class ResourceAttributes @Inject constructor(
+	libraryElementsAttributeValue: Provider<String>,
 	objects: ObjectFactory,
-	name: String,
 ) : AttributeContainer {
 
 	private val resourceAttributes: MapProperty<Attribute<*>, Any> =
@@ -46,7 +48,9 @@ abstract class ResourceAttributes @Inject constructor(
 					CATEGORY_ATTRIBUTE to objects.named<Category>(LIBRARY),
 					BUNDLING_ATTRIBUTE to objects.named<Bundling>(EXTERNAL),
 					LIBRARY_ELEMENTS_ATTRIBUTE to
-						objects.named<LibraryElements>("$name-resources"),
+						objects.named<LibraryElements>(
+							libraryElementsAttributeValue.get()
+						),
 					USAGE_ATTRIBUTE to objects.named<Usage>(JAVA_RUNTIME),
 				)
 			)

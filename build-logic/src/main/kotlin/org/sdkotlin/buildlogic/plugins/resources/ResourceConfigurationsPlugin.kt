@@ -56,9 +56,9 @@ import org.sdkotlin.buildlogic.attributes.applyAttributes
  * }
  * ```
  *
- * If any attributes are configured, none of the default attributes are applied,
- * and must be re-declared as needed. This is to ensure precise, unambiguous
- * definition of variants.
+ * If any attributes are configured, none of the default attributes will be
+ * applied, and must be redeclared as needed. This is to ensure precise,
+ * unambiguous definition of variants.
  *
  * A dependency handler extension is added to assist consuming projects in
  * declaring a dependency on the resource variant. For a resource configuration
@@ -102,9 +102,8 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 
 			// Create a variant-aware consumable configuration for this resource
 			// configuration's artifacts.
-			val consumableConfigurationName = "${name}Elements"
 			@Suppress("UnstableApiUsage")
-			project.configurations.consumable(consumableConfigurationName) {
+			project.configurations.consumable(consumableConfigurationName.get()) {
 				attributes {
 					applyAttributes(resourceAttributes)
 				}
@@ -116,7 +115,7 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 			if (resourceDirectory.get().asFile.exists()) {
 
 				project.artifacts.add(
-					consumableConfigurationName,
+					consumableConfigurationName.get(),
 					resourceDirectory
 				) {
 					type = JVM_RESOURCES_DIRECTORY
@@ -125,10 +124,9 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 
 			// Add a `DependencyHandler` extension for declaring a dependency on
 			// the resource configuration's artifact variant.
-			val dependencyHandlerExtensionName = "${name}Resources"
 			project.dependencies.extensions.add(
 				DependencyCreationExtension::class.java,
-				dependencyHandlerExtensionName,
+				dependencyHandlerExtensionName.get(),
 				AttributesDependencyCreationExtension(
 					project.dependencies,
 					resourceAttributes,

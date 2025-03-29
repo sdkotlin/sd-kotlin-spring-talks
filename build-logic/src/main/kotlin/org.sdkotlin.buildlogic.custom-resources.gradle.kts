@@ -55,7 +55,7 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							"${resourceConfiguration.name}-resources"
+							resourceConfiguration.libraryElementsAttributeValue
 						)
 					}
 				}.files
@@ -80,7 +80,8 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							libraryElementsAttributeValue = CLASSES_AND_RESOURCES
+							libraryElementsAttributeValue =
+								provider { CLASSES_AND_RESOURCES }
 						)
 					}
 				}.files

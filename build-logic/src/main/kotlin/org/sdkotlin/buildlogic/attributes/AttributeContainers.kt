@@ -6,6 +6,9 @@ import org.gradle.api.attributes.AttributeContainer
 /**
  * An extension function to assist with applying the attributes from one
  * [AttributeContainer] to another.
+ *
+ * @param otherAttributeContainer the `AttributeContainer` to apply the
+ * attributes to.
  */
 fun AttributeContainer.applyAttributes(
 	otherAttributeContainer: AttributeContainer,
