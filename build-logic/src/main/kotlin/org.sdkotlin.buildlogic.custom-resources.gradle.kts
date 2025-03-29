@@ -2,6 +2,7 @@ import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
+import org.sdkotlin.buildlogic.tasks.PrintClasspath
 
 plugins {
 	// Java plugin application only strictly needed for ensuring
@@ -86,26 +87,5 @@ tasks {
 					}
 				}.files
 		}
-	}
-}
-
-@CacheableTask
-abstract class PrintClasspath : DefaultTask() {
-
-	@get:Input
-	abstract val classpathName: Property<String>
-
-	@get:Classpath
-	abstract val classpath: Property<FileCollection>
-
-	@TaskAction
-	fun printClasspath() {
-
-		val classpathAsPath = classpath.get().asPath
-
-		val wrappedClasspath =
-			classpathAsPath.replace(File.pathSeparator, "\n")
-
-		logger.lifecycle("${classpathName.get()}: \n$wrappedClasspath")
 	}
 }
