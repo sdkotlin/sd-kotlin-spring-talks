@@ -1,14 +1,7 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
-import org.gradle.api.attributes.AttributeContainer
-import org.gradle.kotlin.dsl.container
-import org.sdkotlin.buildlogic.artifacts.dsl.AttributesDependencyCreationExtension
-import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
-import org.sdkotlin.buildlogic.attributes.applyAttributes
 
 /**
  * A Gradle plugin for registering named resource variants in support of
@@ -91,66 +84,13 @@ class ResourceConfigurationsPlugin : Plugin<Project> {
 
 		// Add a project extension for declaration and configuration of
 		// resource configurations.
-		val resourceConfigurationContainer: NamedDomainObjectContainer<ResourceConfiguration> =
-			project.container<ResourceConfiguration>()
+		val resourceConfigurationsExtension: ResourceConfigurationsExtension =
+			project.objects
+				.newInstance(ResourceConfigurationsExtension::class.java)
 
 		project.extensions.add(
 			RESOURCE_CONFIGURATION_EXTENSION_NAME,
-			resourceConfigurationContainer
+			resourceConfigurationsExtension
 		)
-
-		resourceConfigurationContainer.all {
-
-			val resourceAttributesProvider =
-				project.provider<AttributeContainer> { resourceAttributes }
-
-			// Create a variant-aware consumable configuration for this resource
-			// configuration's artifacts.
-			@Suppress("UnstableApiUsage")
-			project.configurations.consumable(consumableConfigurationName.get())
-				.configure {
-					attributes {
-
-						// TODO: Remove debug logging.
-						println(
-							"Applying attributes for '$name' " +
-								"to consumable configuration " +
-								"'${consumableConfigurationName.get()}'..."
-						)
-
-						applyAttributes(resourceAttributesProvider)
-					}
-				}
-
-			// Any files in "src/main/<resourceConfigurationName>/" are
-			// resources for this configuration. No build step is necessary, so
-			// directly add the directory as a project artifact.
-			if (resourceDirectory.get().asFile.exists()) {
-
-				// TODO: Remove debug logging.
-				println(
-					"Adding resource directory '${resourceDirectory.get()}' " +
-						"to project artifacts for '$name'..."
-				)
-
-				project.artifacts.add(
-					consumableConfigurationName.get(),
-					resourceDirectory
-				) {
-					type = JVM_RESOURCES_DIRECTORY
-				}
-			}
-
-			// Add a `DependencyHandler` extension for declaring a dependency on
-			// the resource configuration's artifact variant.
-			project.dependencies.extensions.add(
-				DependencyCreationExtension::class.java,
-				dependencyHandlerExtensionName.get(),
-				AttributesDependencyCreationExtension(
-					project.dependencies,
-					resourceAttributesProvider,
-				)
-			)
-		}
 	}
 }

@@ -1,7 +1,9 @@
 import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.NativeAttributes.applyNativeAttributes
+import org.sdkotlin.buildlogic.osdetector.osAsOperatingSystemFamilyAttributeValue
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
+import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 import org.sdkotlin.buildlogic.tasks.PrintClasspath
 
@@ -16,16 +18,23 @@ val currentOsResourceConfigurationName = "native"
 
 apply<ResourceConfigurationsPlugin>()
 
-configure<NamedDomainObjectContainer<ResourceConfiguration>> {
+configure<ResourceConfigurationsExtension> {
 	create(currentOsResourceConfigurationName) {
+
+		val operatingSystemAttributeValue =
+			osdetector.osAsOperatingSystemFamilyAttributeValue()
+
+		resourceDirectory = layout.projectDirectory
+			.dir("src/main/$operatingSystemAttributeValue")
+
 		attributes {
 			applyLibraryElementsAttributes(
 				objects,
-				libraryElementsAttributeValue
+				libraryElementsAttributeValue.get()
 			)
 			applyNativeAttributes(
 				objects,
-				provider { osdetector.os }
+				operatingSystemAttributeValue
 			)
 		}
 	}
@@ -34,14 +43,16 @@ configure<NamedDomainObjectContainer<ResourceConfiguration>> {
 // Print tasks for demonstration purposes only...
 
 val currentOsResourceConfiguration: ResourceConfiguration =
-	the<NamedDomainObjectContainer<ResourceConfiguration>>()[currentOsResourceConfigurationName]
+	the<ResourceConfigurationsExtension>()[currentOsResourceConfigurationName]
 
 tasks {
 
-	register<PrintClasspath>("printCurrentOsRuntimeClasspath") {
+	register<PrintClasspath>("printRuntimeClasspath") {
 
 		group = "native-resources"
-		description = "Prints the current OS runtime classpath"
+		description =
+			"Prints the runtime classpath, including the native resources " +
+				"for the current OS."
 
 		classpathName = "runtimeClasspath"
 
@@ -50,11 +61,11 @@ tasks {
 		}
 	}
 
-	register<PrintClasspath>("printCurrentOsResourcesClasspath") {
+	register<PrintClasspath>("printRuntimeClasspathWithOnlyCurrentOsResources") {
 
 		group = "native-resources"
 		description =
-			"Prints the current OS resources subset of the runtime classpath"
+			"Prints only the current OS resources from the runtime classpath."
 
 		classpathName = "currentOsResourcesClasspath"
 
@@ -68,11 +79,11 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							currentOsResourceConfiguration.libraryElementsAttributeValue
+							currentOsResourceConfiguration.libraryElementsAttributeValue.get()
 						)
 						applyNativeAttributes(
 							objects,
-							provider { osdetector.os }
+							osdetector.osAsOperatingSystemFamilyAttributeValue()
 						)
 					}
 				}.files
@@ -83,7 +94,7 @@ tasks {
 
 		group = "native-resources"
 		description =
-			"Prints the runtime classpath without the custom resources"
+			"Prints the runtime classpath without the current OS resources."
 
 		classpathName = "runtimeClasspathWithoutCurrentOsResources"
 
@@ -98,7 +109,7 @@ tasks {
 						applyLibraryElementsAttributes(
 							objects,
 							libraryElementsAttributeValue =
-								provider { CLASSES_AND_RESOURCES }
+								CLASSES_AND_RESOURCES
 						)
 					}
 				}.files

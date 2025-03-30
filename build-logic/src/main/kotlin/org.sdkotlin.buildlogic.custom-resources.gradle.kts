@@ -1,6 +1,7 @@
 import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
+import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 import org.sdkotlin.buildlogic.tasks.PrintClasspath
 
@@ -15,21 +16,22 @@ val resourceConfigurationName = "custom"
 
 apply<ResourceConfigurationsPlugin>()
 
-configure<NamedDomainObjectContainer<ResourceConfiguration>> {
+configure<ResourceConfigurationsExtension> {
 	create(resourceConfigurationName)
 }
 
 // Print tasks for demonstration purposes only...
 
 val resourceConfiguration: ResourceConfiguration =
-	the<NamedDomainObjectContainer<ResourceConfiguration>>()[resourceConfigurationName]
+	the<ResourceConfigurationsExtension>()[resourceConfigurationName]
 
 tasks {
 
 	register<PrintClasspath>("printRuntimeClasspath") {
 
 		group = "custom-resources"
-		description = "Prints the runtime classpath"
+		description =
+			"Prints the runtime classpath, including the custom resources."
 
 		classpathName = "runtimeClasspath"
 
@@ -38,11 +40,11 @@ tasks {
 		}
 	}
 
-	register<PrintClasspath>("printCustomResourcesClasspath") {
+	register<PrintClasspath>("printRuntimeClasspathWithOnlyCustomResources") {
 
 		group = "custom-resources"
 		description =
-			"Prints the custom resources subset of the runtime classpath"
+			"Prints only the custom resources from the runtime classpath."
 
 		classpathName = "customResourcesClasspath"
 
@@ -56,7 +58,7 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							resourceConfiguration.libraryElementsAttributeValue
+							resourceConfiguration.libraryElementsAttributeValue.get()
 						)
 					}
 				}.files
@@ -67,7 +69,7 @@ tasks {
 
 		group = "custom-resources"
 		description =
-			"Prints the runtime classpath without the custom resources"
+			"Prints the runtime classpath without the custom resources."
 
 		classpathName = "runtimeClasspathWithoutCustomResources"
 
@@ -82,7 +84,7 @@ tasks {
 						applyLibraryElementsAttributes(
 							objects,
 							libraryElementsAttributeValue =
-								provider { CLASSES_AND_RESOURCES }
+								CLASSES_AND_RESOURCES
 						)
 					}
 				}.files

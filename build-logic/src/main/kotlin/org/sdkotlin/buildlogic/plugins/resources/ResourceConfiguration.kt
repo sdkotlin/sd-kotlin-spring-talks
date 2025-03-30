@@ -21,7 +21,6 @@ abstract class ResourceConfiguration @Inject constructor(
 	objects: ObjectFactory,
 	layout: ProjectLayout,
 ) {
-
 	/**
 	 * Represents the directory where resource files for a specific resource
 	 * configuration are located. This directory is used to add resource files
