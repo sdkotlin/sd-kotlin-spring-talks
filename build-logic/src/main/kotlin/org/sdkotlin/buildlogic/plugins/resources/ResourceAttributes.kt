@@ -86,4 +86,7 @@ abstract class ResourceAttributes @Inject constructor(
 		resourceAttributes.get().contains(key)
 
 	override fun getAttributes(): AttributeContainer = this
+
+	override fun toString(): String =
+		resourceAttributes.orNull?.toString() ?: "{}"
 }

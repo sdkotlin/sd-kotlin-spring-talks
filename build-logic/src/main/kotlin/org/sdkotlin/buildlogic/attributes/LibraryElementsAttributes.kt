@@ -25,9 +25,6 @@ object LibraryElementsAttributes {
 		objects: ObjectFactory,
 		libraryElementsAttributeValue: Provider<String>
 	) {
-		// TODO: Remove debug logging.
-		println("Setting library elements attributes for '$libraryElementsAttributeValue'...")
-
 		attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
 		attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
 		attribute(LIBRARY_ELEMENTS_ATTRIBUTE,

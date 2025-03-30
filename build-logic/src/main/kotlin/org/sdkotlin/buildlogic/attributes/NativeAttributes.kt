@@ -34,7 +34,6 @@ object NativeAttributes {
 					)
 			}
 
-		println("Setting native attributes for operating system '$operatingSystemAttributeValue'...")
 		attribute(
 			OPERATING_SYSTEM_ATTRIBUTE,
 			objects.named(operatingSystemAttributeValue)

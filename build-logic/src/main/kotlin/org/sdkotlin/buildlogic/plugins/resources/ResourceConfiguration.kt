@@ -5,6 +5,7 @@ import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.ProjectLayout
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.Nested
 import javax.inject.Inject
 
 /**
@@ -68,7 +69,8 @@ abstract class ResourceConfiguration @Inject constructor(
 		objects.property(String::class.java)
 			.convention("${name}Resources")
 
-	internal val resourceAttributes: ResourceAttributes =
+	@get:Nested
+	val resourceAttributes: ResourceAttributes =
 		objects.newInstance(
 			ResourceAttributes::class.java,
 			libraryElementsAttributeValue,
@@ -83,10 +85,6 @@ abstract class ResourceConfiguration @Inject constructor(
 	 *
 	 * @param action a configuration block that defines the attributes.
 	 */
-	fun attributes(action: ResourceAttributes.() -> Unit) {
-		// TODO: Remove debug logging.
-		println("Configuring resource attributes for '$name'...")
-
+	fun attributes(action: ResourceAttributes.() -> Unit) =
 		resourceAttributes.action()
-	}
 }

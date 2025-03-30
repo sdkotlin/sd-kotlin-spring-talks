@@ -4,6 +4,7 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.attributes.AttributeContainer
+import org.gradle.api.provider.Provider
 import org.sdkotlin.buildlogic.attributes.applyAttributes
 
 /**
@@ -12,7 +13,7 @@ import org.sdkotlin.buildlogic.attributes.applyAttributes
  */
 class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val dependencyAttributes: AttributeContainer,
+	private val dependencyAttributes: Provider<AttributeContainer>,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {
@@ -20,12 +21,13 @@ class AttributesDependencyCreationExtension(
 		val dependency = dependencyHandler.create(notation)
 
 		require(dependency is ModuleDependency) {
-			"Dependency type ${dependency::class.qualifiedName} unknown!"
+			"Dependency type '${dependency::class.qualifiedName}' unknown!"
 		}
 
 		dependency.attributes {
+
 			// TODO: Remove debug logging.
-			println("Applying attributes for dependency '$dependency'...")
+			println("Applying attributes for dependency '$dependency'")
 
 			applyAttributes(dependencyAttributes)
 		}
