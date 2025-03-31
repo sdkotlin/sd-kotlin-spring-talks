@@ -14,12 +14,12 @@ import javax.inject.Inject
  * @property name the resource configuration name. Used to derive the default
  * values for other properties.
  * @param objects the injected [ObjectFactory].
- * @param layout the injected [ProjectLayout]
+ * @param layout the injected [ProjectLayout].
  */
 abstract class ResourceConfiguration @Inject constructor(
 	val name: String,
-	objects: ObjectFactory,
 	layout: ProjectLayout,
+	objects: ObjectFactory,
 ) {
 	/**
 	 * Represents the directory where resource files for a specific resource

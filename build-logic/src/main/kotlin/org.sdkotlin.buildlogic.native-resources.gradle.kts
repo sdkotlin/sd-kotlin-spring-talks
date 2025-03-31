@@ -1,6 +1,7 @@
 import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.NativeAttributes.applyNativeAttributes
+import org.sdkotlin.buildlogic.attributes.applyAttributes
 import org.sdkotlin.buildlogic.osdetector.osAsOperatingSystemFamilyAttributeValue
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
@@ -15,6 +16,9 @@ plugins {
 }
 
 val currentOsResourceConfigurationName = "native"
+val linuxResourceConfigurationName = "linux"
+val macosResourceConfigurationName = "macos"
+val windowsResourceConfigurationName = "windows"
 
 apply<ResourceConfigurationsPlugin>()
 
@@ -38,12 +42,57 @@ configure<ResourceConfigurationsExtension> {
 			)
 		}
 	}
+	create(linuxResourceConfigurationName) {
+		attributes {
+			applyLibraryElementsAttributes(
+				objects,
+				libraryElementsAttributeValue.get()
+			)
+			applyNativeAttributes(
+				objects,
+				linuxResourceConfigurationName
+			)
+		}
+	}
+	create(macosResourceConfigurationName) {
+		attributes {
+			applyLibraryElementsAttributes(
+				objects,
+				libraryElementsAttributeValue.get()
+			)
+			applyNativeAttributes(
+				objects,
+				macosResourceConfigurationName
+			)
+		}
+	}
+	create(windowsResourceConfigurationName) {
+		attributes {
+			applyLibraryElementsAttributes(
+				objects,
+				libraryElementsAttributeValue.get()
+			)
+			applyNativeAttributes(
+				objects,
+				windowsResourceConfigurationName
+			)
+		}
+	}
 }
 
 // Print tasks for demonstration purposes only...
 
 val currentOsResourceConfiguration: ResourceConfiguration =
 	the<ResourceConfigurationsExtension>()[currentOsResourceConfigurationName]
+
+val linuxResourceConfiguration: ResourceConfiguration =
+	the<ResourceConfigurationsExtension>()[linuxResourceConfigurationName]
+
+val macosResourceConfiguration: ResourceConfiguration =
+	the<ResourceConfigurationsExtension>()[macosResourceConfigurationName]
+
+val windowsResourceConfiguration: ResourceConfiguration =
+	the<ResourceConfigurationsExtension>()[windowsResourceConfigurationName]
 
 tasks {
 
@@ -61,36 +110,7 @@ tasks {
 		}
 	}
 
-	register<PrintClasspath>("printRuntimeClasspathWithOnlyCurrentOsResources") {
-
-		group = "native-resources"
-		description =
-			"Prints only the current OS resources from the runtime classpath."
-
-		classpathName = "currentOsResourcesClasspath"
-
-		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
-
-					@Suppress("UnstableApiUsage")
-					withVariantReselection()
-
-					attributes {
-						applyLibraryElementsAttributes(
-							objects,
-							currentOsResourceConfiguration.libraryElementsAttributeValue.get()
-						)
-						applyNativeAttributes(
-							objects,
-							osdetector.osAsOperatingSystemFamilyAttributeValue()
-						)
-					}
-				}.files
-		}
-	}
-
-	register<PrintClasspath>("printRuntimeClasspathWithoutCurrentOsResources") {
+	register<PrintClasspath>("printRuntimeClasspathWithoutNativeResources") {
 
 		group = "native-resources"
 		description =
@@ -110,6 +130,102 @@ tasks {
 							objects,
 							libraryElementsAttributeValue =
 								CLASSES_AND_RESOURCES
+						)
+					}
+				}.files
+		}
+	}
+
+	register<PrintClasspath>("printRuntimeClasspathWithOnlyCurrentOsResources") {
+
+		group = "native-resources"
+		description =
+			"Prints only the current OS resources from the runtime classpath."
+
+		classpathName = "currentOsResourcesClasspath"
+
+		classpath = provider {
+			configurations.named("runtimeClasspath").get().incoming
+				.artifactView {
+
+					@Suppress("UnstableApiUsage")
+					withVariantReselection()
+
+					attributes {
+						applyAttributes(
+							currentOsResourceConfiguration.resourceAttributes
+						)
+					}
+				}.files
+		}
+	}
+
+	register<PrintClasspath>("printRuntimeClasspathWithOnlyLinuxResources") {
+
+		group = "native-resources"
+		description =
+			"Prints only the Linux resources from the runtime classpath."
+
+		classpathName = "linuxResourcesClasspath"
+
+		classpath = provider {
+			configurations.named("runtimeClasspath").get().incoming
+				.artifactView {
+
+					@Suppress("UnstableApiUsage")
+					withVariantReselection()
+
+					attributes {
+						applyAttributes(
+							linuxResourceConfiguration.resourceAttributes
+						)
+					}
+				}.files
+		}
+	}
+
+	register<PrintClasspath>("printRuntimeClasspathWithOnlyMacOSResources") {
+
+		group = "native-resources"
+		description =
+			"Prints only the MacOS resources from the runtime classpath."
+
+		classpathName = "macosResourcesClasspath"
+
+		classpath = provider {
+			configurations.named("runtimeClasspath").get().incoming
+				.artifactView {
+
+					@Suppress("UnstableApiUsage")
+					withVariantReselection()
+
+					attributes {
+						applyAttributes(
+							macosResourceConfiguration.resourceAttributes
+						)
+					}
+				}.files
+		}
+	}
+
+	register<PrintClasspath>("printRuntimeClasspathWithOnlyWindowsResources") {
+
+		group = "native-resources"
+		description =
+			"Prints only the Windows resources from the runtime classpath."
+
+		classpathName = "windowsResourcesClasspath"
+
+		classpath = provider {
+			configurations.named("runtimeClasspath").get().incoming
+				.artifactView {
+
+					@Suppress("UnstableApiUsage")
+					withVariantReselection()
+
+					attributes {
+						applyAttributes(
+							windowsResourceConfiguration.resourceAttributes
 						)
 					}
 				}.files

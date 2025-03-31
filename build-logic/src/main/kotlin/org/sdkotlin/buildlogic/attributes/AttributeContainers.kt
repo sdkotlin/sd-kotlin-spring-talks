@@ -2,7 +2,6 @@ package org.sdkotlin.buildlogic.attributes
 
 import org.gradle.api.attributes.Attribute
 import org.gradle.api.attributes.AttributeContainer
-import org.gradle.api.provider.Provider
 
 /**
  * An extension function to assist with applying the attributes from one
@@ -12,17 +11,15 @@ import org.gradle.api.provider.Provider
  * attributes to.
  */
 fun AttributeContainer.applyAttributes(
-	otherAttributeContainer: Provider<AttributeContainer>,
+	otherAttributeContainer: AttributeContainer,
 ) {
-	val theOtherAttributeContainer = otherAttributeContainer.get()
-
 	// TODO: Removed debug logging.
-	println("Applying attributes $theOtherAttributeContainer")
+	println("Applying attributes $otherAttributeContainer")
 
-	theOtherAttributeContainer.keySet().forEach { key ->
+	otherAttributeContainer.keySet().forEach { key ->
 		@Suppress("UNCHECKED_CAST")
 		val value =
-			theOtherAttributeContainer.getAttribute<Any>(key as Attribute<Any>)
+			otherAttributeContainer.getAttribute<Any>(key as Attribute<Any>)
 		attribute(key, value as Any)
 	}
 }

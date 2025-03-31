@@ -4,7 +4,6 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.attributes.AttributeContainer
-import org.gradle.api.provider.Provider
 import org.sdkotlin.buildlogic.attributes.applyAttributes
 
 /**
@@ -13,7 +12,7 @@ import org.sdkotlin.buildlogic.attributes.applyAttributes
  */
 class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val dependencyAttributes: Provider<AttributeContainer>,
+	private val dependencyAttributes: AttributeContainer,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {
