@@ -2,10 +2,8 @@ package org.sdkotlin.buildlogic.plugins.resources
 
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
-import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
 import org.sdkotlin.buildlogic.artifacts.dsl.AttributesDependencyCreationExtension
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
-import org.sdkotlin.buildlogic.attributes.applyAttributes
 import javax.inject.Inject
 
 /**
@@ -43,34 +41,6 @@ abstract class ResourceConfigurationsExtension @Inject constructor(
 
 		with(resourceConfiguration) {
 
-			val theConsumableConfigurationName =
-				consumableConfigurationName.get()
-			val theResourceDirectory = resourceDirectory.get()
-
-			// Create a variant-aware consumable configuration for this resource
-			// configuration's artifacts.
-			@Suppress("UnstableApiUsage")
-			project.configurations.consumable(theConsumableConfigurationName)
-				.configure {
-					attributes {
-						applyAttributes(resourceAttributes)
-					}
-				}
-
-			// Any files in "src/main/<resourceConfigurationName>/" are
-			// resources for this configuration. No build step is necessary, so
-			// directly add the directory as a project artifact.
-			if (theResourceDirectory.asFile.exists()) {
-				project.logger.lifecycle("Adding resource directory: {}",
-					theResourceDirectory)
-				project.artifacts.add(
-					theConsumableConfigurationName,
-					theResourceDirectory
-				) {
-					type = JVM_RESOURCES_DIRECTORY
-				}
-			}
-
 			// Add a `DependencyHandler` extension for declaring a dependency on
 			// the resource configuration's artifact variant.
 			project.dependencies.extensions.add(
@@ -81,6 +51,10 @@ abstract class ResourceConfigurationsExtension @Inject constructor(
 					resourceAttributes,
 				)
 			)
+
+			if (resourceConfigurationVariants.isEmpty()) {
+				resourceConfigurationVariants.variant(name)
+			}
 		}
 
 		resourceConfigurations += resourceConfiguration

@@ -1,4 +1,5 @@
-import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
+import org.gradle.api.attributes.LibraryElements.JAR
+import org.gradle.nativeplatform.OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.NativeAttributes.applyNativeAttributes
 import org.sdkotlin.buildlogic.attributes.applyAttributes
@@ -15,88 +16,70 @@ plugins {
 	id("java")
 }
 
-val currentOsResourceConfigurationName = "native"
-val linuxResourceConfigurationName = "linux"
-val macosResourceConfigurationName = "macos"
-val windowsResourceConfigurationName = "windows"
+val nativeResourceConfigurationName = "native"
+val linuxVariantName = "linux"
+val macosVariantName = "macos"
+val windowsVariantName = "windows"
 
 apply<ResourceConfigurationsPlugin>()
 
 configure<ResourceConfigurationsExtension> {
-	create(currentOsResourceConfigurationName) {
-
-		val operatingSystemAttributeValue =
-			osdetector.osAsOperatingSystemFamilyAttributeValue()
-
-		resourceDirectory = layout.projectDirectory
-			.dir("src/main/$operatingSystemAttributeValue")
-
-		attributes {
-			applyLibraryElementsAttributes(
-				objects,
-				libraryElementsAttributeValue.get()
-			)
-			applyNativeAttributes(
-				objects,
-				operatingSystemAttributeValue
-			)
+	create(nativeResourceConfigurationName) {
+		variants {
+			variant(linuxVariantName) {
+				attributes {
+					applyNativeAttributes(
+						objects,
+						linuxVariantName
+					)
+				}
+			}
+			variant(macosVariantName) {
+				attributes {
+					applyNativeAttributes(
+						objects,
+						macosVariantName
+					)
+				}
+			}
+			variant(windowsVariantName) {
+				attributes {
+					applyNativeAttributes(
+						objects,
+						windowsVariantName
+					)
+				}
+			}
 		}
 	}
-	create(linuxResourceConfigurationName) {
+}
+
+val nativeResourceConfiguration: ResourceConfiguration =
+	the<ResourceConfigurationsExtension>()[nativeResourceConfigurationName]
+
+val currentOsVariantName =
+	osdetector.osAsOperatingSystemFamilyAttributeValue()
+
+val currentOsResourceVariantAttributes =
+	nativeResourceConfiguration
+		.resourceConfigurationVariants[currentOsVariantName]
+		.variantAttributes
+
+configurations.all {
+	if (isCanBeResolved
+		&& name.contains("runtimeClasspath", ignoreCase = true)
+	) {
 		attributes {
-			applyLibraryElementsAttributes(
-				objects,
-				libraryElementsAttributeValue.get()
-			)
-			applyNativeAttributes(
-				objects,
-				linuxResourceConfigurationName
-			)
-		}
-	}
-	create(macosResourceConfigurationName) {
-		attributes {
-			applyLibraryElementsAttributes(
-				objects,
-				libraryElementsAttributeValue.get()
-			)
-			applyNativeAttributes(
-				objects,
-				macosResourceConfigurationName
-			)
-		}
-	}
-	create(windowsResourceConfigurationName) {
-		attributes {
-			applyLibraryElementsAttributes(
-				objects,
-				libraryElementsAttributeValue.get()
-			)
-			applyNativeAttributes(
-				objects,
-				windowsResourceConfigurationName
-			)
+			applyAttributes(currentOsResourceVariantAttributes)
 		}
 	}
 }
 
 // Print tasks for demonstration purposes only...
 
-val currentOsResourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurationsExtension>()[currentOsResourceConfigurationName]
-
-val linuxResourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurationsExtension>()[linuxResourceConfigurationName]
-
-val macosResourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurationsExtension>()[macosResourceConfigurationName]
-
-val windowsResourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurationsExtension>()[windowsResourceConfigurationName]
-
 tasks {
 
-	register<PrintClasspath>("printRuntimeClasspath") {
+	register<PrintClasspath>("printNativeResourcesRuntimeClasspath") {
 
 		group = "native-resources"
 		description =
@@ -119,8 +102,8 @@ tasks {
 		classpathName = "runtimeClasspathWithoutCurrentOsResources"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
@@ -128,8 +111,7 @@ tasks {
 					attributes {
 						applyLibraryElementsAttributes(
 							objects,
-							libraryElementsAttributeValue =
-								CLASSES_AND_RESOURCES
+							libraryElementsAttributeValue = JAR
 						)
 					}
 				}.files
@@ -145,16 +127,17 @@ tasks {
 		classpathName = "currentOsResourcesClasspath"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
 					attributes {
 						applyAttributes(
-							currentOsResourceConfiguration.resourceAttributes
+							nativeResourceConfiguration.resourceAttributes
 						)
+						applyAttributes(currentOsResourceVariantAttributes)
 					}
 				}.files
 		}
@@ -169,15 +152,20 @@ tasks {
 		classpathName = "linuxResourcesClasspath"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
 					attributes {
 						applyAttributes(
-							linuxResourceConfiguration.resourceAttributes
+							nativeResourceConfiguration.resourceAttributes
+						)
+						applyAttributes(
+							nativeResourceConfiguration
+								.resourceConfigurationVariants[linuxVariantName]
+								.variantAttributes
 						)
 					}
 				}.files
@@ -193,15 +181,20 @@ tasks {
 		classpathName = "macosResourcesClasspath"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
 					attributes {
 						applyAttributes(
-							macosResourceConfiguration.resourceAttributes
+							nativeResourceConfiguration.resourceAttributes
+						)
+						applyAttributes(
+							nativeResourceConfiguration
+								.resourceConfigurationVariants[macosVariantName]
+								.variantAttributes
 						)
 					}
 				}.files
@@ -217,15 +210,20 @@ tasks {
 		classpathName = "windowsResourcesClasspath"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
 					attributes {
 						applyAttributes(
-							windowsResourceConfiguration.resourceAttributes
+							nativeResourceConfiguration.resourceAttributes
+						)
+						applyAttributes(
+							nativeResourceConfiguration
+								.resourceConfigurationVariants[windowsVariantName]
+								.variantAttributes
 						)
 					}
 				}.files

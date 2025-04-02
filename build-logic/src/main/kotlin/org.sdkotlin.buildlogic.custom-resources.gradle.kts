@@ -1,4 +1,4 @@
-import org.gradle.api.attributes.LibraryElements.CLASSES_AND_RESOURCES
+import org.gradle.api.attributes.LibraryElements.JAR
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
@@ -27,7 +27,7 @@ val resourceConfiguration: ResourceConfiguration =
 
 tasks {
 
-	register<PrintClasspath>("printRuntimeClasspath") {
+	register<PrintClasspath>("printCustomResourcesRuntimeClasspath") {
 
 		group = "custom-resources"
 		description =
@@ -84,7 +84,7 @@ tasks {
 						applyLibraryElementsAttributes(
 							objects,
 							libraryElementsAttributeValue =
-								CLASSES_AND_RESOURCES
+								JAR
 						)
 					}
 				}.files

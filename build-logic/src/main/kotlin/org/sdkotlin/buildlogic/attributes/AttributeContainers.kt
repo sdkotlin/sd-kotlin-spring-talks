@@ -13,9 +13,6 @@ import org.gradle.api.attributes.AttributeContainer
 fun AttributeContainer.applyAttributes(
 	otherAttributeContainer: AttributeContainer,
 ) {
-	// TODO: Removed debug logging.
-	println("Applying attributes $otherAttributeContainer")
-
 	otherAttributeContainer.keySet().forEach { key ->
 		@Suppress("UNCHECKED_CAST")
 		val value =

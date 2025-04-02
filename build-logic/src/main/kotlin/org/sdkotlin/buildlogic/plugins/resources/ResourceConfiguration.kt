@@ -1,11 +1,24 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
 import org.gradle.api.artifacts.dsl.DependencyHandler
-import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.attributes.AttributeContainer
+import org.gradle.api.attributes.Bundling
+import org.gradle.api.attributes.Bundling.BUNDLING_ATTRIBUTE
+import org.gradle.api.attributes.Bundling.EXTERNAL
+import org.gradle.api.attributes.Category
+import org.gradle.api.attributes.Category.CATEGORY_ATTRIBUTE
+import org.gradle.api.attributes.Category.LIBRARY
+import org.gradle.api.attributes.LibraryElements
+import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
+import org.gradle.api.attributes.Usage
+import org.gradle.api.attributes.Usage.JAVA_RUNTIME
+import org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE
 import org.gradle.api.file.ProjectLayout
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Nested
+import org.gradle.kotlin.dsl.named
+import org.sdkotlin.buildlogic.attributes.MapBackedAttributeContainer
 import javax.inject.Inject
 
 /**
@@ -18,21 +31,8 @@ import javax.inject.Inject
  */
 abstract class ResourceConfiguration @Inject constructor(
 	val name: String,
-	layout: ProjectLayout,
 	objects: ObjectFactory,
 ) {
-	/**
-	 * Represents the directory where resource files for a specific resource
-	 * configuration are located. This directory is used to add resource files
-	 * as project artifacts, enabling variant-aware handling and consumption of
-	 * these resources by other projects.
-	 *
-	 * By default, this directory is set to "src/main/<[name]>".
-	 */
-	val resourceDirectory: DirectoryProperty =
-		objects.directoryProperty()
-			.convention(layout.projectDirectory.dir("src/main/$name"))
-
 	/**
 	 * Specifies the value for the `org.gradle.libraryelements` attribute of the
 	 * resource configuration. This attribute is utilized to describe the type
@@ -46,19 +46,6 @@ abstract class ResourceConfiguration @Inject constructor(
 			.convention("$name-resources")
 
 	/**
-	 * The name of the consumable configuration created for a resource
-	 * configuration.
-	 *
-	 * The configuration is used to make the artifacts of the resource
-	 * configuration available for consumption by other projects.
-	 *
-	 * By default, the value is set to "<[name]>Elements".
-	 */
-	val consumableConfigurationName: Property<String> =
-		objects.property(String::class.java)
-			.convention("${name}Elements")
-
-	/**
 	 * The name of the [DependencyHandler] extension added for declaring
 	 * dependencies on a specific resource configuration.
 	 *
@@ -69,14 +56,21 @@ abstract class ResourceConfiguration @Inject constructor(
 			.convention("${name}Resources")
 
 	@get:Nested
-	val resourceAttributes: ResourceAttributes =
+	val resourceAttributes: AttributeContainer =
 		objects.newInstance(
-			ResourceAttributes::class.java,
-			libraryElementsAttributeValue,
+			MapBackedAttributeContainer::class.java,
+		).convention(
+			mapOf(
+				CATEGORY_ATTRIBUTE to objects.named<Category>(LIBRARY),
+				BUNDLING_ATTRIBUTE to objects.named<Bundling>(EXTERNAL),
+				LIBRARY_ELEMENTS_ATTRIBUTE to objects.named<LibraryElements>(
+					libraryElementsAttributeValue.get()),
+				USAGE_ATTRIBUTE to objects.named<Usage>(JAVA_RUNTIME),
+			)
 		)
 
 	/**
-	 * Configures the attributes for the resource configuration variant.
+	 * Configures the attributes for the resource configuration.
 	 *
 	 * If any attributes are configured, none of the default attributes will be
 	 * applied, and must be redeclared as needed. This is to ensure precise,
@@ -84,6 +78,24 @@ abstract class ResourceConfiguration @Inject constructor(
 	 *
 	 * @param action a configuration block that defines the attributes.
 	 */
-	fun attributes(action: ResourceAttributes.() -> Unit) =
+	fun attributes(action: AttributeContainer.() -> Unit) =
 		resourceAttributes.action()
+
+	@get:Nested
+	val resourceConfigurationVariants: ResourceConfigurationVariants =
+		objects.newInstance(
+			ResourceConfigurationVariants::class.java,
+			this,
+		)
+
+	/**
+	 * Configures the variants for the resource configuration.
+	 *
+	 * If no variants are configured, defaults to a single variant with the
+	 * attributes of this resource configuration.
+	 *
+	 * @param action a configuration block that creates the variants.
+	 */
+	fun variants(action: ResourceConfigurationVariants.() -> Unit) =
+		resourceConfigurationVariants.action()
 }

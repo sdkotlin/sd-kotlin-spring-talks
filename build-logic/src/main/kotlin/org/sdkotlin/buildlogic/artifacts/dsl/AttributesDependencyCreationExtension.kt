@@ -24,10 +24,6 @@ class AttributesDependencyCreationExtension(
 		}
 
 		dependency.attributes {
-
-			// TODO: Remove debug logging.
-			println("Applying attributes for dependency '$dependency'")
-
 			applyAttributes(dependencyAttributes)
 		}
 
