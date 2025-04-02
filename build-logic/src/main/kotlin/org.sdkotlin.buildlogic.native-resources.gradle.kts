@@ -1,5 +1,4 @@
 import org.gradle.api.attributes.LibraryElements.JAR
-import org.gradle.nativeplatform.OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE
 import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.NativeAttributes.applyNativeAttributes
 import org.sdkotlin.buildlogic.attributes.applyAttributes
