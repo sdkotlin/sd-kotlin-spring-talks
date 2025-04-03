@@ -23,6 +23,19 @@ open class MapBackedAttributeContainer @Inject constructor(
 	private val resourceAttributes: MapProperty<Attribute<*>, Any> =
 		objects.mapProperty(Attribute::class.java, Any::class.java)
 
+	/**
+	 * Sets default attributes for the container by applying the specified map
+	 * of attributes.
+	 *
+	 * This function allows setting a convention for the attributes, which
+	 * defines their default values. If a value for a specific attribute has
+	 * already been set, the convention will not overwrite it.
+	 *
+	 * @param attributes a map of attributes and their default values to apply
+	 * as the convention.
+	 * @return the current instance of the attribute container, enabling method
+	 * chaining.
+	 */
 	fun convention(attributes: Map<Attribute<*>, Any>): AttributeContainer {
 		resourceAttributes.convention(attributes)
 		return this

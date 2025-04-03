@@ -7,6 +7,18 @@ import org.gradle.api.model.ObjectFactory
 import org.sdkotlin.buildlogic.attributes.applyAttributes
 import javax.inject.Inject
 
+/**
+ * A class responsible for managing and defining resource configuration
+ * variants within a project. Each resource configuration variant represents a
+ * specific set of attributes and associated resources. The class facilitates
+ * the creation, customization, and retrieval of these configuration variants.
+ *
+ * Instances of this class are injected into a resource configuration and
+ * operate within the context of a Gradle project.
+ *
+ * @constructor Creates an instance with the specified resource configuration,
+ * project, and object factory.
+ */
 abstract class ResourceConfigurationVariants @Inject constructor(
 	private val resourceConfiguration: ResourceConfiguration,
 	private val project: Project,
@@ -16,6 +28,21 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 		NamedDomainObjectSet<ResourceConfigurationVariant> =
 		objects.namedDomainObjectSet(ResourceConfigurationVariant::class.java)
 
+	/**
+	 * Creates and configures a new resource configuration variant with the
+	 * specified name. The variant represents a unique set of resource
+	 * attributes and resource directory, allowing for variant-aware handling
+	 * and consumption of resources by other projects. If the resource
+	 * directory for the variant exists, it is added as a project artifact for
+	 * consumption.
+	 *
+	 * @param name the name of the resource configuration variant being created.
+	 * It is used to determine the default values for properties such as the
+	 * resource directory and consumable configuration name.
+	 * @param action a configuration block to customize the resource
+	 * configuration variant's attributes and other properties. The block is
+	 * executed on the created variant instance.
+	 */
 	fun variant(
 		name: String,
 		action: ResourceConfigurationVariant.() -> Unit = {}
@@ -70,6 +97,12 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 	operator fun get(name: String): ResourceConfigurationVariant =
 		resourceConfigurationVariants.getByName(name)
 
+	/**
+	 * Checks whether the resource configuration variants collection is empty.
+	 *
+	 * @return true if there are no resource configuration variants, false
+	 * otherwise.
+	 */
 	fun isEmpty(): Boolean =
 		resourceConfigurationVariants.isEmpty()
 }

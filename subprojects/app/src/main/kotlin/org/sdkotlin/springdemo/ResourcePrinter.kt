@@ -13,12 +13,12 @@ class ResourcePrinter(
 
 	override fun run(args: ApplicationArguments?) {
 
-		val nativeResourceContent = resourceLoader
+		val resourceContent = resourceLoader
 			.getResource(resourceLocation)
 			.getContentAsString(UTF_8)
 
 		logger.info {
-			"$resourceLocation content:\n$nativeResourceContent"
+			"$resourceLocation content:\n$resourceContent"
 		}
 	}
 }

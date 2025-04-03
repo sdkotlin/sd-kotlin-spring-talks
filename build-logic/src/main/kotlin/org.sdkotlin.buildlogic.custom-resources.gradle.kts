@@ -1,7 +1,7 @@
 import org.gradle.api.attributes.LibraryElements.JAR
-import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
+import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
-import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
+import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurations
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 import org.sdkotlin.buildlogic.tasks.PrintClasspath
 
@@ -16,14 +16,14 @@ val resourceConfigurationName = "custom"
 
 apply<ResourceConfigurationsPlugin>()
 
-configure<ResourceConfigurationsExtension> {
+configure<ResourceConfigurations> {
 	create(resourceConfigurationName)
 }
 
 // Print tasks for demonstration purposes only...
 
 val resourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurationsExtension>()[resourceConfigurationName]
+	the<ResourceConfigurations>()[resourceConfigurationName]
 
 tasks {
 
@@ -49,8 +49,8 @@ tasks {
 		classpathName = "customResourcesClasspath"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
@@ -74,8 +74,8 @@ tasks {
 		classpathName = "runtimeClasspathWithoutCustomResources"
 
 		classpath = provider {
-			configurations.named("runtimeClasspath").get().incoming
-				.artifactView {
+			configurations.named("runtimeClasspath").get()
+				.incoming.artifactView {
 
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()

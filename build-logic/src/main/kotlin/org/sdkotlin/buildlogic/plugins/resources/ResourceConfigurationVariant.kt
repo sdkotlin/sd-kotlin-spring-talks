@@ -9,6 +9,18 @@ import org.gradle.api.tasks.Nested
 import org.sdkotlin.buildlogic.attributes.MapBackedAttributeContainer
 import javax.inject.Inject
 
+/**
+ * Defines a configuration variant for resources within a project. Each variant
+ * represents a specific set of attributes and a directory path where the
+ * corresponding resource files are located. These variants allow for
+ * variant-aware handling and consumption of resources by other projects.
+ *
+ * @property name The name of the resource configuration variant. Used to
+ * determine default values for various properties, such as the resource
+ * directory and consumable configuration name.
+ * @constructor Creates an instance of the resource configuration variant with
+ * the supplied name, project layout, and object factory.
+ */
 abstract class ResourceConfigurationVariant @Inject constructor(
 	val name: String,
 	layout: ProjectLayout,
@@ -39,6 +51,10 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 		objects.property(String::class.java)
 			.convention("${name}Elements")
 
+	/**
+	 * Represents the attributes associated with a specific resource
+	 * configuration variant.
+	 */
 	@get:Nested
 	val variantAttributes: AttributeContainer =
 		objects.newInstance(

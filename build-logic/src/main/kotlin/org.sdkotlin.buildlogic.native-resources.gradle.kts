@@ -1,10 +1,12 @@
 import org.gradle.api.attributes.LibraryElements.JAR
-import org.sdkotlin.buildlogic.attributes.LibraryElementsAttributes.applyLibraryElementsAttributes
-import org.sdkotlin.buildlogic.attributes.NativeAttributes.applyNativeAttributes
+import org.gradle.nativeplatform.OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE
+import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule
 import org.sdkotlin.buildlogic.attributes.applyAttributes
+import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
+import org.sdkotlin.buildlogic.attributes.applyNativeAttributes
 import org.sdkotlin.buildlogic.osdetector.osAsOperatingSystemFamilyAttributeValue
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
-import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsExtension
+import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurations
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 import org.sdkotlin.buildlogic.tasks.PrintClasspath
 
@@ -22,7 +24,7 @@ val windowsVariantName = "windows"
 
 apply<ResourceConfigurationsPlugin>()
 
-configure<ResourceConfigurationsExtension> {
+configure<ResourceConfigurations> {
 	create(nativeResourceConfigurationName) {
 		variants {
 			variant(linuxVariantName) {
@@ -54,22 +56,20 @@ configure<ResourceConfigurationsExtension> {
 }
 
 val nativeResourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurationsExtension>()[nativeResourceConfigurationName]
+	the<ResourceConfigurations>()[nativeResourceConfigurationName]
 
-val currentOsVariantName =
+val currentOsAttributeValue =
 	osdetector.osAsOperatingSystemFamilyAttributeValue()
 
-val currentOsResourceVariantAttributes =
-	nativeResourceConfiguration
-		.resourceConfigurationVariants[currentOsVariantName]
-		.variantAttributes
+CurrentOsAttributeDisambiguationRule.currentOsAttributeValue =
+	objects.named(currentOsAttributeValue)
 
-configurations.all {
-	if (isCanBeResolved
-		&& name.contains("runtimeClasspath", ignoreCase = true)
-	) {
-		attributes {
-			applyAttributes(currentOsResourceVariantAttributes)
+dependencies {
+	attributesSchema {
+		attribute(OPERATING_SYSTEM_ATTRIBUTE) {
+			disambiguationRules.add(
+				CurrentOsAttributeDisambiguationRule::class.java
+			)
 		}
 	}
 }
@@ -77,6 +77,11 @@ configurations.all {
 // Print tasks for demonstration purposes only...
 
 tasks {
+
+	val currentOsResourceVariantAttributes =
+		nativeResourceConfiguration
+			.resourceConfigurationVariants[currentOsAttributeValue]
+			.variantAttributes
 
 	register<PrintClasspath>("printNativeResourcesRuntimeClasspath") {
 

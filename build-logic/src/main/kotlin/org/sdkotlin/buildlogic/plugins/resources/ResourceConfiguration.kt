@@ -13,7 +13,6 @@ import org.gradle.api.attributes.LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE
 import org.gradle.api.attributes.Usage
 import org.gradle.api.attributes.Usage.JAVA_RUNTIME
 import org.gradle.api.attributes.Usage.USAGE_ATTRIBUTE
-import org.gradle.api.file.ProjectLayout
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Nested
@@ -27,7 +26,6 @@ import javax.inject.Inject
  * @property name the resource configuration name. Used to derive the default
  * values for other properties.
  * @param objects the injected [ObjectFactory].
- * @param layout the injected [ProjectLayout].
  */
 abstract class ResourceConfiguration @Inject constructor(
 	val name: String,

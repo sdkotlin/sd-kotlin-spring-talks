@@ -9,7 +9,7 @@ import org.springframework.core.io.ResourceLoader
 import java.nio.charset.StandardCharsets.UTF_8
 
 @SpringBootTest
-internal class CustomResourcesTransitiveIT {
+internal class NativeResourcesTransitiveIT {
 
 	@Configuration
 	class TestConfig
@@ -20,9 +20,9 @@ internal class CustomResourcesTransitiveIT {
 		resourceLoader: ResourceLoader
 	) {
 		val resourceContent = resourceLoader
-			.getResource("classpath:/custom-resource.txt")
+			.getResource("classpath:/native-resource.txt")
 			.getContentAsString(UTF_8)
 
-		assertThat(resourceContent).contains("Testing custom resources.")
+		assertThat(resourceContent).contains("Testing native resources on")
 	}
 }

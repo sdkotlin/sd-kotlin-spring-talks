@@ -1,1 +1,1 @@
-Testing on MacOS.
+Testing native resources on MacOS.

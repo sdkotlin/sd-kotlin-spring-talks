@@ -16,7 +16,8 @@ import org.gradle.api.Project
  * }
  * ```
  *
- * Multiple configurations can be created via additional `create("<name>")` calls.
+ * Multiple configurations can be created via additional `create("<name>")`
+ * calls.
  *
  * Each named configuration adds a source directory of the same name under
  * 'src/main'. For a configuration named "special", it would be
@@ -76,20 +77,19 @@ import org.gradle.api.Project
 class ResourceConfigurationsPlugin : Plugin<Project> {
 
 	companion object {
-		const val RESOURCE_CONFIGURATION_EXTENSION_NAME =
-			"resourceConfiguration"
+		const val RESOURCE_CONFIGURATIONS_EXTENSION_NAME =
+			"resourceConfigurations"
 	}
 
 	override fun apply(project: Project) {
 
 		// Add a project extension for declaration and configuration of
 		// resource configurations.
-		val resourceConfigurationsExtension: ResourceConfigurationsExtension =
-			project.objects
-				.newInstance(ResourceConfigurationsExtension::class.java)
+		val resourceConfigurationsExtension: ResourceConfigurations =
+			project.objects.newInstance(ResourceConfigurations::class.java)
 
 		project.extensions.add(
-			RESOURCE_CONFIGURATION_EXTENSION_NAME,
+			RESOURCE_CONFIGURATIONS_EXTENSION_NAME,
 			resourceConfigurationsExtension
 		)
 	}
