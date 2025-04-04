@@ -15,7 +15,7 @@ import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule.C
  * phase. This value is then used to determine the closest match among the
  * provided candidates during dependency resolution.
  */
-abstract class CurrentOsAttributeDisambiguationRule :
+open class CurrentOsAttributeDisambiguationRule :
 	AttributeDisambiguationRule<OperatingSystemFamily> {
 
 	companion object {
