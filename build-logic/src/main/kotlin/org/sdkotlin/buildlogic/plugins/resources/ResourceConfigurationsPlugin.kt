@@ -19,14 +19,39 @@ import org.gradle.api.Project
  * Multiple configurations can be created via additional `create("<name>")`
  * calls.
  *
- * Each named configuration adds a source directory of the same name under
+ * Multiple variants of a configuration can be created:
+ *
+ * ```kotlin
+ * resourceConfigurations {
+ *     create("native") {
+ *         variants {
+ *             variant("linux") {
+ *                 attributes {
+ *                     [...]
+ *                 }
+ *             }
+ *             variant("macos") {
+ *                 attributes {
+ *                     [...]
+ *                 }
+ *             }
+ *             [...]
+ *         }
+ *     }
+ * }
+ * ```
+ *
+ * If no variants are declared, a default variant with the same name of the
+ * configuration is added.
+ *
+ * Each variant by default adds a source directory of the same name under
  * 'src/main'. For a configuration named "special", it would be
  * 'src/main/special'. Any resources in this directory will be added as an
  * additional project output.
  *
- * Each configuration can define its own attributes for that project output,
- * enabling variant-aware consumption by other projects. By default, the
- * following attributes are set:
+ * Each configuration and variant can define its own attributes for that project
+ * artifact, enabling variant-aware consumption by other projects. By default,
+ * the following attributes are set:
  * ```
  * org.gradle.category            = library
  * org.gradle.dependency.bundling = external
@@ -43,10 +68,12 @@ import org.gradle.api.Project
  * ```kotlin
  * resourceConfigurations {
  *     create("special") {
- *         attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
- *         attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
- *         attribute(LIBRARY_ELEMENTS_ATTRIBUTE, objects.named("something-else"))
- *         attribute(USAGE_ATTRIBUTE, objects.named(JAVA_RUNTIME))
+ *         attributes {
+ *             attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
+ *             attribute(BUNDLING_ATTRIBUTE, objects.named(EXTERNAL))
+ *             attribute(LIBRARY_ELEMENTS_ATTRIBUTE, objects.named("something-else"))
+ *             attribute(USAGE_ATTRIBUTE, objects.named(JAVA_RUNTIME))
+ *         }
  *     }
  * }
  * ```
@@ -54,6 +81,9 @@ import org.gradle.api.Project
  * If any attributes are configured, none of the default attributes will be
  * applied, and must be redeclared as needed. This is to ensure precise,
  * unambiguous definition of variants.
+ *
+ * Attributes declared for variants are appended to those used for the
+ * configuration as a whole.
  *
  * A dependency handler extension is added to assist consuming projects in
  * declaring a dependency on the resource variant. For a resource configuration
@@ -65,14 +95,18 @@ import org.gradle.api.Project
  * downstream consumers), and thereby available for tasks such as `test` and
  * `run`.
  *
- * Artifact views could then be used to select only the artifacts in
- * the runtime classpath that are from the named resource configuration, or to
+ * Not that the dependency handler extension only adds the attributes for the
+ * base configuration to the dependency declaration. Any additional attributes
+ * for declared variants must be addressed by adding them to the respective
+ * resolvable configurations, or via attribute compatibility and disambiguation
+ * rules. This allows for artifact views to then be used to select only the
+ * artifacts in the runtime classpath that are from a given variant, or to
  * select all the artifacts on the runtime classpath that are _not_ from the
- * named resource configuration. A use case for this may be for creating
- * distributions or generating installers where the resources are located
- * outside a typical 'lib' folder (e.g. in a 'conf/special' or 'bin/special'
- * folder), yet are still placed on the runtime classpath of the
- * application for portable, classpath-relative loading.
+ * variant. A use case for this may be for creating distributions or generating
+ * installers where the resources are located outside a typical 'lib' folder
+ * (e.g. in a 'conf/special' or 'bin/special' folder), yet are still placed on
+ * the runtime classpath of the application for portable, classpath-relative
+ * loading.
  */
 class ResourceConfigurationsPlugin : Plugin<Project> {
 
