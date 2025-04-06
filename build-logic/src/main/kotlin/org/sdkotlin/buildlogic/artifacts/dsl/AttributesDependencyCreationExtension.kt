@@ -1,10 +1,11 @@
 package org.sdkotlin.buildlogic.artifacts.dsl
 
+import org.gradle.api.Action
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.attributes.AttributeContainer
-import org.sdkotlin.buildlogic.attributes.applyAttributes
+import org.gradle.kotlin.dsl.invoke
 
 /**
  * A [DependencyHandler] extension that sets the attributes for variants of a
@@ -12,7 +13,7 @@ import org.sdkotlin.buildlogic.attributes.applyAttributes
  */
 class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val dependencyAttributes: AttributeContainer,
+	private val attributesAction: Action<AttributeContainer>,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {
@@ -23,9 +24,7 @@ class AttributesDependencyCreationExtension(
 			"Dependency type '${dependency::class.qualifiedName}' unknown!"
 		}
 
-		dependency.attributes {
-			applyAttributes(dependencyAttributes)
-		}
+		attributesAction(dependency.attributes)
 
 		return dependency
 	}

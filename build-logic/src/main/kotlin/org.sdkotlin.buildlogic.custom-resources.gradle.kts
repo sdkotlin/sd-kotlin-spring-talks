@@ -55,12 +55,8 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes {
-						applyLibraryElementsAttributes(
-							objects,
-							resourceConfiguration.libraryElementsAttributeValue.get()
-						)
-					}
+					resourceConfiguration
+						.configurationAttributesAction(attributes)
 				}.files
 		}
 	}

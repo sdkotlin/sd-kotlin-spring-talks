@@ -58,7 +58,7 @@ abstract class ResourceConfigurations @Inject constructor(
 				dependencyHandlerExtensionName.get(),
 				AttributesDependencyCreationExtension(
 					project.dependencies,
-					resourceAttributes,
+					configurationAttributesAction,
 				)
 			)
 

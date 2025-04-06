@@ -1,12 +1,11 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
+import org.gradle.api.Action
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.ProjectLayout
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.Nested
-import org.sdkotlin.buildlogic.attributes.MapBackedAttributeContainer
 import javax.inject.Inject
 
 /**
@@ -55,11 +54,10 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 * Represents the attributes associated with a specific resource
 	 * configuration variant.
 	 */
-	@get:Nested
-	val variantAttributes: AttributeContainer =
-		objects.newInstance(
-			MapBackedAttributeContainer::class.java,
-		)
+	var variantAttributesAction: Action<AttributeContainer> =
+		Action {
+			// Default to just the resource configuration attributes.
+		}
 
 	/**
 	 * Configures the attributes for the resource configuration variant.
@@ -70,6 +68,7 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 *
 	 * @param action a configuration block that defines the attributes.
 	 */
-	fun attributes(action: AttributeContainer.() -> Unit) =
-		variantAttributes.action()
+	fun attributes(action: Action<AttributeContainer>) {
+		variantAttributesAction = action
+	}
 }

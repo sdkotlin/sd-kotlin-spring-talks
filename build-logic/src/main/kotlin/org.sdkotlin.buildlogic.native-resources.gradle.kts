@@ -1,7 +1,6 @@
 import org.gradle.api.attributes.LibraryElements.JAR
 import org.gradle.nativeplatform.OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE
 import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule
-import org.sdkotlin.buildlogic.attributes.applyAttributes
 import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.applyNativeAttributes
 import org.sdkotlin.buildlogic.osdetector.osAsOperatingSystemFamilyAttributeValue
@@ -78,11 +77,6 @@ dependencies {
 
 tasks {
 
-	val currentOsResourceVariantAttributes =
-		nativeResourceConfiguration
-			.resourceConfigurationVariants[currentOsAttributeValue]
-			.variantAttributes
-
 	register<PrintClasspath>("printNativeResourcesRuntimeClasspath") {
 
 		group = "native-resources"
@@ -137,12 +131,11 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes {
-						applyAttributes(
-							nativeResourceConfiguration.resourceAttributes
-						)
-						applyAttributes(currentOsResourceVariantAttributes)
-					}
+					nativeResourceConfiguration
+						.configurationAttributesAction(attributes)
+					nativeResourceConfiguration
+						.resourceConfigurationVariants[currentOsAttributeValue]
+						.variantAttributesAction(attributes)
 				}.files
 		}
 	}
@@ -162,16 +155,11 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes {
-						applyAttributes(
-							nativeResourceConfiguration.resourceAttributes
-						)
-						applyAttributes(
-							nativeResourceConfiguration
-								.resourceConfigurationVariants[linuxVariantName]
-								.variantAttributes
-						)
-					}
+					nativeResourceConfiguration
+						.configurationAttributesAction(attributes)
+					nativeResourceConfiguration
+						.resourceConfigurationVariants[linuxVariantName]
+						.variantAttributesAction(attributes)
 				}.files
 		}
 	}
@@ -191,16 +179,11 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes {
-						applyAttributes(
-							nativeResourceConfiguration.resourceAttributes
-						)
-						applyAttributes(
-							nativeResourceConfiguration
-								.resourceConfigurationVariants[macosVariantName]
-								.variantAttributes
-						)
-					}
+					nativeResourceConfiguration
+						.configurationAttributesAction(attributes)
+					nativeResourceConfiguration
+						.resourceConfigurationVariants[macosVariantName]
+						.variantAttributesAction(attributes)
 				}.files
 		}
 	}
@@ -220,16 +203,11 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes {
-						applyAttributes(
-							nativeResourceConfiguration.resourceAttributes
-						)
-						applyAttributes(
-							nativeResourceConfiguration
-								.resourceConfigurationVariants[windowsVariantName]
-								.variantAttributes
-						)
-					}
+					nativeResourceConfiguration
+						.configurationAttributesAction(attributes)
+					nativeResourceConfiguration
+						.resourceConfigurationVariants[windowsVariantName]
+						.variantAttributesAction(attributes)
 				}.files
 		}
 	}

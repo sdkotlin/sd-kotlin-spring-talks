@@ -4,7 +4,7 @@ import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
 import org.gradle.api.model.ObjectFactory
-import org.sdkotlin.buildlogic.attributes.applyAttributes
+import org.gradle.kotlin.dsl.invoke
 import javax.inject.Inject
 
 /**
@@ -66,10 +66,9 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 			@Suppress("UnstableApiUsage")
 			project.configurations.consumable(theConsumableConfigurationName)
 				.configure {
-					attributes {
-						applyAttributes(resourceConfiguration.resourceAttributes)
-						applyAttributes(variantAttributes)
-					}
+					resourceConfiguration
+						.configurationAttributesAction(attributes)
+					variantAttributesAction(attributes)
 				}
 
 			// Any files in "src/main/<resourceConfigurationName>/" are
