@@ -55,8 +55,10 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					resourceConfiguration
-						.configurationAttributesAction(attributes)
+					attributes(
+						resourceConfiguration.configurationAttributesAction
+					)
+
 				}.files
 		}
 	}

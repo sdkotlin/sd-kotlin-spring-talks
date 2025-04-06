@@ -5,7 +5,6 @@ import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.attributes.AttributeContainer
-import org.gradle.kotlin.dsl.invoke
 
 /**
  * A [DependencyHandler] extension that sets the attributes for variants of a
@@ -13,7 +12,7 @@ import org.gradle.kotlin.dsl.invoke
  */
 class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val attributesAction: Action<in AttributeContainer>,
+	private val attributesConfigureAction: Action<in AttributeContainer>,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {
@@ -24,7 +23,7 @@ class AttributesDependencyCreationExtension(
 			"Dependency type '${dependency::class.qualifiedName}' unknown!"
 		}
 
-		attributesAction(dependency.attributes)
+		dependency.attributes(attributesConfigureAction)
 
 		return dependency
 	}
