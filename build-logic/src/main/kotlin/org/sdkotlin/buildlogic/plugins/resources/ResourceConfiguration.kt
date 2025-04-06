@@ -1,11 +1,9 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
-import org.gradle.api.Action
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.Property
-import org.gradle.kotlin.dsl.invoke
 import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
 import javax.inject.Inject
 
@@ -42,13 +40,12 @@ abstract class ResourceConfiguration @Inject constructor(
 		objects.property(String::class.java)
 			.convention("${name}Resources")
 
-	var configurationAttributesAction: Action<in AttributeContainer> =
-		Action {
-			applyLibraryElementsAttributes(
-				objects,
-				libraryElementsAttributeValue.get()
-			)
-		}
+	var configurationAttributesAction: AttributeContainer.() -> Unit = {
+		applyLibraryElementsAttributes(
+			objects,
+			libraryElementsAttributeValue.get()
+		)
+	}
 
 	/**
 	 * Configures the attributes for the resource configuration.
@@ -59,7 +56,7 @@ abstract class ResourceConfiguration @Inject constructor(
 	 *
 	 * @param configureAction a configuration block that defines the attributes.
 	 */
-	fun attributes(configureAction: Action<in AttributeContainer>) {
+	fun attributes(configureAction: AttributeContainer.() -> Unit) {
 		configurationAttributesAction = configureAction
 	}
 
@@ -77,6 +74,6 @@ abstract class ResourceConfiguration @Inject constructor(
 	 *
 	 * @param configureAction a configuration block that creates the variants.
 	 */
-	fun variants(configureAction: Action<in ResourceConfigurationVariants>) =
+	fun variants(configureAction: ResourceConfigurationVariants.() -> Unit) =
 		configureAction(resourceConfigurationVariants)
 }

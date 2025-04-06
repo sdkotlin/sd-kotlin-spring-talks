@@ -12,7 +12,7 @@ import org.gradle.api.attributes.AttributeContainer
  */
 class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val attributesConfigureAction: Action<in AttributeContainer>,
+	private val attributesConfigureAction: AttributeContainer.() -> Unit,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {

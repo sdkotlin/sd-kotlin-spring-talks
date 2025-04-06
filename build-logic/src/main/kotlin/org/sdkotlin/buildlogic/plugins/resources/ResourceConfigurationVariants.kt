@@ -1,11 +1,9 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
-import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
 import org.gradle.api.model.ObjectFactory
-import org.gradle.kotlin.dsl.invoke
 import javax.inject.Inject
 
 /**
@@ -46,7 +44,7 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 	 */
 	fun variant(
 		name: String,
-		configureAction: Action<in ResourceConfigurationVariant> = Action {}
+		configureAction: ResourceConfigurationVariant.() -> Unit = {}
 	) {
 		val resourceConfigurationVariant =
 			objects.newInstance(

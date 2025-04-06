@@ -1,6 +1,5 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
-import org.gradle.api.Action
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.ProjectLayout
@@ -54,10 +53,9 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 * Represents the attributes associated with a specific resource
 	 * configuration variant.
 	 */
-	var variantAttributesAction: Action<in AttributeContainer> =
-		Action {
-			// Default to just the resource configuration attributes.
-		}
+	var variantAttributesAction: AttributeContainer.() -> Unit = {
+		// Default to just the resource configuration attributes.
+	}
 
 	/**
 	 * Configures the attributes for the resource configuration variant.
@@ -68,7 +66,7 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 *
 	 * @param configureAction a configuration block that defines the attributes.
 	 */
-	fun attributes(configureAction: Action<in AttributeContainer>) {
+	fun attributes(configureAction: AttributeContainer.() -> Unit) {
 		variantAttributesAction = configureAction
 	}
 }

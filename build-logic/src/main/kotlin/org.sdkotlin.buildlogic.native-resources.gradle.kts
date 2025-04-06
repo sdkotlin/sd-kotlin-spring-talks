@@ -1,6 +1,5 @@
 import org.gradle.api.attributes.LibraryElements.JAR
 import org.gradle.nativeplatform.OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE
-import org.sdkotlin.buildlogic.actions.actions
 import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule
 import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.applyNativeAttributes
@@ -132,13 +131,14 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes(actions(
+					attributes {
 						nativeResourceConfiguration
-							.configurationAttributesAction,
+							.configurationAttributesAction(this)
 						nativeResourceConfiguration
 							.resourceConfigurationVariants[currentOsAttributeValue]
-							.variantAttributesAction,
-					))
+							.variantAttributesAction(this)
+					}
+
 				}.files
 		}
 	}
@@ -158,13 +158,13 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes(actions(
+					attributes {
 						nativeResourceConfiguration
-							.configurationAttributesAction,
+							.configurationAttributesAction(this)
 						nativeResourceConfiguration
 							.resourceConfigurationVariants[linuxVariantName]
-							.variantAttributesAction,
-					))
+							.variantAttributesAction(this)
+					}
 				}.files
 		}
 	}
@@ -184,13 +184,13 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes(actions(
+					attributes {
 						nativeResourceConfiguration
-							.configurationAttributesAction,
+							.configurationAttributesAction(this)
 						nativeResourceConfiguration
 							.resourceConfigurationVariants[macosVariantName]
-							.variantAttributesAction,
-					))
+							.variantAttributesAction(this)
+					}
 				}.files
 		}
 	}
@@ -210,13 +210,13 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes(actions(
+					attributes {
 						nativeResourceConfiguration
-							.configurationAttributesAction,
+							.configurationAttributesAction(this)
 						nativeResourceConfiguration
 							.resourceConfigurationVariants[windowsVariantName]
-							.variantAttributesAction,
-					))
+							.variantAttributesAction(this)
+					}
 				}.files
 		}
 	}

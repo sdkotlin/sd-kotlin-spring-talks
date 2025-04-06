@@ -1,9 +1,7 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
-import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.invoke
 import org.sdkotlin.buildlogic.artifacts.dsl.AttributesDependencyCreationExtension
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
 import javax.inject.Inject
@@ -46,7 +44,7 @@ abstract class ResourceConfigurations @Inject constructor(
 	 */
 	fun create(
 		name: String,
-		configureAction: Action<in ResourceConfiguration> = Action {},
+		configureAction: ResourceConfiguration.() -> Unit = {},
 	) {
 
 		val resourceConfiguration =
