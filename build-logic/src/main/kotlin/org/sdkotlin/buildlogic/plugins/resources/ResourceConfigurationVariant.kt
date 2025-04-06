@@ -54,7 +54,7 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 * Represents the attributes associated with a specific resource
 	 * configuration variant.
 	 */
-	var variantAttributesAction: Action<AttributeContainer> =
+	var variantAttributesAction: Action<in AttributeContainer> =
 		Action {
 			// Default to just the resource configuration attributes.
 		}
@@ -66,9 +66,9 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 * applied, and must be redeclared as needed. This is to ensure precise,
 	 * unambiguous definition of variants.
 	 *
-	 * @param action a configuration block that defines the attributes.
+	 * @param configureAction a configuration block that defines the attributes.
 	 */
-	fun attributes(action: Action<AttributeContainer>) {
-		variantAttributesAction = action
+	fun attributes(configureAction: Action<in AttributeContainer>) {
+		variantAttributesAction = configureAction
 	}
 }

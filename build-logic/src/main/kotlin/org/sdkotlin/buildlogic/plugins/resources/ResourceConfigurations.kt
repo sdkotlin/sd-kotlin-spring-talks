@@ -1,7 +1,9 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.invoke
 import org.sdkotlin.buildlogic.artifacts.dsl.AttributesDependencyCreationExtension
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
 import javax.inject.Inject
@@ -38,16 +40,19 @@ abstract class ResourceConfigurations @Inject constructor(
 	 * @param name the name of the resource configuration being created. This
 	 * name is used to derive defaults for attributes and variants associated
 	 * with the configuration.
-	 * @param action a configuration block to customize the resource
+	 * @param configureAction a configuration block to customize the resource
 	 * configuration's attributes, dependencies, and variants. The block is
 	 * executed on the created configuration instance.
 	 */
-	fun create(name: String, action: ResourceConfiguration.() -> Unit = {}) {
+	fun create(
+		name: String,
+		configureAction: Action<in ResourceConfiguration> = Action {},
+	) {
 
 		val resourceConfiguration =
 			project.objects.newInstance(ResourceConfiguration::class.java, name)
 
-		resourceConfiguration.action()
+		configureAction(resourceConfiguration)
 
 		with(resourceConfiguration) {
 

@@ -1,5 +1,6 @@
 package org.sdkotlin.buildlogic.plugins.resources
 
+import org.gradle.api.Action
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
@@ -39,13 +40,13 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 	 * @param name the name of the resource configuration variant being created.
 	 * It is used to determine the default values for properties such as the
 	 * resource directory and consumable configuration name.
-	 * @param action a configuration block to customize the resource
+	 * @param configureAction a configuration block to customize the resource
 	 * configuration variant's attributes and other properties. The block is
 	 * executed on the created variant instance.
 	 */
 	fun variant(
 		name: String,
-		action: ResourceConfigurationVariant.() -> Unit = {}
+		configureAction: Action<in ResourceConfigurationVariant> = Action {}
 	) {
 		val resourceConfigurationVariant =
 			objects.newInstance(
@@ -53,7 +54,7 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 				name,
 			)
 
-		resourceConfigurationVariant.action()
+		configureAction(resourceConfigurationVariant)
 
 		with(resourceConfigurationVariant) {
 

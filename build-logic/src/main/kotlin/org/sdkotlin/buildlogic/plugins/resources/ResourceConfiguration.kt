@@ -42,7 +42,7 @@ abstract class ResourceConfiguration @Inject constructor(
 		objects.property(String::class.java)
 			.convention("${name}Resources")
 
-	var configurationAttributesAction: Action<AttributeContainer> =
+	var configurationAttributesAction: Action<in AttributeContainer> =
 		Action {
 			applyLibraryElementsAttributes(
 				objects,
@@ -57,10 +57,10 @@ abstract class ResourceConfiguration @Inject constructor(
 	 * applied, and must be redeclared as needed. This is to ensure precise,
 	 * unambiguous definition of variants.
 	 *
-	 * @param action a configuration block that defines the attributes.
+	 * @param configureAction a configuration block that defines the attributes.
 	 */
-	fun attributes(action: Action<AttributeContainer>) {
-		configurationAttributesAction = action
+	fun attributes(configureAction: Action<in AttributeContainer>) {
+		configurationAttributesAction = configureAction
 	}
 
 	val resourceConfigurationVariants: ResourceConfigurationVariants =
@@ -75,8 +75,8 @@ abstract class ResourceConfiguration @Inject constructor(
 	 * If no variants are configured, defaults to a single variant with the
 	 * attributes of this resource configuration.
 	 *
-	 * @param action a configuration block that creates the variants.
+	 * @param configureAction a configuration block that creates the variants.
 	 */
-	fun variants(action: Action<ResourceConfigurationVariants>) =
-		action(resourceConfigurationVariants)
+	fun variants(configureAction: Action<in ResourceConfigurationVariants>) =
+		configureAction(resourceConfigurationVariants)
 }

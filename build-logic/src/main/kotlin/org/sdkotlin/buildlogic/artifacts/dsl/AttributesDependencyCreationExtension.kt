@@ -13,7 +13,7 @@ import org.gradle.kotlin.dsl.invoke
  */
 class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
-	private val attributesAction: Action<AttributeContainer>,
+	private val attributesAction: Action<in AttributeContainer>,
 ) : DependencyCreationExtension {
 
 	override fun invoke(notation: Any): Dependency {
