@@ -21,6 +21,7 @@ import javax.inject.Inject
  */
 abstract class ResourceConfigurationVariant @Inject constructor(
 	val name: String,
+	private val configurationAttributesConfigureAction: AttributeContainer.() -> Unit,
 	layout: ProjectLayout,
 	objects: ObjectFactory,
 ) {
@@ -53,7 +54,7 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 * Represents the attributes associated with a specific resource
 	 * configuration variant.
 	 */
-	var variantAttributesAction: AttributeContainer.() -> Unit = {
+	private var variantAttributesAction: AttributeContainer.() -> Unit = {
 		// Default to just the resource configuration attributes.
 	}
 
@@ -68,5 +69,28 @@ abstract class ResourceConfigurationVariant @Inject constructor(
 	 */
 	fun attributes(configureAction: AttributeContainer.() -> Unit) {
 		variantAttributesAction = configureAction
+	}
+
+	/**
+	 * Applies variant-specific attributes to an [AttributeContainer].
+	 *
+	 * This method ensures that all necessary configurations defined for the
+	 * variant are applied to the given attribute container. It delegates to the
+	 * predefined actions for configuring base configuration attributes and
+	 * variant-specific attributes.
+	 *
+	 * As an `AttributeContainer` member extension method, this would typically
+	 * be called like so:
+	 * ```kotlin
+	 * attributes {
+	 *     with(variant) {
+	 *         applyVariantAttributes()
+	 *     }
+	 * }
+	 * ```
+	 */
+	fun AttributeContainer.applyVariantAttributes() {
+		configurationAttributesConfigureAction()
+		variantAttributesAction()
 	}
 }

@@ -1,6 +1,5 @@
 package org.sdkotlin.buildlogic.artifacts.dsl
 
-import org.gradle.api.Action
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.ModuleDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
@@ -23,7 +22,9 @@ class AttributesDependencyCreationExtension(
 			"Dependency type '${dependency::class.qualifiedName}' unknown!"
 		}
 
-		dependency.attributes(attributesConfigureAction)
+		dependency.attributes {
+			attributesConfigureAction()
+		}
 
 		return dependency
 	}

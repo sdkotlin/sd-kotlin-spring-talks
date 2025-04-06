@@ -4,7 +4,6 @@ import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule
 import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
 import org.sdkotlin.buildlogic.attributes.applyNativeAttributes
 import org.sdkotlin.buildlogic.osdetector.osAsOperatingSystemFamilyAttributeValue
-import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurations
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 import org.sdkotlin.buildlogic.tasks.PrintClasspath
@@ -54,9 +53,6 @@ configure<ResourceConfigurations> {
 	}
 }
 
-val nativeResourceConfiguration: ResourceConfiguration =
-	the<ResourceConfigurations>()[nativeResourceConfigurationName]
-
 val currentOsAttributeValue =
 	osdetector.osAsOperatingSystemFamilyAttributeValue()
 
@@ -72,6 +68,22 @@ dependencies {
 		}
 	}
 }
+
+val nativeResourceConfiguration =
+	the<ResourceConfigurations>()[nativeResourceConfigurationName]
+
+val currentOsConfigurationVariant =
+	nativeResourceConfiguration.resourceConfigurationVariants[currentOsAttributeValue]
+
+val linuxConfigurationVariant =
+	nativeResourceConfiguration.resourceConfigurationVariants[linuxVariantName]
+
+val macosConfigurationVariant =
+	nativeResourceConfiguration.resourceConfigurationVariants[macosVariantName]
+
+val windowsConfigurationVariant =
+	nativeResourceConfiguration.resourceConfigurationVariants[windowsVariantName]
+
 
 // Print tasks for demonstration purposes only...
 
@@ -132,13 +144,10 @@ tasks {
 					withVariantReselection()
 
 					attributes {
-						nativeResourceConfiguration
-							.configurationAttributesAction(this)
-						nativeResourceConfiguration
-							.resourceConfigurationVariants[currentOsAttributeValue]
-							.variantAttributesAction(this)
+						with(currentOsConfigurationVariant) {
+							applyVariantAttributes()
+						}
 					}
-
 				}.files
 		}
 	}
@@ -159,11 +168,9 @@ tasks {
 					withVariantReselection()
 
 					attributes {
-						nativeResourceConfiguration
-							.configurationAttributesAction(this)
-						nativeResourceConfiguration
-							.resourceConfigurationVariants[linuxVariantName]
-							.variantAttributesAction(this)
+						with(linuxConfigurationVariant) {
+							applyVariantAttributes()
+						}
 					}
 				}.files
 		}
@@ -185,11 +192,9 @@ tasks {
 					withVariantReselection()
 
 					attributes {
-						nativeResourceConfiguration
-							.configurationAttributesAction(this)
-						nativeResourceConfiguration
-							.resourceConfigurationVariants[macosVariantName]
-							.variantAttributesAction(this)
+						with(macosConfigurationVariant) {
+							applyVariantAttributes()
+						}
 					}
 				}.files
 		}
@@ -211,11 +216,9 @@ tasks {
 					withVariantReselection()
 
 					attributes {
-						nativeResourceConfiguration
-							.configurationAttributesAction(this)
-						nativeResourceConfiguration
-							.resourceConfigurationVariants[windowsVariantName]
-							.variantAttributesAction(this)
+						with(windowsConfigurationVariant) {
+							applyVariantAttributes()
+						}
 					}
 				}.files
 		}

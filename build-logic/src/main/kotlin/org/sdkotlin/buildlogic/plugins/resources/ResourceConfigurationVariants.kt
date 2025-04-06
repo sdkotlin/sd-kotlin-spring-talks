@@ -3,6 +3,7 @@ package org.sdkotlin.buildlogic.plugins.resources
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
+import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.model.ObjectFactory
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ import javax.inject.Inject
  * project, and object factory.
  */
 abstract class ResourceConfigurationVariants @Inject constructor(
-	private val resourceConfiguration: ResourceConfiguration,
+	private val configurationAttributesConfigureAction: AttributeContainer.() -> Unit,
 	private val project: Project,
 	private val objects: ObjectFactory,
 ) {
@@ -50,6 +51,7 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 			objects.newInstance(
 				ResourceConfigurationVariant::class.java,
 				name,
+				configurationAttributesConfigureAction,
 			)
 
 		configureAction(resourceConfigurationVariant)
@@ -65,9 +67,9 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 			@Suppress("UnstableApiUsage")
 			project.configurations.consumable(theConsumableConfigurationName)
 				.configure {
-					resourceConfiguration
-						.configurationAttributesAction(attributes)
-					variantAttributesAction(attributes)
+					attributes {
+						applyVariantAttributes()
+					}
 				}
 
 			// Any files in "src/main/<resourceConfigurationName>/" are

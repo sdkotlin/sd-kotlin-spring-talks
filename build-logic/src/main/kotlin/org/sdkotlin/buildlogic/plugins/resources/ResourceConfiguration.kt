@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 abstract class ResourceConfiguration @Inject constructor(
 	val name: String,
-	objects: ObjectFactory,
+	private val objects: ObjectFactory,
 ) {
 	/**
 	 * Specifies the value for the `org.gradle.libraryelements` attribute of the
@@ -40,10 +40,10 @@ abstract class ResourceConfiguration @Inject constructor(
 		objects.property(String::class.java)
 			.convention("${name}Resources")
 
-	var configurationAttributesAction: AttributeContainer.() -> Unit = {
+	private var configurationAttributesAction: AttributeContainer.() -> Unit = {
 		applyLibraryElementsAttributes(
 			objects,
-			libraryElementsAttributeValue.get()
+			libraryElementsAttributeValue.get(),
 		)
 	}
 
@@ -60,10 +60,21 @@ abstract class ResourceConfiguration @Inject constructor(
 		configurationAttributesAction = configureAction
 	}
 
+	/**
+	 * Applies the base resource configuration attributes to an
+	 * `AttributeContainer`.
+	 *
+	 * Users would typically apply the attributes for a given variant or the
+	 * default variant instead with
+	 * [ResourceConfigurationVariant.applyVariantAttributes].
+	 */
+	fun AttributeContainer.applyConfigurationAttributes() =
+		configurationAttributesAction(this)
+
 	val resourceConfigurationVariants: ResourceConfigurationVariants =
 		objects.newInstance(
 			ResourceConfigurationVariants::class.java,
-			this,
+			configurationAttributesAction,
 		)
 
 	/**

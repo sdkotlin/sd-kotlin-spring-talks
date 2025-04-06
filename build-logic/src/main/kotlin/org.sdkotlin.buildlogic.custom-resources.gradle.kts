@@ -1,6 +1,5 @@
 import org.gradle.api.attributes.LibraryElements.JAR
 import org.sdkotlin.buildlogic.attributes.applyLibraryElementsAttributes
-import org.sdkotlin.buildlogic.plugins.resources.ResourceConfiguration
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurations
 import org.sdkotlin.buildlogic.plugins.resources.ResourceConfigurationsPlugin
 import org.sdkotlin.buildlogic.tasks.PrintClasspath
@@ -22,8 +21,9 @@ configure<ResourceConfigurations> {
 
 // Print tasks for demonstration purposes only...
 
-val resourceConfiguration: ResourceConfiguration =
+val resourceConfigurationVariant =
 	the<ResourceConfigurations>()[resourceConfigurationName]
+		.resourceConfigurationVariants[resourceConfigurationName]
 
 tasks {
 
@@ -55,10 +55,11 @@ tasks {
 					@Suppress("UnstableApiUsage")
 					withVariantReselection()
 
-					attributes(
-						resourceConfiguration.configurationAttributesAction
-					)
-
+					attributes {
+						with(resourceConfigurationVariant) {
+							applyVariantAttributes()
+						}
+					}
 				}.files
 		}
 	}
