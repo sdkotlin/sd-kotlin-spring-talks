@@ -56,15 +56,16 @@ configure<ResourceConfigurations> {
 val currentOsAttributeValue =
 	osdetector.osAsOperatingSystemFamilyAttributeValue()
 
-CurrentOsAttributeDisambiguationRule.currentOsAttributeValue =
-	objects.named(currentOsAttributeValue)
-
 dependencies {
 	attributesSchema {
 		attribute(OPERATING_SYSTEM_ATTRIBUTE) {
 			disambiguationRules.add(
 				CurrentOsAttributeDisambiguationRule::class.java
-			)
+			) {
+				params(
+					objects.named<OperatingSystemFamily>(currentOsAttributeValue)
+				)
+			}
 		}
 	}
 }

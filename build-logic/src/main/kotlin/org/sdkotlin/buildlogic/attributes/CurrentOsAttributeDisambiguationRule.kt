@@ -2,8 +2,9 @@ package org.sdkotlin.buildlogic.attributes
 
 import org.gradle.api.attributes.AttributeDisambiguationRule
 import org.gradle.api.attributes.MultipleCandidatesDetails
+import org.gradle.api.model.ObjectFactory
 import org.gradle.nativeplatform.OperatingSystemFamily
-import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule.Companion.currentOsAttributeValue
+import javax.inject.Inject
 
 /**
  * A rule to disambiguate between multiple candidates of the
@@ -14,25 +15,20 @@ import org.sdkotlin.buildlogic.attributes.CurrentOsAttributeDisambiguationRule.C
  * object property [currentOsAttributeValue] during the project configuration
  * phase. This value is then used to determine the closest match among the
  * provided candidates during dependency resolution.
+ *
+ * @param currentOsAttributeValue the [OperatingSystemFamily] attribute value corresponding
+ * to the current operating system.
+ * @param objects the Gradle [ObjectFactory].
  */
-open class CurrentOsAttributeDisambiguationRule :
-	AttributeDisambiguationRule<OperatingSystemFamily> {
-
-	companion object {
-
-		/**
-		 * Represents the [OperatingSystemFamily] attribute value corresponding
-		 * to the current operating system. This variable must be initialized
-		 * during the Gradle project configuration phase to ensure that
-		 * dependency resolution prioritizes candidates that match the current
-		 * operating system's attribute.
-		 */
-		lateinit var currentOsAttributeValue: OperatingSystemFamily
-	}
+open class CurrentOsAttributeDisambiguationRule @Inject constructor(
+	private val currentOsAttribute: OperatingSystemFamily,
+) : AttributeDisambiguationRule<OperatingSystemFamily> {
 
 	override fun execute(
 		details: MultipleCandidatesDetails<OperatingSystemFamily>
 	) {
-		details.closestMatch(currentOsAttributeValue)
+		if (details.candidateValues.contains(currentOsAttribute)) {
+			details.closestMatch(currentOsAttribute)
+		}
 	}
 }
