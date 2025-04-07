@@ -60,7 +60,7 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 
 			val theConsumableConfigurationName =
 				consumableConfigurationName.get()
-			val theResourceDirectory = resourceDirectory.get()
+			//val theResourceDirectory = resourceDirectory.get()
 
 			// Create a variant-aware consumable configuration for this resource
 			// configuration's artifacts.
@@ -75,14 +75,14 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 			// Any files in "src/main/<resourceConfigurationName>/" are
 			// resources for this configuration. No build step is necessary, so
 			// directly add the directory as a project artifact.
-			if (theResourceDirectory.asFile.exists()) {
-				project.artifacts.add(
-					theConsumableConfigurationName,
-					theResourceDirectory
-				) {
-					type = JVM_RESOURCES_DIRECTORY
-				}
+			//if (theResourceDirectory.asFile.exists()) {
+			project.artifacts.add(
+				theConsumableConfigurationName,
+				resourceDirectory
+			) {
+				type = JVM_RESOURCES_DIRECTORY
 			}
+			//}
 		}
 
 		resourceConfigurationVariants += resourceConfigurationVariant
