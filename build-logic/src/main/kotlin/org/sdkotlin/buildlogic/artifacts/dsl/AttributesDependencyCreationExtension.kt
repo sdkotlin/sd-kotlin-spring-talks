@@ -20,7 +20,8 @@ class AttributesDependencyCreationExtension(
 	override fun invoke(notation: Any): Provider<Dependency> =
 		providers.provider {
 
-			println("Creating $notation...")
+			// TODO: Remove debug logging.
+			RuntimeException("Creating $notation...").printStackTrace()
 
 			val dependency = dependencyHandler.create(notation)
 
