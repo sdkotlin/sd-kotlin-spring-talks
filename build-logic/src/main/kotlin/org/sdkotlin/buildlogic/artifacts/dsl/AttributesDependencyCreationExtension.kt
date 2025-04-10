@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory
  * A [DependencyHandler] extension that sets the attributes for variants of a
  * declared [Dependency].
  */
-class AttributesDependencyCreationExtension(
+abstract class AttributesDependencyCreationExtension(
 	private val dependencyHandler: DependencyHandler,
 	private val providers: ProviderFactory,
 	private val attributesConfigureAction: AttributeContainer.() -> Unit,
@@ -24,15 +24,10 @@ class AttributesDependencyCreationExtension(
 		providers.provider {
 
 			// TODO: Remove debug logging.
-			try {
-				throw RuntimeException(
-					"Attributes dependency helper stacktrace"
-				)
-			} catch (e: RuntimeException) {
-				logger.warn(
-					"Creating $notation...", e
-				)
-			}
+			logger.warn(
+				"Creating $notation...",
+				RuntimeException("Attributes dependency helper stacktrace")
+			)
 
 			val dependency = dependencyHandler.create(notation)
 

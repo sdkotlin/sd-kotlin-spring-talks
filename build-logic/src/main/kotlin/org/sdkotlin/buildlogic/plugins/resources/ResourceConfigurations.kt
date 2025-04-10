@@ -2,6 +2,7 @@ package org.sdkotlin.buildlogic.plugins.resources
 
 import org.gradle.api.NamedDomainObjectSet
 import org.gradle.api.Project
+import org.gradle.api.attributes.AttributeContainer
 import org.sdkotlin.buildlogic.artifacts.dsl.AttributesDependencyCreationExtension
 import org.sdkotlin.buildlogic.artifacts.dsl.DependencyCreationExtension
 import javax.inject.Inject
@@ -46,30 +47,29 @@ abstract class ResourceConfigurations @Inject constructor(
 		name: String,
 		configureAction: ResourceConfiguration.() -> Unit = {},
 	) {
-
 		val resourceConfiguration =
 			project.objects.newInstance(ResourceConfiguration::class.java, name)
 
 		configureAction(resourceConfiguration)
 
+		// Add a `DependencyHandler` extension for declaring a dependency on
+		// the resource configuration's artifact variant.
+		project.dependencies.extensions.create(
+			DependencyCreationExtension::class.java,
+			resourceConfiguration.dependencyHandlerExtensionName.get(),
+			AttributesDependencyCreationExtension::class.java,
+			project.dependencies,
+			project.providers,
+			{ container: AttributeContainer ->
+				resourceConfiguration.run {
+					container.applyConfigurationAttributes()
+				}
+			},
+		)
+
+		// Create a default variant for this resource configuration if none
+		// are added by the user.
 		with(resourceConfiguration) {
-
-			// Add a `DependencyHandler` extension for declaring a dependency on
-			// the resource configuration's artifact variant.
-			project.dependencies.extensions.add(
-				DependencyCreationExtension::class.java,
-				dependencyHandlerExtensionName.get(),
-				AttributesDependencyCreationExtension(
-					dependencyHandler = project.dependencies,
-					providers = project.providers,
-					attributesConfigureAction = {
-						applyConfigurationAttributes()
-					},
-				)
-			)
-
-			// Create a default variant for this resource configuration if none
-			// are added by the user.
 			if (resourceConfigurationVariants.isEmpty()) {
 				resourceConfigurationVariants.variant(name)
 			}

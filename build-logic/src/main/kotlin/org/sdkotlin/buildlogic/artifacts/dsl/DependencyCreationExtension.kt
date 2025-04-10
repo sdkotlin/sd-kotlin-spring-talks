@@ -2,6 +2,7 @@ package org.sdkotlin.buildlogic.artifacts.dsl
 
 import org.gradle.api.artifacts.Dependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
+import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.provider.Provider
 
 /**
@@ -9,6 +10,16 @@ import org.gradle.api.provider.Provider
  * dependencies. Facilitates calling the extensions as unqualified helper
  * functions.
  */
-fun interface DependencyCreationExtension {
+interface DependencyCreationExtension : ExtensionAware {
+
+	/**
+	 * Ivocable from the Kotlin DSL.
+	 */
 	operator fun invoke(notation: Any): Provider<Dependency>
+
+	/**
+	 * Invokable from the Groovy DSL.
+	 */
+	@Suppress("unused")
+	fun call(notation: Any): Provider<Dependency> = invoke(notation)
 }

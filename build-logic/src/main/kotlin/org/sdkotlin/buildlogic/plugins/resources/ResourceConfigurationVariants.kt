@@ -68,23 +68,17 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 			// Create a variant-aware consumable configuration for this resource
 			// configuration's artifacts.
 			@Suppress("UnstableApiUsage")
-			project.configurations.consumable(theConsumableConfigurationName)
-				.configure {
-					// TODO: Remove debug logging.
-					try {
-						throw RuntimeException(
-							"Configuration configureAction stacktrace"
-						)
-					} catch (e: RuntimeException) {
-						logger.warn(
-							"Configuring $theConsumableConfigurationName...", e
-						)
-					}
+			project.configurations.consumable(theConsumableConfigurationName) {
+				// TODO: Remove debug logging.
+				logger.warn(
+					"Configuring $theConsumableConfigurationName...",
+					RuntimeException("Configuration configureAction stacktrace")
+				)
 
-					attributes {
-						applyVariantAttributes()
-					}
+				attributes {
+					applyVariantAttributes()
 				}
+			}
 
 			// Any files in "src/main/<resourceConfigurationName>/" are
 			// resources for this configuration. No build step is necessary, so
