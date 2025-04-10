@@ -37,4 +37,4 @@ jobs:
           build-scan-terms-of-use-agree: "yes"
 
       - name: Build with Gradle Wrapper
-        run: ./gradlew build
+        run: ./gradlew help
