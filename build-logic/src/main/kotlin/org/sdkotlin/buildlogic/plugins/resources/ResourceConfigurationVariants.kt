@@ -5,6 +5,7 @@ import org.gradle.api.Project
 import org.gradle.api.artifacts.type.ArtifactTypeDefinition.JVM_RESOURCES_DIRECTORY
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.model.ObjectFactory
+import org.slf4j.LoggerFactory
 import javax.inject.Inject
 
 /**
@@ -24,6 +25,8 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 	private val project: Project,
 	private val objects: ObjectFactory,
 ) {
+	private val logger = LoggerFactory.getLogger(this::class.java)
+
 	private val resourceConfigurationVariants:
 		NamedDomainObjectSet<ResourceConfigurationVariant> =
 		objects.namedDomainObjectSet(ResourceConfigurationVariant::class.java)
@@ -60,13 +63,24 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 
 			val theConsumableConfigurationName =
 				consumableConfigurationName.get()
-			//val theResourceDirectory = resourceDirectory.get()
+			val theResourceDirectory = resourceDirectory.get()
 
 			// Create a variant-aware consumable configuration for this resource
 			// configuration's artifacts.
 			@Suppress("UnstableApiUsage")
 			project.configurations.consumable(theConsumableConfigurationName)
 				.configure {
+					// TODO: Remove debug logging.
+					try {
+						throw RuntimeException(
+							"Configuration configureAction stacktrace"
+						)
+					} catch (e: RuntimeException) {
+						logger.warn(
+							"Configuring $theConsumableConfigurationName...", e
+						)
+					}
+
 					attributes {
 						applyVariantAttributes()
 					}
@@ -75,14 +89,14 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 			// Any files in "src/main/<resourceConfigurationName>/" are
 			// resources for this configuration. No build step is necessary, so
 			// directly add the directory as a project artifact.
-			//if (theResourceDirectory.asFile.exists()) {
-			project.artifacts.add(
-				theConsumableConfigurationName,
-				resourceDirectory
-			) {
-				type = JVM_RESOURCES_DIRECTORY
+			if (theResourceDirectory.asFile.exists()) {
+				project.artifacts.add(
+					theConsumableConfigurationName,
+					theResourceDirectory
+				) {
+					type = JVM_RESOURCES_DIRECTORY
+				}
 			}
-			//}
 		}
 
 		resourceConfigurationVariants += resourceConfigurationVariant
