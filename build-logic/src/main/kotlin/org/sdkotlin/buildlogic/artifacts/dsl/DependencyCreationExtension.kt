@@ -13,7 +13,7 @@ import org.gradle.api.provider.Provider
 interface DependencyCreationExtension : ExtensionAware {
 
 	/**
-	 * Ivocable from the Kotlin DSL.
+	 * Invokable from the Kotlin DSL.
 	 */
 	operator fun invoke(notation: Any): Provider<Dependency>
 
