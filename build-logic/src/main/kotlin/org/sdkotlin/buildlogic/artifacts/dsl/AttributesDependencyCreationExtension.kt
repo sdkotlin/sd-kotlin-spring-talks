@@ -6,6 +6,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.attributes.AttributeContainer
 import org.gradle.api.provider.Provider
 import org.gradle.api.provider.ProviderFactory
+import org.slf4j.LoggerFactory
 
 /**
  * A [DependencyHandler] extension that sets the attributes for variants of a
@@ -17,11 +18,21 @@ class AttributesDependencyCreationExtension(
 	private val attributesConfigureAction: AttributeContainer.() -> Unit,
 ) : DependencyCreationExtension {
 
+	private val logger = LoggerFactory.getLogger(this::class.java)
+
 	override fun invoke(notation: Any): Provider<Dependency> =
 		providers.provider {
 
 			// TODO: Remove debug logging.
-			RuntimeException("Creating $notation...").printStackTrace()
+			try {
+				throw RuntimeException(
+					"Attributes dependency helper stacktrace"
+				)
+			} catch (e: RuntimeException) {
+				logger.warn(
+					"Creating $notation...", e
+				)
+			}
 
 			val dependency = dependencyHandler.create(notation)
 
