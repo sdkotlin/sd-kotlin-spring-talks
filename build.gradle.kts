@@ -37,6 +37,12 @@ dependencyAnalysis {
 			}
 		}
 	}
+	usage {
+		analysis {
+			checkSuperClasses(true)
+		}
+	}
+	useTypesafeProjectAccessors(true)
 }
 
 tasks {
