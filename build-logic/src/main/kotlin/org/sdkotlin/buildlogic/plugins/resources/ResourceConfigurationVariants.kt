@@ -61,34 +61,34 @@ abstract class ResourceConfigurationVariants @Inject constructor(
 
 		with(resourceConfigurationVariant) {
 
-			val theConsumableConfigurationName =
-				consumableConfigurationName.get()
-			val theResourceDirectory = resourceDirectory.get()
+			if (resourceDirectory.get().asFile.exists()) {
 
-			// Create a variant-aware consumable configuration for this resource
-			// configuration's artifacts.
-			@Suppress("UnstableApiUsage")
-			project.configurations.consumable(theConsumableConfigurationName) {
-				// TODO: Remove debug logging.
-				logger.warn(
-					"Configuring $theConsumableConfigurationName...",
-					RuntimeException("Configuration configureAction stacktrace")
-				)
+				val theConsumableConfigurationName =
+					consumableConfigurationName.get()
 
-				attributes {
-					applyVariantAttributes()
-				}
-			}
+				// Create a variant-aware consumable configuration for this resource
+				// configuration's artifacts.
+				@Suppress("UnstableApiUsage")
+				project.configurations.consumable(theConsumableConfigurationName) {
+					// TODO: Remove debug logging.
+					logger.warn(
+						"Configuring $theConsumableConfigurationName...",
+						RuntimeException("Configuration configureAction stacktrace")
+					)
 
-			// Any files in "src/main/<resourceConfigurationName>/" are
-			// resources for this configuration. No build step is necessary, so
-			// directly add the directory as a project artifact.
-			if (theResourceDirectory.asFile.exists()) {
-				project.artifacts.add(
-					theConsumableConfigurationName,
-					theResourceDirectory
-				) {
-					type = JVM_RESOURCES_DIRECTORY
+					attributes {
+						applyVariantAttributes()
+					}
+
+					// Any files in "src/main/<resourceConfigurationName>/" are
+					// resources for this configuration. No build step is necessary,
+					// so directly add the directory as a project artifact.
+					project.artifacts.add(
+						theConsumableConfigurationName,
+						resourceDirectory
+					) {
+						type = JVM_RESOURCES_DIRECTORY
+					}
 				}
 			}
 		}
