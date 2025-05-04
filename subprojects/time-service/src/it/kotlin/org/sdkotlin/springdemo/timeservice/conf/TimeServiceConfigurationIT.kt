@@ -29,7 +29,7 @@ internal class TimeServiceConfigurationIT {
 		timeServer: TimeServer?
 	) {
 		assertThat(timeServer)
-				.describedAs("timeServer")
-				.isNotNull
+			.describedAs("timeServer")
+			.isNotNull
 	}
 }

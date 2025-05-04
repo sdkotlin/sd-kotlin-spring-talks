@@ -10,8 +10,14 @@ using [Spring](https://spring.io/projects/spring-framework) and
 
 ## Building
 
-The project is built with [Gradle](https://docs.gradle.org/current/userguide/userguide.html) and uses the [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#gradle_wrapper_reference), which can be invoked from the project root once the [Gradle prerequisites](https://docs.gradle.org/current/userguide/installation.html#sec:prerequisites) are met.
+The project is built
+with [Gradle](https://docs.gradle.org/current/userguide/userguide.html) and uses
+the [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#gradle_wrapper_reference),
+which can be invoked from the project root once
+the [Gradle prerequisites](https://docs.gradle.org/current/userguide/installation.html#sec:prerequisites)
+are met.
 
-The project currently requires Gradle to be invoked with a Java Development Kit (JDK) version 21 or higher.
+The project currently requires Gradle to be invoked with a Java Development
+Kit (JDK) version 21 or higher.
 
 The primary build task is `build`.

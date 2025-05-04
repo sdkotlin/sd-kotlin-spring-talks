@@ -21,7 +21,7 @@ class ConcurrentMapChildContextService(
 	}
 
 	private val childContextsMap:
-			ConcurrentMap<String, ConfigurableApplicationContext> =
+		ConcurrentMap<String, ConfigurableApplicationContext> =
 		ConcurrentHashMap()
 
 	override fun createIfAbsent(
@@ -51,16 +51,16 @@ class ConcurrentMapChildContextService(
 
 			val springApplicationBuilder =
 				SpringApplicationBuilder(*sourceJavaClasses)
-						.parent(parentContext)
-						.properties(
-							mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId)
-						)
+					.parent(parentContext)
+					.properties(
+						mapOf(CHILD_CONTEXT_ID_PROPERTY_NAME to childContextId)
+					)
 
 			springApplicationBuilderConfigurer(springApplicationBuilder)
 
 			springApplicationBuilder
-					.build()
-					.run()
+				.build()
+				.run()
 		}
 	}
 
@@ -71,7 +71,7 @@ class ConcurrentMapChildContextService(
 		childContextsMap[childContextId]
 
 	override fun removeAndCloseIfPresent(childContextId: String):
-			ConfigurableApplicationContext? {
+		ConfigurableApplicationContext? {
 
 		val applicationContext = childContextsMap.remove(childContextId)
 

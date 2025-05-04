@@ -25,5 +25,5 @@ interface ChildContextService {
 	fun get(childContextId: String): ConfigurableApplicationContext?
 
 	fun removeAndCloseIfPresent(childContextId: String):
-			ConfigurableApplicationContext?
+		ConfigurableApplicationContext?
 }

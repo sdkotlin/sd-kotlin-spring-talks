@@ -45,7 +45,9 @@ sd-kotlin-spring-talks/
 - AssertJ is used for fluent assertions
 - Mockk is available for mocking
 - Prefer plain Kotlin mocks
-- Use Gradle [test fixtures](https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures) for shared test doubles and utilities
+- Use
+  Gradle [test fixtures](https://docs.gradle.org/current/userguide/java_testing.html#sec:java_test_fixtures)
+  for shared test doubles and utilities
 - Tests are organized into unit (`src/test`) and integration (`src/it`) suites
 - JUnit 5's `@DynamicTest` feature is used for test parameterization
 - Spring's `@SpringBootTest` is used for integration tests
