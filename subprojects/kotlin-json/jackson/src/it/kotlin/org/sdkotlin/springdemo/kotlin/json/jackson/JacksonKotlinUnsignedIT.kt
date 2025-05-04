@@ -84,7 +84,6 @@ internal class JacksonKotlinUnsignedIT(
 	}
 
 	@Test
-	@Disabled("https://github.com/FasterXML/jackson-module-kotlin/issues/650")
 	fun `test unsigned value deserialization`() {
 
 		val unsignedTypesJson = """
