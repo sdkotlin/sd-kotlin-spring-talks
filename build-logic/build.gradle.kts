@@ -12,12 +12,12 @@ dependencies {
 
 	implementation(platform("org.sdkotlin.platforms:plugins-platform"))
 
-	implementation(libs.dependency.analysis.gradle.plugin.dependency)
-	implementation(libs.jvm.dependency.conflict.resolution.gradle.plugin.dependency)
-	implementation(libs.kotlin.gradle.plugin.dependency)
-	implementation(libs.kotlin.spring.gradle.plugin.dependency)
-	implementation(libs.osdetector.gradle.plugin.dependency)
-	implementation(libs.springboot.gradle.plugin.dependency)
+	implementation(libs.dependencyAnalysis.gradlePluginDependency)
+	implementation(libs.jvmDependencyConflictResolution.gradlePluginDependency)
+	implementation(libs.kotlin.gradlePluginDependency)
+	implementation(libs.kotlin.spring.gradlePluginDependency)
+	implementation(libs.osdetector.gradlePluginDependency)
+	implementation(libs.springboot.gradlePluginDependency)
 }
 
 gradlePlugin {

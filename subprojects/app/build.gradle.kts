@@ -1,6 +1,6 @@
 plugins {
 	application
-	alias(libs.plugins.springboot.plugin)
+	alias(libs.plugins.springboot.gradlePlugin)
 	id("org.sdkotlin.buildlogic.custom-resources")
 	id("org.sdkotlin.buildlogic.native-resources")
 	id("org.sdkotlin.buildlogic.spring-project")

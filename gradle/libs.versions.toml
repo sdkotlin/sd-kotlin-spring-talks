@@ -1,24 +1,24 @@
 [versions]
 
 assertj = "3.27.3"
-dependency-analysis-gradle-plugin = "2.17.0"
+dependencyAnalysis-gradlePlugin = "2.17.0"
 jetbrains-annotations = "23.0.0"
 jackson = "2.19.0"
 jackson-kogera = "2.19.0-beta23"
 jakarta-inject = "2.0.1"
 junit = "5.12.2"
-jvm-dependency-conflict-resolution = "2.3"
+jvmDependencyConflictResolution-gradlePlugin = "2.3"
 kotlin = "2.1.21"
 kotlinx-coroutines = "1.10.2"
 kotlinx-datetime = "0.6.2"
 log4j = "2.24.1"
 log4j-kotlin = "1.5.0"
 mockk = "1.14.2"
-osdetector-gradle-plugin = "1.7.3"
+osdetector-gradlePlugin = "1.7.3"
 spring = "6.2.6"
 spring-boot = "3.4.5"
 spring-mockk = "4.0.2"
-versions-gradle-plugin = "0.52.0"
+versionsCheck-gradlePlugin = "0.52.0"
 
 [libraries]
 
@@ -26,9 +26,9 @@ versions-gradle-plugin = "0.52.0"
 module = "org.assertj:assertj-core"
 version.ref = "assertj"
 
-[libraries.dependency-analysis-gradle-plugin-dependency]
+[libraries.dependencyAnalysis-gradlePluginDependency]
 module = "com.autonomousapps.dependency-analysis:com.autonomousapps.dependency-analysis.gradle.plugin"
-version.ref = "dependency-analysis-gradle-plugin"
+version.ref = "dependencyAnalysis-gradlePlugin"
 
 [libraries.jackson-bom]
 module = "com.fasterxml.jackson:jackson-bom"
@@ -59,15 +59,15 @@ version.ref = "junit"
 [libraries.junit-params]
 module = "org.junit.jupiter:junit-jupiter-params"
 
-[libraries.jvm-dependency-conflict-resolution-gradle-plugin-dependency]
+[libraries.jvmDependencyConflictResolution-gradlePluginDependency]
 module = "org.gradlex:jvm-dependency-conflict-resolution"
-version.ref = "jvm-dependency-conflict-resolution"
+version.ref = "jvmDependencyConflictResolution-gradlePlugin"
 
-[libraries.kotlin-gradle-plugin-dependency]
+[libraries.kotlin-gradlePluginDependency]
 module = "org.jetbrains.kotlin:kotlin-gradle-plugin"
 version.ref = "kotlin"
 
-[libraries.kotlin-spring-gradle-plugin-dependency]
+[libraries.kotlin-spring-gradlePluginDependency]
 module = "org.jetbrains.kotlin:kotlin-allopen"
 version.ref = "kotlin"
 
@@ -128,9 +128,9 @@ version.ref = "mockk"
 module = "io.mockk:mockk-dsl-jvm"
 version.ref = "mockk"
 
-[libraries.osdetector-gradle-plugin-dependency]
+[libraries.osdetector-gradlePluginDependency]
 module = "com.google.gradle:osdetector-gradle-plugin"
-version.ref = "osdetector-gradle-plugin"
+version.ref = "osdetector-gradlePlugin"
 
 [libraries.spring]
 module = "org.springframework:spring"
@@ -168,7 +168,7 @@ module = "org.springframework.boot:spring-boot-autoconfigure"
 module = "org.springframework.boot:spring-boot-dependencies"
 version.ref = "spring-boot"
 
-[libraries.springboot-gradle-plugin-dependency]
+[libraries.springboot-gradlePluginDependency]
 module = "org.springframework.boot:spring-boot-gradle-plugin"
 version.ref = "spring-boot"
 
@@ -192,6 +192,10 @@ module = "org.springframework.boot:spring-boot-test"
 
 [libraries.springboot-test-autoconfigure]
 module = "org.springframework.boot:spring-boot-test-autoconfigure"
+
+[libraries.versionsCheck-gradlePluginDependency]
+module = "com.github.ben-manes:gradle-versions-plugin"
+version.ref = "versionsCheck-gradlePlugin"
 
 [bundles]
 
@@ -229,30 +233,30 @@ mockk-jvm = [
 
 [plugins]
 
-[plugins.dependency-analysis-gradle-plugin]
+[plugins.dependencyAnalysis-gradlePlugin]
 id = "com.autonomousapps.dependency-analysis"
-version.ref = "dependency-analysis-gradle-plugin"
+version.ref = "dependencyAnalysis-gradlePlugin"
 
-[plugins.kotlin-gradle-plugin]
+[plugins.kotlin-gradlePlugin]
 id = "org.jetbrains.kotlin.jvm"
 version.ref = "kotlin"
 
-[plugins.jvm-dependency-conflict-detection-gradle-plugin]
+[plugins.jvmDependencyConflictDetection-gradlePlugin]
 id = "org.gradlex.jvm-dependency-conflict-detection"
-version.ref = "jvm-dependency-conflict-resolution"
+version.ref = "jvmDependencyConflictResolution-gradlePlugin"
 
-[plugins.jvm-dependency-conflict-resolution-gradle-plugin]
+[plugins.jvmDependencyConflictResolution-gradlePlugin]
 id = "org.gradlex.jvm-dependency-conflict-resolution"
-version.ref = "jvm-dependency-conflict-resolution"
+version.ref = "jvmDependencyConflictResolution-gradlePlugin"
 
-[plugins.osdetector-gradle-plugin]
+[plugins.osdetector-gradlePlugin]
 id = "com.google.osdetector"
-version.ref = "osdetector-gradle-plugin"
+version.ref = "osdetector-gradlePlugin"
 
-[plugins.springboot-plugin]
+[plugins.springboot-gradlePlugin]
 id = "org.springframework.boot"
 version.ref = "spring-boot"
 
-[plugins.versions-gradle-plugin]
+[plugins.versionsCheck-gradlePlugin]
 id = "com.github.ben-manes.versions"
-version.ref = "versions-gradle-plugin"
+version.ref = "versionsCheck-gradlePlugin"
