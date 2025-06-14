@@ -3,7 +3,7 @@
 assertj = "3.27.3"
 dependencyAnalysis-gradlePlugin = "2.18.0"
 jetbrains-annotations = "23.0.0"
-jackson = "2.19.0"
+jackson = "2.19.1"
 jackson-kogera = "2.19.0-beta24"
 jakarta-inject = "2.0.1"
 junit = "5.13.1"
