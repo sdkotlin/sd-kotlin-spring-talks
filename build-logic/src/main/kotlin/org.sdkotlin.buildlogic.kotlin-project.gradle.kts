@@ -36,7 +36,7 @@ tasks {
 			optIn = listOf(
 				"kotlin.ExperimentalStdlibApi",
 				"kotlin.contracts.ExperimentalContracts",
-				"kotlinx.coroutines.ExperimentalCoroutinesApi",
+				"kotlin.time.ExperimentalTime",
 			)
 			// Planned for deprecation:
 			// https://youtrack.jetbrains.com/issue/KT-61035/

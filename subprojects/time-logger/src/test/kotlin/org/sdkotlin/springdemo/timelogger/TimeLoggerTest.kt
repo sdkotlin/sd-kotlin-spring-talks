@@ -2,9 +2,9 @@ package org.sdkotlin.springdemo.timelogger
 
 import io.mockk.mockk
 import io.mockk.verify
-import kotlinx.datetime.Clock
 import org.apache.logging.log4j.kotlin.KotlinLogger
 import org.junit.jupiter.api.Test
+import kotlin.time.Clock
 
 internal class TimeLoggerTest {
 

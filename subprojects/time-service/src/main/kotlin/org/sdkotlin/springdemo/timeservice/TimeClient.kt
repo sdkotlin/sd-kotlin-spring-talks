@@ -1,6 +1,7 @@
 package org.sdkotlin.springdemo.timeservice
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
+
 
 fun interface TimeClient {
 

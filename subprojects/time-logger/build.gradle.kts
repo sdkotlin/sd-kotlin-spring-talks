@@ -7,7 +7,6 @@ dependencies {
 
 	api(projects.subprojects.timeService)
 
-	api(libs.bundles.kotlinx.datetime.jvm)
 	api(libs.log4j.api.kotlin)
 	api(libs.spring.context)
 

@@ -8,9 +8,10 @@ jackson-kogera = "2.19.0-beta25"
 jakarta-inject = "2.0.1"
 junit = "5.13.3"
 jvmDependencyConflictResolution-gradlePlugin = "2.4"
-kotlin = "2.1.21"
+kotlin = "2.2.0"
+kotlin-metadata-jvm = "2.2.0"
 kotlinx-coroutines = "1.10.2"
-kotlinx-datetime = "0.6.2"
+kotlinx-datetime = "0.7.0"
 log4j = "2.24.3"
 log4j-kotlin = "1.5.0"
 mockk = "1.14.4"
@@ -70,6 +71,10 @@ version.ref = "kotlin"
 [libraries.kotlin-spring-gradlePluginDependency]
 module = "org.jetbrains.kotlin:kotlin-allopen"
 version.ref = "kotlin"
+
+[libraries.kotlin-metadata-jvm]
+module = "org.jetbrains.kotlin:kotlin-metadata-jvm"
+version.ref = "kotlin-metadata-jvm"
 
 [libraries.kotlinx-coroutines-bom]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom"

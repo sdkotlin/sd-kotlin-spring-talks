@@ -6,12 +6,9 @@ plugins {
 
 dependencies {
 
-	api(libs.kotlinx.datetime.jvm)
 	api(libs.spring.context)
 
 	implementation(libs.bundles.kotlinx.coroutines.jvm)
-
-	testFixturesApi(libs.kotlinx.datetime.jvm)
 
 	testImplementation(projects.subprojects.timeService)
 
