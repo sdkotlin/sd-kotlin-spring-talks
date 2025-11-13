@@ -1,7 +1,7 @@
 [versions]
 
 assertj = "3.27.3"
-dependencyAnalysis-gradlePlugin = "2.19.0"
+dependencyAnalysis-gradlePlugin = "3.4.1"
 jetbrains-annotations = "23.0.0"
 jackson = "2.19.2"
 jackson-kogera = "2.19.2-beta27"
