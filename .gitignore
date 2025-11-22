@@ -20,7 +20,7 @@ gradle-user-home/
 profile-out*/
 
 ### Kotlin
-/.kotlin/
+.kotlin/
 
 ### KotlinTest
 .kotlintest/
