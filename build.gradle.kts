@@ -66,6 +66,11 @@ tasks {
 		gradleVersion = "9.2.1"
 		distributionType = ALL
 	}
+
+	named<UpdateDaemonJvm>("updateDaemonJvm") {
+		languageVersion =
+			JavaLanguageVersion.of(libs.versions.jvm.get().toInt())
+	}
 }
 
 fun isNonStable(version: String): Boolean {

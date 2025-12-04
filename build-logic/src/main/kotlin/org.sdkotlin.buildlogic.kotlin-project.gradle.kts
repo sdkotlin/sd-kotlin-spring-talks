@@ -13,7 +13,8 @@ plugins {
 	id("org.gradlex.jvm-dependency-conflict-resolution")
 }
 
-val javaTargetVersion: String = JavaVersion.VERSION_21.toString()
+val versionCatalog = versionCatalogs.named("libs")
+val javaTargetVersion = versionCatalog.findVersion("jvm").get().requiredVersion.toInt()
 
 jvmDependencyConflicts {
 	logging {
@@ -21,12 +22,22 @@ jvmDependencyConflicts {
 	}
 }
 
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(javaTargetVersion))
+	}
+}
+
+kotlin {
+	jvmToolchain(javaTargetVersion)
+}
+
 tasks {
 
 	withType<JavaCompile>().configureEach {
 
 		with(options) {
-			release = javaTargetVersion.toInt()
+			release = javaTargetVersion
 			isFork = true
 		}
 	}
