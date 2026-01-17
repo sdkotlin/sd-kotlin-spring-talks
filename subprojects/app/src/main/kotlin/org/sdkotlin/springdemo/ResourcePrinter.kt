@@ -11,7 +11,7 @@ class ResourcePrinter(
 	private val resourceLocation: String,
 ) : ApplicationRunner {
 
-	override fun run(args: ApplicationArguments?) {
+	override fun run(args: ApplicationArguments) {
 
 		val resourceContent = resourceLoader
 			.getResource(resourceLocation)

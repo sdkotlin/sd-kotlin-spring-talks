@@ -9,20 +9,30 @@ import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.LIST_ACTION
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.REQUEST_PATH
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.test.web.reactive.server.expectBody
 import kotlin.reflect.KClass
 
-@WebFluxTest(ChildContextController::class)
+@SpringBootTest
+@Import(ChildContextController::class, WebTestClientConfig::class)
 internal class ChildContextControllerIT(
 	@Autowired
 	private val webClient: WebTestClient
 ) {
 	@MockkBean
 	private lateinit var childContextService: ChildContextService
+
+	@Autowired
+	private lateinit var applicationContext: ApplicationContext
+
+	private fun svc(): ChildContextService =
+		applicationContext.getBean(ChildContextService::class.java)
 
 	@Nested
 	inner class TestCreate {
@@ -43,7 +53,7 @@ internal class ChildContextControllerIT(
 				.expectStatus().isCreated
 
 			verify {
-				childContextService.createIfAbsent(
+				svc().createIfAbsent(
 					childContextId = childContextId,
 					sources = setOf(TestChildContextConfig::class)
 				)
@@ -73,7 +83,7 @@ internal class ChildContextControllerIT(
 			)
 
 			every {
-				childContextService.createIfAbsent(any(), any<Set<KClass<*>>>())
+				svc().createIfAbsent(any(), any<Set<KClass<*>>>())
 			} throws Exception("Test service exception")
 
 			webClient.put()
@@ -95,7 +105,7 @@ internal class ChildContextControllerIT(
 			val childContextIds = setOf(childContextId)
 
 			every {
-				childContextService.list()
+				svc().list()
 			} returns childContextIds
 
 			webClient.get()
@@ -120,7 +130,7 @@ internal class ChildContextControllerIT(
 				.expectStatus().isOk
 
 			verify {
-				childContextService.removeAndCloseIfPresent(
+				svc().removeAndCloseIfPresent(
 					childContextId = childContextId,
 				)
 			}
@@ -129,13 +139,23 @@ internal class ChildContextControllerIT(
 }
 
 // Defined outside the test class so as not to contribute configuration to the
-// test itself.
+// test itself, except for explicit imports.
 
 @Configuration
 internal class TestChildContextConfig {
 
 	@Bean
 	fun testBean() = TestBean()
+}
+
+@TestConfiguration
+internal class WebTestClientConfig {
+
+	@Bean
+	fun webTestClient(childContextService: ChildContextService): WebTestClient =
+		WebTestClient.bindToController(
+			ChildContextController(childContextService)
+		).configureClient().build()
 }
 
 internal class TestBean

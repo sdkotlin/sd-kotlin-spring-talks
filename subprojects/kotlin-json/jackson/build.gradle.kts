@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
 
+	integrationTestImplementation(libs.jackson.module.kotlin)
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
 	integrationTestImplementation(libs.springboot.test)
 	integrationTestImplementation(libs.springboot.test.autoconfigure)
 
-	integrationTestRuntimeOnly(libs.jackson.module.kotlin)
 	integrationTestRuntimeOnly(libs.springboot.starter.json)
 	integrationTestRuntimeOnly(libs.springboot.starter.test)
 }

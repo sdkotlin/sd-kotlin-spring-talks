@@ -3,6 +3,7 @@ package org.sdkotlin.springdemo.kotlin.json.jackson
 import io.github.projectmapk.jackson.module.kogera.KotlinModule
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.ThrowingConsumer
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.JsonTest
@@ -11,6 +12,8 @@ import org.springframework.boot.test.json.JsonContent
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+// TODO: File issue to request jackson-module-kogera Jackson 3.x support.
+@Disabled("jackson-module-kogera does not currently support Jackson 3.")
 @JsonTest
 internal class JacksonKogeraUnsignedIT(
 	@Autowired

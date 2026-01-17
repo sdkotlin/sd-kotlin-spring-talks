@@ -25,5 +25,6 @@ dependencies {
 	integrationTestImplementation(libs.spring.mockk)
 	integrationTestImplementation(libs.spring.test)
 	integrationTestImplementation(libs.springboot.autoconfigure)
+	integrationTestImplementation(libs.springboot.starter.webflux.test)
 	integrationTestImplementation(libs.springboot.test.autoconfigure)
 }
