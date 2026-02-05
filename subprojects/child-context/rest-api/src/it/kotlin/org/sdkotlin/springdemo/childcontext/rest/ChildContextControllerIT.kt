@@ -9,6 +9,7 @@ import org.sdkotlin.springdemo.childcontext.domainservice.ChildContextService
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.LIST_ACTION
 import org.sdkotlin.springdemo.childcontext.rest.ChildContextController.Companion.REQUEST_PATH
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.getBean
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.ApplicationContext
@@ -22,17 +23,17 @@ import kotlin.reflect.KClass
 @SpringBootTest
 @Import(ChildContextController::class, WebTestClientConfig::class)
 internal class ChildContextControllerIT(
-	@Autowired
-	private val webClient: WebTestClient
+	@param:Autowired
+	private val webClient: WebTestClient,
+	@param:Autowired
+	private val applicationContext: ApplicationContext,
 ) {
 	@MockkBean
+	@Suppress("unused")
 	private lateinit var childContextService: ChildContextService
 
-	@Autowired
-	private lateinit var applicationContext: ApplicationContext
-
 	private fun svc(): ChildContextService =
-		applicationContext.getBean(ChildContextService::class.java)
+		applicationContext.getBean<ChildContextService>()
 
 	@Nested
 	inner class TestCreate {

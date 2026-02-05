@@ -16,9 +16,9 @@ import org.springframework.context.annotation.Configuration
 @Disabled("jackson-module-kogera does not currently support Jackson 3.")
 @JsonTest
 internal class JacksonKogeraUnsignedIT(
-	@Autowired
+	@param:Autowired
 	val signedTypesJacksonTester: JacksonTester<SignedTypesEntity>,
-	@Autowired
+	@param:Autowired
 	val unsignedTypesJacksonTester: JacksonTester<UnsignedTypesEntity>,
 ) {
 	@Configuration
