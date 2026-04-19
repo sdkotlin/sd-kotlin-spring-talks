@@ -20,7 +20,7 @@ osdetector-gradlePlugin = "1.7.3"
 spring = "7.0.6"
 spring-boot = "4.0.5"
 spring-mockk = "5.0.1"
-versionsCheck-gradlePlugin = "0.53.0"
+versionsCheck-gradlePlugin = "0.54.0"
 
 [libraries]
 
