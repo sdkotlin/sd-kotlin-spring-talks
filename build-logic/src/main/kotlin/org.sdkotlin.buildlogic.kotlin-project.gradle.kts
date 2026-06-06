@@ -13,8 +13,10 @@ plugins {
 	id("org.gradlex.jvm-dependency-conflict-resolution")
 }
 
-val versionCatalog = versionCatalogs.named("libs")
-val javaTargetVersion = versionCatalog.findVersion("jvm").get().requiredVersion.toInt()
+val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+val javaTargetVersion: String = libs.findVersion("java")
+	.orElseThrow { GradleException("Define the 'java' version in libs.versions.toml.") }
+	.requiredVersion
 
 jvmDependencyConflicts {
 	logging {
@@ -22,14 +24,8 @@ jvmDependencyConflicts {
 	}
 }
 
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(javaTargetVersion))
-	}
-}
-
 kotlin {
-	jvmToolchain(javaTargetVersion)
+	jvmToolchain(javaTargetVersion.toInt())
 }
 
 tasks {
@@ -37,7 +33,7 @@ tasks {
 	withType<JavaCompile>().configureEach {
 
 		with(options) {
-			release = javaTargetVersion
+			release = javaTargetVersion.toInt()
 			isFork = true
 		}
 	}

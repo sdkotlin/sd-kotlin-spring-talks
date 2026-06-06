@@ -29,16 +29,3 @@ gradlePlugin {
 		}
 	}
 }
-
-val versionCatalog = versionCatalogs.named("libs")
-val javaTargetVersion = versionCatalog.findVersion("jvm").get().requiredVersion.toInt()
-
-java {
-	toolchain {
-		languageVersion.set(JavaLanguageVersion.of(javaTargetVersion))
-	}
-}
-
-kotlin {
-    jvmToolchain(javaTargetVersion)
-}
