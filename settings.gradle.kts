@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 	@Suppress("UnstableApiUsage")
 	repositories {
 		mavenCentral()
-		maven { setUrl("https://jitpack.io") }
 	}
 }
 
@@ -47,7 +46,6 @@ include("subprojects:component-scanned-service")
 include("subprojects:custom-resources")
 include("subprojects:custom-resources-intermediary")
 include("subprojects:kotlin-json:jackson")
-include("subprojects:kotlin-json:kogera")
 include("subprojects:native-resources")
 include("subprojects:native-resources-intermediary")
 include("subprojects:time-logger")

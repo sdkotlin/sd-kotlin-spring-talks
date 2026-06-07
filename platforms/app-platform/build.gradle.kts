@@ -15,9 +15,7 @@ dependencies {
 	api(platform(libs.springboot.bom))
 
 	constraints {
-		api(libs.jackson.module.kogera)
 		api(libs.jetbrains.annotations)
-		api(libs.kotlin.metadata.jvm)
 		api(libs.bundles.kotlinx.datetime.jvm)
 		api(libs.bundles.log4j.kotlin)
 	}

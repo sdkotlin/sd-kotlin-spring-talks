@@ -4,13 +4,11 @@ assertj = "3.27.7"
 dependencyAnalysis-gradlePlugin = "3.14.1"
 jetbrains-annotations = "23.0.0"
 jackson = "3.1.4"
-jackson-kogera = "2.21.3-beta36"
 jakarta-inject = "2.0.1"
 java = "21"
 junit = "6.1.0"
 jvmDependencyConflictResolution-gradlePlugin = "2.5"
 kotlin = "2.3.21"
-kotlin-metadata-jvm = "2.2.0"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.7.0"
 log4j = "2.26.0"
@@ -35,10 +33,6 @@ version.ref = "dependencyAnalysis-gradlePlugin"
 [libraries.jackson-bom]
 module = "tools.jackson:jackson-bom"
 version.ref = "jackson"
-
-[libraries.jackson-module-kogera]
-module = "com.github.ProjectMapK:jackson-module-kogera"
-version.ref = "jackson-kogera"
 
 [libraries.jackson-module-kotlin]
 module = "tools.jackson.module:jackson-module-kotlin"
@@ -72,10 +66,6 @@ version.ref = "kotlin"
 [libraries.kotlin-spring-gradlePluginDependency]
 module = "org.jetbrains.kotlin:kotlin-allopen"
 version.ref = "kotlin"
-
-[libraries.kotlin-metadata-jvm]
-module = "org.jetbrains.kotlin:kotlin-metadata-jvm"
-version.ref = "kotlin-metadata-jvm"
 
 [libraries.kotlinx-coroutines-bom]
 module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom"
