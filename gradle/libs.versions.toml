@@ -120,7 +120,6 @@ version.ref = "log4j-kotlin"
 
 [libraries.log4j-slf4j2-impl]
 module = "org.apache.logging.log4j:log4j-slf4j2-impl"
-version.ref = "log4j-kotlin"
 
 [libraries.mockk]
 module = "io.mockk:mockk"
