@@ -51,7 +51,7 @@ internal class SpringGetBeanNestedGenericIT {
 	}
 
 	@Test
-	@Disabled
+	@Disabled("https://github.com/spring-projects/spring-framework/issues/31439")
 	fun `test getBean with nested generic`(
 		applicationContext: ApplicationContext
 	) {
