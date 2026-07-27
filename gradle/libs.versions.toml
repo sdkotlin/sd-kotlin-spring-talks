@@ -18,7 +18,6 @@ osdetector-gradlePlugin = "1.7.3"
 spring = "7.0.8"
 spring-boot = "4.1.0"
 spring-mockk = "5.0.1"
-versionsCheck-gradlePlugin = "0.54.0"
 
 [libraries]
 
@@ -195,10 +194,6 @@ module = "org.springframework.boot:spring-boot-test"
 [libraries.springboot-test-autoconfigure]
 module = "org.springframework.boot:spring-boot-test-autoconfigure"
 
-[libraries.versionsCheck-gradlePluginDependency]
-module = "com.github.ben-manes:gradle-versions-plugin"
-version.ref = "versionsCheck-gradlePlugin"
-
 [bundles]
 
 kotlinx-coroutines-jvm = [
@@ -259,7 +254,3 @@ version.ref = "osdetector-gradlePlugin"
 [plugins.springboot-gradlePlugin]
 id = "org.springframework.boot"
 version.ref = "spring-boot"
-
-[plugins.versionsCheck-gradlePlugin]
-id = "com.github.ben-manes.versions"
-version.ref = "versionsCheck-gradlePlugin"

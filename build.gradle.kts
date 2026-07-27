@@ -21,7 +21,6 @@ plugins {
 	alias(libs.plugins.springboot.gradlePlugin) apply false
 	// Declare with `apply false` to include in Versions Gradle Plugin checks.
 	alias(libs.plugins.osdetector.gradlePlugin) apply false
-	alias(libs.plugins.versionsCheck.gradlePlugin)
 }
 
 dependencyAnalysis {
