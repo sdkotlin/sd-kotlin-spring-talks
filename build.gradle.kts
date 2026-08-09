@@ -56,10 +56,12 @@ dependencyAnalysis {
 }
 
 tasks {
-
 	named<DependencyUpdatesTask>("dependencyUpdates").configure {
+		checkConstraints = true
+		filterConfigurations = Spec { !isPluginInternal(it.name) }
 		rejectVersionIf {
-			isNonStable(candidate.version) && !isNonStable(currentVersion)
+			(candidate.version.isNonStable() && !currentVersion.isNonStable()) ||
+				!satisfiesDeclaredBound
 		}
 		gradleReleaseChannel = CURRENT.id
 	}
@@ -76,16 +78,30 @@ tasks {
 		notCompatibleWithConfigurationCache(
 			"updateDaemonJvm resolves toolchain download URLs at execution time."
 		)
-		languageVersion = JavaLanguageVersion.of(libs.versions.java.get().toInt())
+		languageVersion =
+			JavaLanguageVersion.of(libs.versions.java.get().toInt())
 		vendor = JvmVendorSpec.ADOPTIUM
 	}
 }
 
-fun isNonStable(version: String): Boolean {
+fun isPluginInternal(configurationName: String): Boolean {
+	val pluginInternalConfigurations = setOf(
+		"dependencyAnalysisKotlinMetadataClasspath",
+		"kotlinAbiValidationCompatClasspath",
+		"kotlinBuildToolsApiClasspath",
+		"kotlinCompilerClasspath",
+		"kotlinKlibCommonizerClasspath",
+	)
+	return configurationName in pluginInternalConfigurations ||
+		(configurationName.startsWith("kotlinCompilerPluginClasspath") &&
+			configurationName != "kotlinCompilerPluginClasspath")
+}
+
+fun String.isNonStable(): Boolean {
 	val stableKeyword = listOf("RELEASE", "FINAL", "GA").any {
-		version.uppercase().contains(it)
+		uppercase().contains(it)
 	}
-	val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-	val isStable = stableKeyword || regex.matches(version)
+	val regex = "^[0-9,.v-]+(-r|-jre|-android)?$".toRegex()
+	val isStable = stableKeyword || regex.matches(this)
 	return isStable.not()
 }
