@@ -34,6 +34,11 @@ rootProject.name = "sd-kotlin-spring-talks"
 
 includeBuild("platforms")
 
+// build-logic is included under pluginManagement, which contributes plugin
+// substitutions only. A dependencyUpdatesAggregation entry resolves through
+// dependency substitution, so the entry needs this second include to reach it.
+includeBuild("build-logic")
+
 gradle.beforeProject {
 	// Set group and version properties for all projects
 	group = "org.sdkotlin"

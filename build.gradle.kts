@@ -22,6 +22,14 @@ plugins {
 	alias(libs.plugins.osdetector.gradlePlugin) apply false
 }
 
+// Each included build produces its own partial results, and the entries below
+// merge them into this report. This task's own settings are then applied to
+// everything merged, so the included builds need no task configuration.
+dependencies {
+	dependencyUpdatesAggregation("org.sdkotlin.buildlogic:build-logic:1.0.0-SNAPSHOT")
+	dependencyUpdatesAggregation("org.sdkotlin.platforms:platforms:1.0.0-SNAPSHOT")
+}
+
 dependencyAnalysis {
 	issues {
 		all {
@@ -57,9 +65,24 @@ dependencyAnalysis {
 tasks {
 	named<DependencyUpdatesTask>("dependencyUpdates").configure {
 		checkConstraints = true
-		filterConfigurations = Spec { !isKgpInternal(it.name) }
-		filterDeclaredConfigurations =
-			Spec { it != "dependencyAnalysisKotlinMetadata" }
+		// `filterConfigurations` would skip the lookups too, but it covers only
+		// what this build resolves, leaving the KGP internal classpath rows in
+		// the entries merged from the included builds. The predicate is inlined
+		// because a rule that calls a function declared in this script cannot be
+		// stored in the configuration cache once entries are merged.
+		filterDeclaredConfigurations = Spec { configurationName ->
+			val kgpInternalConfigurations = setOf(
+				"kotlinAbiValidationCompatClasspath",
+				"kotlinBouncyCastleConfiguration",
+				"kotlinBuildToolsApiClasspath",
+				"kotlinCompilerClasspath",
+				"kotlinKlibCommonizerClasspath",
+			)
+			configurationName != "dependencyAnalysisKotlinMetadata" &&
+				configurationName !in kgpInternalConfigurations &&
+				!(configurationName.startsWith("kotlinCompilerPluginClasspath") &&
+					configurationName != "kotlinCompilerPluginClasspath")
+		}
 		// Replaces the former `isNonStable` recipe. `rejectOutOfBounds` covers
 		// the former `!satisfiesDeclaredBound` clause and is on by default, as
 		// is the `current` Gradle release channel once pre-releases are out.
@@ -82,17 +105,5 @@ tasks {
 			JavaLanguageVersion.of(libs.versions.java.get().toInt())
 		vendor = JvmVendorSpec.ADOPTIUM
 	}
-}
-
-fun isKgpInternal(configurationName: String): Boolean {
-	val pluginInternalConfigurations = setOf(
-		"kotlinAbiValidationCompatClasspath",
-		"kotlinBuildToolsApiClasspath",
-		"kotlinCompilerClasspath",
-		"kotlinKlibCommonizerClasspath",
-	)
-	return configurationName in pluginInternalConfigurations ||
-		(configurationName.startsWith("kotlinCompilerPluginClasspath") &&
-			configurationName != "kotlinCompilerPluginClasspath")
 }
 

@@ -1,4 +1,19 @@
+plugins {
+	// Produces the partial report that the root project's
+	// `dependencyUpdatesAggregation` entry merges.
+	id("io.github.ben-manes.versions.settings") version "0.63.0"
+}
+
 dependencyResolutionManagement {
+	// A java-platform build resolves nothing of its own, so it declared no
+	// repositories until the report needed somewhere to look for candidates.
+	@Suppress("UnstableApiUsage")
+	repositories {
+		mavenCentral()
+		// plugins-platform constrains Gradle plugin artifacts that only the
+		// Gradle Plugin Portal publishes.
+		gradlePluginPortal()
+	}
 	versionCatalogs {
 		create("libs") {
 			from(files("../gradle/libs.versions.toml"))
