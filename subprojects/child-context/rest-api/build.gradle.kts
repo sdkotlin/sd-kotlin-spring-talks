@@ -18,13 +18,14 @@ dependencies {
 
 	integrationTestImplementation(projects.subprojects.childContext.domainService)
 
-	integrationTestImplementation(libs.bundles.mockk.jvm)
+	integrationTestImplementation(libs.mockk)
+	integrationTestImplementation(libs.mockk.dsl)
+	integrationTestImplementation(libs.mockk.dsl.jvm)
 	integrationTestImplementation(libs.spring.beans)
 	integrationTestImplementation(libs.spring.context)
 	integrationTestImplementation(libs.spring.core)
 	integrationTestImplementation(libs.spring.mockk)
 	integrationTestImplementation(libs.spring.test)
 	integrationTestImplementation(libs.springboot.autoconfigure)
-	integrationTestImplementation(libs.springboot.starter.webflux.test)
-	integrationTestImplementation(libs.springboot.test.autoconfigure)
+	integrationTestImplementation(libs.springboot.test)
 }
