@@ -1,7 +1,7 @@
 plugins {
 	// Produces the partial report that the root project's
 	// `dependencyUpdatesAggregation` entry merges.
-	id("io.github.ben-manes.versions") version "0.66.0"
+	id("io.github.ben-manes.versions") version "0.67.0"
 }
 
 dependencyResolutionManagement {
